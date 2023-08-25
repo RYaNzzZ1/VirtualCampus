@@ -33,10 +33,19 @@ public class CourseDaoImp implements CourseDao {
             case MessageType.REQ_STU_ADD_LESSON: {
                 System.out.println("serving REQ_STU_ADD_LESSON");
                 System.out.println("adding....");
+                //检查课程是否存在
+                Course course = new Course();
                 String CourseId = this.mesFromClient.getContent().get(0);
-                String UserId = this.mesFromClient.getContent().get(1);
+                System.out.println("CourseID为" + CourseId);
+                course = this.searchCourseByID(CourseId);
+                if (course == null)
+                    this.mesToClient.setSeccess(false);
+                else {
+                    //String CourseId = this.mesFromClient.getContent().get(0);
+                    String UserId = this.mesFromClient.getContent().get(1);
 
-                this.mesToClient.setSeccess(this.sigAddCourse(CourseId, UserId));
+                    this.mesToClient.setSeccess(this.sigAddCourse(CourseId, UserId));
+                }
                 System.out.println("REQ_STU_ADD_LESSON finished");
                 break;
             }
@@ -53,7 +62,7 @@ public class CourseDaoImp implements CourseDao {
             case MessageType.REQ_ADD_LESSON: {
                 System.out.println("serving REQ_ADD_LESSON");
                 System.out.println("adding....");
-
+                //
                 Course course = new Course();
                 course.setContent(this.mesFromClient.getContent());
 
@@ -115,16 +124,18 @@ public class CourseDaoImp implements CourseDao {
                 //�������и�ѧ����ѡ�γ�
                 Vector<String> sigCourseContent = new Vector<String>();
                 Vector<String> allCourseContent = new Vector<String>();
-                List<Course> allCourse = new LinkedList<Course>();
+                List<Course> allCourse; //= new LinkedList<Course>();
                 User user = new User();
                 user.setContent(this.mesFromClient.getContent());
                 allCourse = user.getCourses();
                 Iterator<Course> iteAllCourse = allCourse.iterator();
                 while (iteAllCourse.hasNext()) {
                     sigCourseContent = iteAllCourse.next().getContent();
-                    for (int i = 0; i <= 6; i++) {
-                        allCourseContent.add(sigCourseContent.get(i));
-                    }
+                    if(sigCourseContent!=null)
+                        for (int i = 0; i <= 6; i++) {
+                           allCourseContent.add(sigCourseContent.get(i));
+                        }
+
                 }
                 this.mesToClient.setContent(allCourseContent);
                 System.out.println("REQ_STU_ALL_CHOOOSE finished");

@@ -16,11 +16,15 @@ import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class LibraryStu extends JFrame {
 
@@ -92,11 +96,29 @@ public class LibraryStu extends JFrame {
 		contentPane.setOpaque(false);
 		
 		findText = new JTextField();
-		findText.setText("(书号）");
+		findText.setText("(书号）/(书名)");
 		findText.setForeground(SystemColor.textText);
 		findText.setFont(new Font("华文新魏", Font.PLAIN, 20));
 		findText.setColumns(10);
-		
+
+		findText.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				autodisplay(e);
+			}
+
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				autodisplay(e);
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				autodisplay(e);
+			}
+
+		});
+
 		JButton findButton = new JButton();
 		findButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -380,6 +402,15 @@ public class LibraryStu extends JFrame {
 		//居中显示
 		this.setLocationRelativeTo(null);
 	}
+	/**
+	 * 搜索框为空时显示全部书籍
+	 * @param e 文本变化事件
+	 */
+	private void autodisplay(DocumentEvent e) {
+		String text=findText.getText();
+		if(Objects.equals(text, ""))
+			SetTableShow();
+	}
 
 	/**
 	 * 显示借书界面
@@ -441,6 +472,10 @@ public class LibraryStu extends JFrame {
 		int res = (int)serverResponse.getData();
 		if(res==0) {
 			JOptionPane.showMessageDialog(null, "该书号不存在！", "警告", JOptionPane.WARNING_MESSAGE);
+			return;
+		}
+		else if(res==-1){
+			JOptionPane.showMessageDialog(null, "非法操作:库存已达上限！", "错误", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		else if(res > 0)

@@ -21,8 +21,8 @@ import java.util.Vector;
  * 重定向控制台输出到GUI界面显示 <br>
  * @author 柳多荣 吴慕陶
  * @version 1.0
- * @see java.swing.*
- * @see java.awt.*
+ * @see javax.swing
+ * @see java.awt
  * @see Vector
  */
 
@@ -38,8 +38,8 @@ public class ServerFrame extends JFrame {
 	 * 重定向控制台输出到GUI界面显示
 	 * @author 柳多荣 吴慕陶
 	 * @version 1.0
-	 * @see java.swing.*
-	 * @see java.awt.*;
+	 * @see javax.swing
+	 * @see java.awt;
 	 * @see Vector
 	 */
 	public ServerFrame() {

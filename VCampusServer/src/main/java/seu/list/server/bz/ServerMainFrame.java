@@ -162,7 +162,9 @@ public class ServerMainFrame
 			return 0;
 		}
 	}
-	
+
+
+
 	/**
 	 * 
 	 * 获取与服务器连接的客户端信息

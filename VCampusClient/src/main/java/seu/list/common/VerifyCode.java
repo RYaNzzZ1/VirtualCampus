@@ -9,7 +9,7 @@ import java.util.Random;
 public class VerifyCode extends JComponent implements MouseListener{
 
 	private String codes;
-	private int width = 40,height = 30;
+	private int width = 105,height = 47;
 	private int codesLength=4;
 	private Random random = new Random();
 	

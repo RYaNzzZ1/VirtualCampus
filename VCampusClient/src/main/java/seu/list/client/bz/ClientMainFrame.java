@@ -18,7 +18,7 @@ import java.sql.SQLException;
  */
 public class ClientMainFrame {
 	public static Socket socket;
-
+	public static ClientLoginFrame c;
 	/**
 	 * 程序入口
 	 * @param args 系统命令行参数
@@ -32,8 +32,8 @@ public class ClientMainFrame {
 			socket =  new Socket(IConstant.SERVER_ADDRESS, IConstant.SERVER_PORT);		
 
 			// 启动登录窗口
-			ClientLoginFrame c = new ClientLoginFrame(socket);
-			//c.setVisible(true);
+			 c = new ClientLoginFrame(socket);
+
 			
 			// 卡死主程序，防止资源释放
 			while(true);
@@ -68,4 +68,10 @@ public class ClientMainFrame {
 		Client client = new Client(socket);
 		client.sendRequestToServer(offlineMes);
 	}
+	public static void back()
+	{
+		c.setVisible(true);
+
+	}
+
 }

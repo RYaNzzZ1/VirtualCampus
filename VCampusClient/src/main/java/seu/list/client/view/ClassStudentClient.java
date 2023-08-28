@@ -15,6 +15,8 @@ import java.awt.*;
 import java.awt.Dialog.ModalExclusionType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,43 +44,42 @@ public class ClassStudentClient extends JFrame {
 	private JLabel userimage = null;
 	private MainMenu Mainmenu = null;
 
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ClassStudentClient frame = new ClassStudentClient();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
-	/**
-	 * Create the frame.
-	 */
 	@SuppressWarnings("unchecked")
 	public ClassStudentClient(String id, String pwd, MainMenu mainmenu) {
 		this.Mainmenu = mainmenu;
-		this.setBackground(UIManager.getColor("InternalFrame.activeTitleGradient"));
-		this.setBounds(100, 100, 719, 570);
-		
+
+		//1.设置背景图片
+		JLabel backgroundImageLabel = new JLabel(new ImageIcon("VCampusClient/Image/ClassStudentClient.png"));
+		Toolkit k = Toolkit.getDefaultToolkit();
+		Dimension d = k.getScreenSize();
+		setBounds(d.width/2-441, d.height/2-635/2, 882, 670);
+		backgroundImageLabel.setBounds(0, 0, 882, 635);
+		setResizable(false);
+		setLayout(null);
+
+
+		//2.绘制退出按钮
+		//得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+    /* backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+			}
+        });*/
+
+
+
 		PWD = pwd;
 		ID = id;
-
 		setTitle("学生个人信息管理界面");
-		this.setDefaultCloseOperation(2);
-		setBounds(100, 100, 719, 570);
-		contentPane = new JPanel();
-		contentPane.setVisible(true);
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		
-		
+		this.setDefaultCloseOperation(2);  //关闭按钮
+
+
+
+
+		//下面代码无需改动
 		Vector<Student> StuAll = new Vector<Student>();
 		Message mes = new Message();
 		mes.setModuleType(ModuleType.Student);
@@ -105,115 +106,111 @@ public class ClassStudentClient extends JFrame {
 			}
 			studenttemp++;
 		}
-		
-		JLabel lblNewLabel = new JLabel("个人信息管理");
-		lblNewLabel.setForeground(Color.BLACK);
-		lblNewLabel.setFont(new Font("宋体", Font.BOLD, 27));
-		
-		JLabel lblNewLabel_1 = new JLabel("姓名");
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_1.setFont(new Font("宋体", Font.PLAIN, 22));
-		
-		JLabel lblNewLabel_2 = new JLabel("学号");
-		lblNewLabel_2.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_2.setFont(new Font("宋体", Font.PLAIN, 22));
-		
-		JLabel lblNewLabel_3 = new JLabel("专业");
-		lblNewLabel_3.setFont(new Font("宋体", Font.PLAIN, 22));
-		
-		JLabel lblNewLabel_4 = new JLabel("班级");
-		lblNewLabel_4.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_4.setFont(new Font("宋体", Font.PLAIN, 22));
-		
-		JLabel lblNewLabel_5 = new JLabel("老师");
-		lblNewLabel_5.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_5.setFont(new Font("宋体", Font.PLAIN, 22));
-		
-		JLabel lblNewLabel_6 = new JLabel("性别");
-		lblNewLabel_6.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_6.setFont(new Font("宋体", Font.PLAIN, 22));
-		
-		JLabel lblNewLabel_7 = new JLabel("籍贯");
-		lblNewLabel_7.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_7.setFont(new Font("宋体", Font.PLAIN, 22));
-		
-		JLabel lblNewLabel_8 = new JLabel("政治面貌");
-		lblNewLabel_8.setFont(new Font("宋体", Font.PLAIN, 22));
-		
-		JLabel lblNewLabel_10 = new JLabel("账户余额");
-		lblNewLabel_10.setFont(new Font("宋体", Font.PLAIN, 22));
-		
-		name = new JTextField();
+
+
+		//提示标签
+
+
+		//信息输入框（显示框）
+		name = new JTextField();  //姓名
 		name.setText("null");
 		name.setEditable(false);
-		name.setFont(new Font("宋体", Font.PLAIN, 18));
-		name.setColumns(10);
+		name.setFont(new Font("华文行楷", Font.PLAIN, 24));
+		name.setBounds(545,153,783-545,128-91);
 		name.setText(thisStu.getStudentName());
 		Name = thisStu.getStudentName();
+		add(name);
+		name.setOpaque(false);
+		name.setBorder(new EmptyBorder(0,0,0,0));
 		
-		studentid = new JTextField();
+		studentid = new JTextField();      //学号
 		studentid.setEditable(false);
-		studentid.setFont(new Font("宋体", Font.PLAIN, 18));
-		studentid.setColumns(10);
+		studentid.setFont(new Font("华文行楷", Font.PLAIN, 24));
+		studentid.setBounds(545,91,783-545,128-91);
 		studentid.setText("null");
 		studentid.setText(id);
+		add(studentid);
+		studentid.setOpaque(false);
+		studentid.setBorder(new EmptyBorder(0,0,0,0));
 		
-		major = new JTextField();
+		major = new JTextField();  //专业
 		major.setText("null");
 		major.setEditable(false);
-		major.setFont(new Font("宋体", Font.PLAIN, 15));
-		major.setColumns(10);
+		major.setFont(new Font("华文行楷", Font.PLAIN, 24));
+		major.setBounds(545,328,783-545,128-91);
 		major.setText(thisStu.getMajor());
+		add(major);
+		major.setOpaque(false);
+		major.setBorder(new EmptyBorder(0,0,0,0));
 		
-		classid = new JTextField();
+		classid = new JTextField();   //班级
 		classid.setText("null");
 		classid.setEditable(false);
-		classid.setFont(new Font("宋体", Font.PLAIN, 18));
-		classid.setColumns(10);
+		classid.setFont(new Font("华文行楷", Font.PLAIN, 24));
+		classid.setBounds(545,382,783-545,128-91);
 		classid.setText(thisStu.getClassid());
+		add(classid);
+		classid.setOpaque(false);
+		classid.setBorder(new EmptyBorder(0,0,0,0));
 		
-		teacherid = new JTextField();
+		teacherid = new JTextField();   //老师
 		teacherid.setText("null");
 		teacherid.setEditable(false);
-		teacherid.setFont(new Font("宋体", Font.PLAIN, 18));
-		teacherid.setColumns(10);
+		teacherid.setFont(new Font("华文行楷", Font.PLAIN, 24));
+		teacherid.setBounds(169,444,783-545,128-91);
 		teacherid.setText(thisStu.getTeacherid());
+		add(teacherid);
+		teacherid.setOpaque(false);
+		teacherid.setBorder(new EmptyBorder(0,0,0,0));
 		
-		phone = new JTextField();
+		phone = new JTextField();  //联系电话
 		phone.setText("null");
 		phone.setEditable(false);
-		phone.setFont(new Font("宋体", Font.PLAIN, 18));
-		phone.setColumns(10);
+		phone.setFont(new Font("华文行楷", Font.PLAIN, 24));
+		phone.setBounds(545,438,783-545,128-91);
 		phone.setText(thisStu.getStudentphone());
-		
+		add(phone);
+		phone.setOpaque(false);
+		phone.setBorder(new EmptyBorder(0,0,0,0));
+
+
+
 		DecimalFormat df = new DecimalFormat("0.00");
-		credit = new JTextField();
+		credit = new JTextField();   //账户余额
 		credit.setEditable(false);
-		credit.setFont(new Font("宋体", Font.PLAIN, 18));
-		credit.setColumns(10);
+		credit.setFont(new Font("华文行楷", Font.PLAIN, 24));
+		credit.setBounds(545,502,783-545,128-91);
 		credit.setText("" + df.format(thisStu.getStudentcredit()));
 		Money = thisStu.getStudentcredit();
-		
-		origion = new JTextField();
+		add(credit);
+		credit.setOpaque(false);
+		credit.setBorder(new EmptyBorder(0,0,0,0));
+
+		origion = new JTextField(); //籍贯
 		origion.setText("null");
 		origion.setEditable(false);
-		origion.setFont(new Font("宋体", Font.PLAIN, 15));
-		origion.setColumns(10);
+		origion.setFont(new Font("华文行楷", Font.PLAIN, 24));
+		origion.setBounds(545,267,783-545,128-91);
 		origion.setText(thisStu.getStudentorigion());
+		origion.setOpaque(false);
+		origion.setBorder(new EmptyBorder(0,0,0,0));
+
 		
-		final JComboBox gender = new JComboBox();
+		final JComboBox gender = new JComboBox();  //男女的下拉框
 		gender.setEnabled(false);
-		gender.setFont(new Font("宋体", Font.PLAIN, 16));
+		gender.setFont(new Font("华文行楷", Font.PLAIN, 24));
 		gender.addItem("男");
 		gender.addItem("女");
-		
+		gender.setBounds(544,199,783-545,128-91);
+		add(gender);
 		if(thisStu.getStudentgender() == false) {
 			gender.setSelectedIndex(1);
 		}
+		gender.setOpaque(false);
 		
 		gender.setToolTipText("");
 		
-		final JComboBox status = new JComboBox();
+		final JComboBox status = new JComboBox();  //政治面貌的下拉框
 		status.setEnabled(false);
 		status.setFont(new Font("宋体", Font.PLAIN, 16));
 		status.addItem("群众");
@@ -229,8 +226,9 @@ public class ClassStudentClient extends JFrame {
 		status.addItem("九三学社社员");
 		status.addItem("台盟盟员");
 		status.addItem("无党派人士");
-		
-		
+		status.setBounds(169,504,783-545,128-91);
+		status.setOpaque(false);
+		//下面的代码用于显示默认的政治面貌
 		if(thisStu.getStudentstatus() != null) {
 			statusmy = thisStu.getStudentstatus().replaceAll("\\p{C}", "");
 			if(statusmy.length() != 0) {
@@ -305,27 +303,28 @@ public class ClassStudentClient extends JFrame {
 				}
 			}
 		}
-		
-		
-		JLabel lblNewLabel_11 = new JLabel("元");
-		lblNewLabel_11.setFont(new Font("宋体", Font.PLAIN, 20));
-		
+		add(status);
+		add(backgroundImageLabel);//这行代码出现在按钮之前，TextField之后
+
+
+		//修改按钮
 		final JButton modifybutton = new JButton("修改");
 		modifybutton.setFont(new Font("新宋体", Font.PLAIN, 20));
+		modifybutton.setBounds(404,579,262-166,608-579);
+		add(modifybutton);
+		modifybutton.setOpaque(false);
+		//充值按钮
 		JButton investbutton = new JButton("充值");
 		investbutton.setFont(new Font("宋体", Font.PLAIN, 20));
-		
+		investbutton.setBounds(166,579,262-166,608-579);
+		add(investbutton);
+		investbutton.setOpaque(false);
+
+		//修改按钮监听事件
 		modifybutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(modifybutton.getText().compareTo("修改") == 0) {
-					//turn to modify
-					
-					//System.out.println(thisStu.getStudentName());
-					//System.out.println(thisStu.getMajor());
-					//System.out.println(thisStu.getStudentorigion());
-					//System.out.println(thisStu.getStudentstatus());
-					//System.out.println(thisStu.getStudentphone());
-					
+
 					System.out.println(statusmy);
 					System.out.println(statusmy.equals("共青团员"));
 					
@@ -336,7 +335,6 @@ public class ClassStudentClient extends JFrame {
 					major.setEditable(false);
 					classid.setEditable(false);
 					teacherid.setEditable(false);
-					
 					origion.setEditable(true);
 					phone.setEditable(true);
 					status.setEnabled(true);
@@ -436,20 +434,28 @@ public class ClassStudentClient extends JFrame {
 				}
 			}
 		});
-		
+
+		//充值按钮监听事件
 		investbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setinvestframe();
+				setinvestframe();  //单独一个框架
 			}
 		});
-		
+
+
+		//退出按钮
 		JButton exitbutton = new JButton("退出");
+		exitbutton.setBounds(655,575,262-166,608-579);
+		add(exitbutton);
+		exitbutton.setOpaque(false);
+
+		//退出按钮监听事件
 		exitbutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(modifybutton.getText().compareTo("修改") == 0) {
 					close();
 				}
-				else {
+				else {    //不保存直接退出
 					//exit without saving
 					int input = JOptionPane.showConfirmDialog(null, "确认放弃该操作吗？", "提示",JOptionPane.YES_NO_OPTION);
 					if(input == 0)
@@ -469,22 +475,10 @@ public class ClassStudentClient extends JFrame {
 			}
 		});
 		exitbutton.setFont(new Font("新宋体", Font.PLAIN, 20));
+
 		
-		JLabel lblNewLabel_9 = new JLabel("联系电话");
-		lblNewLabel_9.setFont(new Font("宋体", Font.PLAIN, 22));
-		
-		userimage = new JLabel("User Image");
-/*		userimage.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				updateimage();
-			}
-		});*/
-		userimage.setVerticalAlignment(SwingConstants.TOP);
-		userimage.setIcon(new ImageIcon("VCampusClient/src/main/resources/image/WindowsIcon/images/Stuinfo.png"));//\resources\image\WindowsIcon\images
-//		userimage.setIcon(new ImageIcon(this.getClass().getResource("/resources/image/WindowsIcon/images/Stuinfo.png")));//\resources\image\WindowsIcon\images
-		userimage.setBounds(0, 0, 150, 150);
-		this.getContentPane().add(userimage);
+		/*
+		contentPane=new JPanel();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -614,11 +608,14 @@ public class ClassStudentClient extends JFrame {
 		lblNewLabel_1.setIcon(new ImageIcon("VCampusClient/src/main/resources/image/student3.png"));
 //		lblNewLabel_1.setIcon(new ImageIcon(this.getClass().getResource("/resources/image/student3.png")));
 		lblNewLabel_1.setBounds(0, 0, 700, 623);
-		this.getContentPane().add(lblNewLabel_1);
+		this.getContentPane().add(lblNewLabel_1);*/
 		
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(2);
 	}
+
+
+	//保存修改之后的信息
 	void save(Student temp) {
 		Message mes = new Message();
 		mes.setModuleType(ModuleType.Student);
@@ -647,109 +644,16 @@ public class ClassStudentClient extends JFrame {
 		ClassStudentForInvest frame = new ClassStudentForInvest(this, Money, ID, PWD);
 		frame.setVisible(true);
 	}
+	//更新
 	public void update(Double temp) {
 		DecimalFormat df = new DecimalFormat("0.00");
 		credit.setText("" + df.format(temp));
 		Money = temp;
 	}
-	
-	
-	/*
-	public void updateimage() {
-		this.setEnabled(false);
-		this.setModalExclusionType(ModalExclusionType.NO_EXCLUDE);
-		ClassStudentImage frame = new ClassStudentImage(this);
-		frame.setVisible(true);
-	}*/
-	
-	
-/*	public void setImage(JButton btn) {
-		JFileChooser chooser = new JFileChooser();
-		chooser.setMultiSelectionEnabled(true);
-		FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg", "png");
-		chooser.setFileFilter(filter);
-		int returnVal = chooser.showOpenDialog(btn);
-		if(returnVal == JFileChooser.APPROVE_OPTION) {
-			File[] arrfiles = chooser.getSelectedFiles();
-			if(arrfiles == null || arrfiles.length == 0) {
-				return;
-			}
-			
-			File ff = chooser.getSelectedFile();
-			String fileName = ff.getName();
-			
-			String prefix = fileName.substring(fileName.lastIndexOf(".") + 1);
-			
-			if(!(prefix.equals("jpg") || prefix.equals("png"))) {
-				JOptionPane.showMessageDialog(null, "请选择.jpg或.png格式的图片！", "提示", JOptionPane.WARNING_MESSAGE);
-				return;
-			}
-			
-			FileInputStream input = null;
-			FileOutputStream output = null;
-			
-			String path = "VCampusClient/src/main/resources/image/user";
-			try {
-				for (File f : arrfiles) {
-				     File dir = new File(path);
-				     //目标文件夹 
-				     File[] fs = dir.listFiles();
-				     HashSet<String> set = new HashSet<String>();
-				     for (File file : fs) {
-				      set.add(file.getName());
-				     }
-				     //判断是否已有该文件
-				     if (set.contains(f.getName())) {
-				      JOptionPane.showMessageDialog(new JDialog(), f.getName() + ":该文件已存在！");
-				      return;
-				     }
-				     
-				     String absolutePath = chooser.getSelectedFile().getAbsolutePath();
-				     
-				     ImageIcon imageIcon = new ImageIcon(absolutePath);
-				     
-				     userimage.setIcon(imageIcon);
-				     userimage.getIcon();
-				     input = new FileInputStream(f);
-				     byte[] buffer = new byte[1024];
-				     File des = new File(path, f.getName());
-				     output = new FileOutputStream(des);
-				     int len = 0;
-				     while(-1 != (len = input.read(buffer))) {
-				    	 output.write(buffer, 0, len);
-				     }
-				     output.close();
-				     input.close();
-				}
-				JOptionPane.showMessageDialog(null, "上传成功", "提示", JOptionPane.INFORMATION_MESSAGE);
-				
-				Message mes = new Message();
-				mes.setModuleType(ModuleType.Student);
-				mes.setMessageType(MessageType.ClassAdminUpdate);
-				List<Object> sendData = new ArrayList();
-				sendData.add(16);
-				sendData.add(prefix);
-				sendData.add(ID);
-				mes.setData(sendData);
-				Client client = new Client(ClientMainFrame.socket);
-				Message serverResponse = new Message();
-				serverResponse = client.sendRequestToServer(mes);
-				int res = (int) serverResponse.getData();
-				
-			}catch(FileNotFoundException e) {
-				JOptionPane.showMessageDialog(null, "上传失败", "提示", JOptionPane.WARNING_MESSAGE);
-				e.printStackTrace();
-			}catch(IOException e) {
-				JOptionPane.showMessageDialog(null, "上传失败", "提示", JOptionPane.INFORMATION_MESSAGE);
-				e.printStackTrace();
-			}
-		}
-	}*/
-	
+
+   //关闭
 	void close() {
 		this.dispose();
 		Mainmenu.set(Name, Money);
-		//MainTest frame = new MainTest();
-		//frame.setVisible(true);
 	}
 }

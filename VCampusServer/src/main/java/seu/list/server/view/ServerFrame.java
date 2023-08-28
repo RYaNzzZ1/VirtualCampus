@@ -12,17 +12,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.Vector;
 
-/* *
- * 类{@codeServerFrame}用于生成服务器端的界面 <br>
- * 静态数据成员: {@code contentOane}, 类型: {@code JPanel}, 服务器端界面 <br>
- * 支持对服务器的操作 <br>
- * 重定向控制台输出到GUI界面显示 <br>
- * @author 柳多荣 吴慕陶
- * @version 1.0
- * @see java.swing.*
- * @see java.awt.*
- * @see Vector
- */
+
 
 public class ServerFrame extends JFrame {
 
@@ -30,15 +20,7 @@ public class ServerFrame extends JFrame {
 	private JScrollPane scrollPane;
 	public static JTextArea consoleText;
 
-	/* *
-	 * 服务端界面的初始化 <br>
-	 * 重定向控制台输出到GUI界面显示
-	 * @author 柳多荣 吴慕陶
-	 * @version 1.0
-	 * @see java.swing.*
-	 * @see java.awt.*;
-	 * @see Vector
-	 */
+
 	public ServerFrame() {
 		this.setTitle("虚拟校园系统-服务端");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,12 +30,9 @@ public class ServerFrame extends JFrame {
 		consoleText.setEditable(false);
 		consoleText.setFont(new Font("楷体", Font.BOLD+Font.PLAIN+Font.ITALIC, 20));
 		consoleText.setBounds(127, 194, 1154-127, 636-194);
-		//consoleText.setCaretPosition(consoleText.getText().length());
 		consoleText.setOpaque(false);
 		scrollPane = new JScrollPane(consoleText);
 		scrollPane.setBounds(127, 194, 1154-127, 636-194);
-		//scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		//scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		scrollPane.setOpaque(false);
 		scrollPane.getViewport().setOpaque(false);
 		add(scrollPane);
@@ -66,6 +45,7 @@ public class ServerFrame extends JFrame {
 		setSize(1280,760);
 		add(backgroundImageLabel);
 		setResizable(false);
+
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -77,7 +57,7 @@ public class ServerFrame extends JFrame {
 				}
 			}
 		});
-
+        setTitle("服务端后台");
 		//功能按钮配置：
 		//得到鼠标的坐标（用于推算对话框应该摆放的坐标）
      /*backgroundImageLabel.addMouseListener(new MouseAdapter() {
@@ -94,7 +74,6 @@ public class ServerFrame extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null, "launch -- 启动服务器\nclose -- 关闭服务器\nreboot -- 重启服务器\ngetall -- 打印所有客户端信息\nexit -- 退出服务端程序", "帮助", JOptionPane.INFORMATION_MESSAGE);
-				//System.out.println("Hello");
 			}
 		});
 
@@ -217,11 +196,6 @@ public class ServerFrame extends JFrame {
 		consoleText.setCaretPosition(consoleText.getText().length());
 	}
 
-	/**
-	 * 关闭本界面
-	 * @author 柳多荣
-	 * @version 1.0
-	 */
 	public void close() {
 		this.dispose();
 	}

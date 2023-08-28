@@ -6,17 +6,17 @@ import seu.list.client.bz.ClientMainFrame;
 import seu.list.common.*;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
-/**
- * @author 郭念宗
- * @version jdk1.8.0
- */
+
 public class ClientRegisterFrame extends JFrame implements ActionListener{
 	private Socket socket;
 	private JTextField jtf_id;
@@ -28,6 +28,7 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 	private JTextField jtf_money;
 	private JTextField jtf_major;
 	JComboBox comboBox = new JComboBox();
+	JComboBox cobSex=new JComboBox();
 	String role;
 	/**
 	 * create the frame
@@ -36,154 +37,142 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 
 	public ClientRegisterFrame(Socket socket){
 		this.socket=socket;
-		setForeground(SystemColor.inactiveCaption);
-		setBackground(Color.WHITE);
-		setFont(new Font("Dialog", Font.PLAIN, 12));
-		setIconImage(Toolkit.getDefaultToolkit().getImage("VCampusClient/src/main/resources/image/xiaobiao.jpg"));
-		setBak();
+	    //设置背景图片：
+		JLabel backgroundImageLabel = new JLabel(new ImageIcon("VCampusClient/Image/ClientRegisterFrame.png"));
+		Toolkit k = Toolkit.getDefaultToolkit();
+		Dimension d = k.getScreenSize();
+		setBounds(d.width/2-424, d.height/2-320, 848, 640);
+		backgroundImageLabel.setBounds(0, 0, 848, 640);
+		setSize(848,660);
+		setLayout(null);
+		backgroundImageLabel.setOpaque(false);
 
-		this.setSize(711,496);
+
+
+		//功能按钮配置：
+		//得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+   /* backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int x = e.getX();
+                int y = e.getY();
+                System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+            }
+        });
+*/
+
+
+
 		this.setTitle("新用户注册");
-		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.setResizable(false);
-		getContentPane().setLayout(null);
 
-		JLabel JLabel9 = new JLabel("\u4E13\u4E1A\uFF1A");
-		JLabel9.setFont(new Font("华文楷体", Font.PLAIN, 20));
-		JLabel9.setBounds(364, 139, 75, 21);
-		getContentPane().add(JLabel9);
 
-		JButton register = new JButton("\u786E\u5B9A");
 
-		register.addActionListener(this);
-		register.setActionCommand("register");
-		register.setFont(new Font("华文楷体", Font.PLAIN, 20));
-		register.setBounds(304, 391, 75, 27);
-		getContentPane().add(register);//ע�ᰴť
 
-		JLabel JLabel8 = new JLabel("\u521D\u59CB\u91D1\u989D\uFF1A");
-		JLabel8.setFont(new Font("华文楷体", Font.PLAIN, 20));
-		JLabel8.setBounds(364, 299, 111, 21);
-		getContentPane().add(JLabel8);
 
-		JLabel JLabel7 = new JLabel("\u8EAB\u4EFD\uFF1A");
-		JLabel7.setFont(new Font("华文楷体", Font.PLAIN, 20));
-		JLabel7.setBounds(364, 205, 75, 21);
-		getContentPane().add(JLabel7);
 
-		JLabel JLabel6 = new JLabel("\u5E74\u7EA7\uFF1A");
-		JLabel6.setFont(new Font("华文楷体", Font.PLAIN, 20));
-		JLabel6.setBounds(364, 68, 75, 21);
-		getContentPane().add(JLabel6);
-
-		JLabel JLabel5 = new JLabel("\u5E74\u9F84\uFF1A");
-		JLabel5.setFont(new Font("华文楷体", Font.PLAIN, 20));
-		JLabel5.setBounds(59, 332, 75, 21);
-		getContentPane().add(JLabel5);
-
-		JLabel JLabel4 = new JLabel("\u6027\u522B\uFF1A");
-		JLabel4.setFont(new Font("华文楷体", Font.PLAIN, 20));
-		JLabel4.setBounds(59, 270, 75, 21);
-		getContentPane().add(JLabel4);
-
-		JLabel JLabel3 = new JLabel("\u5BC6\u7801\uFF1A");
-		JLabel3.setForeground(Color.BLACK);
-		JLabel3.setFont(new Font("华文楷体", Font.PLAIN, 20));
-		JLabel3.setBackground(Color.WHITE);
-		JLabel3.setBounds(59, 205, 75, 27);
-		getContentPane().add(JLabel3);
-
-		JLabel JLabel2 = new JLabel("\u59D3\u540D\uFF1A");
-		JLabel2.setForeground(Color.BLACK);
-		JLabel2.setFont(new Font("华文楷体", Font.PLAIN, 20));
-		JLabel2.setBackground(Color.BLACK);
-		JLabel2.setBounds(59, 136, 75, 27);
-		getContentPane().add(JLabel2);
-
-		JLabel JLabel1 = new JLabel("ID:");
-		JLabel1.setFont(new Font("华文楷体", Font.PLAIN, 20));
-		JLabel1.setForeground(Color.BLACK);
-		JLabel1.setBackground(Color.BLACK);
-		JLabel1.setBounds(59, 68, 75, 27);
-		getContentPane().add(JLabel1);
-
-		JLabel JLabel0 = new JLabel("\u9762\u677F");
-		JLabel0.setFont(new Font("华文楷体", Font.PLAIN, 21));
-		JLabel0.setForeground(SystemColor.activeCaption);
-		JLabel0.setLabelFor(this);
-		JLabel0.setBounds(-175, -149, 1054, 774);
-		getContentPane().add(JLabel0);
-
+		//名字文本框
 		jtf_name = new JTextField();
-		jtf_name.setForeground(Color.BLACK);
-		jtf_name.setFont(new Font("宋体", Font.PLAIN, 17));
-		jtf_name.setColumns(12);
-		jtf_name.setBackground(Color.WHITE);
-		jtf_name.setBounds(123, 138, 101, 27);
-		getContentPane().add(jtf_name);
+		jtf_name.setFont(new Font("华文行楷", Font.PLAIN+Font.BOLD, 24));
+		jtf_name.setBounds(167,219,238,41);
+		add(jtf_name);
+		jtf_name.setOpaque(false);
+		jtf_name.setBorder(new EmptyBorder(0,0,0,0));
 
+		//密码文本框
 		jtf_pwd = new JPasswordField();
-		jtf_pwd.setBackground(Color.white);
-		jtf_pwd.setBounds(123, 205, 101, 27);
-		getContentPane().add(jtf_pwd);
+		jtf_pwd.setBounds(504,304,238,41);
+		jtf_pwd.setFont(new Font( "",Font.BOLD,24));
+		jtf_pwd.setOpaque(false);
+		add(jtf_pwd);
+		jtf_pwd.setBorder(new EmptyBorder(0,0,0,0));
 
+		//性别 --下拉框实现
 		jtf_sex = new JTextField();
-
 		jtf_sex.setBounds(123, 270, 101, 27);
-		getContentPane().add(jtf_sex);
-		jtf_sex.setColumns(10);
 
+		cobSex.setForeground(Color.BLACK);
+		cobSex.setModel(new DefaultComboBoxModel(new String[] {"男", "女"}));
+		cobSex.setFont(new Font("华文行楷", Font.PLAIN, 24));
+		cobSex.setBounds(171, 393, 133, 41);
+		cobSex.setOpaque(false);
+		add(cobSex);
+
+
+       //年龄
 		jtf_age = new JTextField();
-		jtf_age.setColumns(10);
-		jtf_age.setBounds(123, 332, 101, 24);
-		getContentPane().add(jtf_age);
+		jtf_age.setBounds(168,305,238,41);
+		jtf_age.setFont(new Font("华文行楷", Font.PLAIN+Font.BOLD, 24));
+		add(jtf_age);
+		jtf_age.setOpaque(false);
+		jtf_age.setBorder(new EmptyBorder(0,0,0,0));
 
+
+		//年级
 		jtf_grade = new JTextField();
-		jtf_grade.setColumns(10);
-		jtf_grade.setBounds(427, 68, 111, 27);
-		getContentPane().add(jtf_grade);
+		jtf_grade.setBounds(505,219,238,41);
+		jtf_grade.setFont(new Font("华文行楷", Font.PLAIN+Font.BOLD, 24));
+		add(jtf_grade);
+		jtf_grade.setOpaque(false);
+		jtf_grade.setBorder(new EmptyBorder(0,0,0,0));
 
+		//金钱
 		jtf_money = new JTextField();
-		jtf_money.setColumns(10);
-		jtf_money.setBounds(427, 332, 139, 27);
-		getContentPane().add(jtf_money);
 
+
+		 //ID
 		jtf_id = new JTextField();
-		jtf_id.setFont(new Font("宋体", Font.PLAIN, 17));
-		jtf_id.setBackground(Color.WHITE);
-		jtf_id.setForeground(Color.BLACK);
-		jtf_id.setBounds(123, 68, 101, 25);
-		getContentPane().add(jtf_id);
-		jtf_id.setColumns(12);
+		jtf_id.setFont(new Font("华文行楷", Font.PLAIN+Font.BOLD, 24));
+         jtf_id.setBounds(169,136,238,41);
+		 add(jtf_id);
+		 jtf_id.setOpaque(false);
+		jtf_id.setBorder(new EmptyBorder(0,0,0,0));
 
-		//JComboBox comboBox = new JComboBox();
+
+
+
+		//身份选择
 		comboBox.setForeground(Color.BLACK);
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"学生", "管理员"}));
-		comboBox.setFont(new Font("华文楷体", Font.PLAIN, 15));
-		comboBox.setBounds(433, 242, 133, 33);
-		getContentPane().add(comboBox);
+		comboBox.setFont(new Font("华文行楷", Font.PLAIN, 24));
+		comboBox.setBounds(504, 393, 133, 41);
+		comboBox.setOpaque(false);
+		add(comboBox);
 
+
+		//2.学院
 		jtf_major = new JTextField();
-		jtf_major.setColumns(10);
-		jtf_major.setBounds(427, 136, 111, 27);
-		getContentPane().add(jtf_major);
-		JPanel jp=(JPanel) getContentPane();
-		jp.setOpaque(false);
+		jtf_major.setBounds(503, 134,238,41);
+		jtf_major.setFont(new Font("华文行楷", Font.PLAIN+Font.BOLD, 24));
+		add(jtf_major);
+		jtf_major.setOpaque(false);
+		jtf_major.setBorder(new EmptyBorder(0,0,0,0));
 
-		
+		add(backgroundImageLabel);
+		//确定按钮
+		JButton register = new JButton("确定");
+		register.setBounds(255,495,100,43);
+		register.addActionListener(this);
+		register.setActionCommand("register");
+		register.setOpaque(false);
+		add(register);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(2);
+
+		//退出按钮
+		JButton exit = new JButton("退出");
+		exit.setBounds(509,494,100,43);
+		exit.setOpaque(false);
+		add(exit);
+		exit.addActionListener(event->
+		{
+			this.dispose();
+		});
 	}
 
-	private void setBak() {
-		ImageIcon img = new ImageIcon("/VCampusClient/src/main/resources/image/registerback.jpg");
-		JLabel background = new JLabel(img);
-		this.getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));
-		background.setBounds(0, 10, img.getIconWidth(), img.getIconHeight());
-	}
+
 	/**
 	 * 事件响应
 	 * @param e 事件
@@ -192,11 +181,16 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 	
 		// TODO Auto-generated method stub
-
+          //身份处理
 		if (comboBox.getSelectedItem() =="学生")
 		{role="0";}
 		if (comboBox.getSelectedItem() =="管理员")
 		{role="1";}
+
+		if(comboBox.getSelectedItem()=="男")
+			jtf_sex.setText("男");
+		else
+			jtf_sex.setText("女");
 		
 		
 		//to check whether the input is right
@@ -209,15 +203,14 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 				|| jtf_age.getText().trim().equals("")
 				|| jtf_grade.getText().trim().equals("")
 				|| jtf_major.getText().trim().equals("")
-				|| jtf_money.getText().trim().equals("")
 				|| jtf_name.getText().trim().equals("")
 				|| jtf_pwd.getText().trim().equals("")
 				|| jtf_sex.getText().trim().equals("")) {
 			JOptionPane.showMessageDialog(null, "请完成基本信息填写！", "提示", JOptionPane.WARNING_MESSAGE);
 			System.out.println("11111111");
-		}else {
+		}else {  //所有表单均填写完整
 			i = 0;
-			while(i < jtf_money.getText().length()) {
+		/*	while(i < jtf_money.getText().length()) {
 
 				if(jtf_money.getText().charAt(i) > '9' || jtf_money.getText().charAt(i) < '0') {
 					if(jtf_money.getText().charAt(i) == '.'&&i != 0) {
@@ -239,7 +232,7 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 				}
 				i++;
 			
-			}
+			}*/
 			
 			if(flagall) {
 				Student temp = new Student();
@@ -283,7 +276,7 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 						user.setAge(jtf_age.getText());
 						user.setGrade(jtf_grade.getText());
 						user.setMajor(jtf_major.getText());
-						user.setMoney(jtf_money.getText());
+						user.setMoney("0");  //所有人初始金额都是0
 						user.setName(jtf_name.getText());
 						user.setPwd(jtf_pwd.getText());
 						user.setSex(jtf_sex.getText());

@@ -10,10 +10,7 @@ import seu.list.common.Student;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.SQLException;
@@ -26,7 +23,7 @@ import java.util.Vector;
 
 public class MainMenu extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
-	
+
 	private final String cmdClass = "CMD_CLASS";
 	private final String cmdLib = "CMD_LIB";
 	private final String cmdCourse = "CMD_COURSE";
@@ -40,25 +37,38 @@ public class MainMenu extends JFrame implements ActionListener {
 	private String money;
 	private int userType;
 	private Socket socket;
+	String type ;
 
-	private JPanel contentPane;
+	JLabel l1,l2;
 	private JTextField timeField;
-	
+
 	private JLabel nameLabel;
-	private JLabel moneyLabel;
 
 	/**
 	 * Create the frame.
 	 */
 
 	public MainMenu(int sign, String uID, String pwd, String name, String money, Socket socket) {
-		Toolkit kit = Toolkit.getDefaultToolkit();//获取当前屏幕大小
-		Dimension screensize = kit.getScreenSize();
-		int width=screensize.width;
-		int height = screensize.height;
-		int x=(width-627)/2;
-		int y=(height-450)/2;
-		setBounds(x,y,825,576);
+		//设置背景图片
+		JLabel backgroundImageLabel = new JLabel(new ImageIcon("VCampusClient/Image/MainMenu.PNG"));
+		Toolkit k = Toolkit.getDefaultToolkit();
+		Dimension d = k.getScreenSize();
+		setBounds(d.width/2-640, d.height/2-360, 1280, 720);
+		backgroundImageLabel.setBounds(0, 0, 1280, 720);
+		setSize(1280,760);
+		setResizable(false);
+		setLayout(null);
+
+		//2.绘制退出按钮
+		//得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+     /*backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+			}
+        });*/
 
 		this.userType=sign;
 		this.uID=uID;
@@ -66,8 +76,8 @@ public class MainMenu extends JFrame implements ActionListener {
 		this.name = name;
 		this.money = money;
 		this.socket=socket;
-		
-		
+
+
 		//学生端用户读取student列表进行name\money的设置
 		if(this.userType == 0) {
 			Vector<Student> StuAll = new Vector<Student>();
@@ -79,10 +89,10 @@ public class MainMenu extends JFrame implements ActionListener {
 			Client client = new Client(ClientMainFrame.socket);
 			Message serverResponse = new Message();
 			serverResponse = client.sendRequestToServer(mes);
-			StuAll = (Vector<Student>) serverResponse.getData();		
+			StuAll = (Vector<Student>) serverResponse.getData();
 			Student thisStu = new Student();
 			int studenttemp = 0;
-			
+
 			while(studenttemp < StuAll.size()) {
 				String tempid = StuAll.get(studenttemp).getStudentid();
 				uID.replaceAll("\\p{C}", "");
@@ -99,12 +109,7 @@ public class MainMenu extends JFrame implements ActionListener {
 			this.money = "" + df.format(thisStu.getStudentcredit());
 		}
 		//结束有关学生列表的操作
-		
-		
-		setTitle("\u865A\u62DF\u6821\u56ED\u7CFB\u7EDF-\u4E3B\u83DC\u5355");
-		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setBounds(100, 100, 627, 450);
-		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -114,110 +119,87 @@ public class MainMenu extends JFrame implements ActionListener {
 				}
 			}
 		});
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
+        type="";
 
-		JLabel titleLabel = new JLabel("\u6B22\u8FCE\u4F7F\u7528\u865A\u62DF\u6821\u56ED\u7CFB\u7EDF\uFF01");
-		titleLabel.setFont(new Font("微软雅黑", Font.BOLD, 30));
-		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setBounds(198, 10, 426, 53);
-		contentPane.add(titleLabel);
-
-		JLabel userNameLabel = new JLabel("\u7528\u6237\u540D\uFF1A" + this.uID);
-		userNameLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		userNameLabel.setBounds(10, 109, 227, 39);
-		contentPane.add(userNameLabel);
-
-		JButton classButton = new JButton("\u5B66\u7C4D\u7BA1\u7406");//学籍管理
-		classButton.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		classButton.setBounds(218, 172, 153, 39);
-		contentPane.add(classButton);
-		classButton.addActionListener(this);
-		classButton.setActionCommand(this.cmdClass);
-
-		JButton libraryButton = new JButton("\u56FE\u4E66\u9986");//图书馆
-		libraryButton.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		libraryButton.setBounds(441, 172, 153, 39);
-		contentPane.add(libraryButton);
-		libraryButton.addActionListener(this);
-		libraryButton.setActionCommand(this.cmdLib);
-
-		JButton courseButton = new JButton("\u9009\u8BFE");//选课
-		courseButton.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		courseButton.setBounds(218, 253, 153, 39);
-		contentPane.add(courseButton);
-		courseButton.addActionListener(this);
-		courseButton.setActionCommand(this.cmdCourse);
-		
-		JButton dormButton = new JButton("\u5BBF\u820D");//宿舍
-		dormButton.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		dormButton.setBounds(441, 253, 153, 39);
-		contentPane.add(dormButton);
-		dormButton.addActionListener(this);
-		dormButton.setActionCommand(this.cmdDorm);
-		
-		JButton shopButton = new JButton("\u5546\u5E97");//商店
-		shopButton.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		shopButton.setBounds(218, 334, 153, 39);
-		contentPane.add(shopButton);
-		shopButton.addActionListener(this);
-		shopButton.setActionCommand(this.cmdShop);
-		
-		JButton exitButton = new JButton("\u9000\u51FA");//退出
-		exitButton.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		exitButton.setBounds(582, 466, 153, 39);
-		contentPane.add(exitButton);
-		exitButton.addActionListener(this);
-		exitButton.setActionCommand(this.cmdClose);
-		
-		nameLabel = new JLabel("姓名：" + this.name); // 姓名
-		nameLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		nameLabel.setBounds(10, 158, 164, 39);
-		contentPane.add(nameLabel);
-		
-		String type = "";
 		if(this.userType == 0) {
 			type = "学生";
 		}else {
 			type = "管理员";
 		}
-		JLabel typeLabel = new JLabel("身份：" + type);
-		typeLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		typeLabel.setBounds(10, 204, 164, 39);
-		contentPane.add(typeLabel);
-		
-		
-		moneyLabel = new JLabel("余额：" + this.money);
-		moneyLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		moneyLabel.setBounds(10, 253, 164, 39);
-		contentPane.add(moneyLabel);
-		
-		timeField = new JTextField();
-		timeField.setEditable(false);
-		timeField.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		timeField.setHorizontalAlignment(SwingConstants.CENTER);
-		timeField.setBounds(247, 80, 316, 44);
-		contentPane.add(timeField);
-		timeField.setColumns(10);
-		timeField.addActionListener(new TimeActionListener());
+
+		//显示信息：
+		 l1=new JLabel("Welcome "+name+"!");
+		l1.setFont(new Font("华文行楷",Font.BOLD+Font.ITALIC,30));
+		l1.setOpaque(false);
+		l1.setBounds(250,113,774-250,155-113);
+		l1.setEnabled(false);
+		add(l1);
+
+		 l2=new JLabel("身份："+type+"   账户余额："+this.money);
+		l2.setFont(new Font("华文行楷",Font.BOLD+Font.ITALIC,30));
+		l2.setOpaque(false);
+		l2.setBounds(250,175,774-250,155-113);
+		l2.setEnabled(false);
+		add(l2);
+
+
+         add(backgroundImageLabel);
+		//五大模块
+		JButton classButton = new JButton("学籍管理");//学籍管理
+		classButton.setBounds(79,441,419-79,533-441);
+		add(classButton);
+		classButton.setOpaque(false);
+		classButton.addActionListener(this);
+		classButton.setActionCommand(this.cmdClass);
+
+		JButton libraryButton = new JButton("图书馆");//图书馆
+		libraryButton.setBounds(152,292,447-152,381-292);
+		libraryButton.setOpaque(false);
+		add(libraryButton);
+		libraryButton.addActionListener(this);
+		libraryButton.setActionCommand(this.cmdLib);
+
+		JButton courseButton = new JButton("选课");//选课
+		courseButton.setBounds(515,273,750-515,357-273);
+		courseButton.setOpaque(false);
+		add(courseButton);
+		courseButton.addActionListener(this);
+		courseButton.setActionCommand(this.cmdCourse);
+
+		JButton dormButton = new JButton("宿舍");//宿舍
+		dormButton.setOpaque(false);
+		dormButton.setBounds(567,424,813-567,510-424);
+		add(dormButton);
+		dormButton.addActionListener(this);
+		dormButton.setActionCommand(this.cmdDorm);
+
+		JButton shopButton = new JButton("商店");//商店
+		shopButton.setBounds(281,577,509-281,663-577);
+		shopButton.setOpaque(false);
+		add(shopButton);
+		shopButton.addActionListener(this);
+		shopButton.setActionCommand(this.cmdShop);
+
+		//退出按钮
+		JButton exitButton = new JButton("EXit");//退出
+		exitButton.setOpaque(false);
+		exitButton.setFont(new Font("微软雅黑", Font.BOLD, 20));
+		exitButton.setBounds(1082,575,1213-1082,627-575);
+	    add(exitButton);
+		exitButton.addActionListener(this);
+		exitButton.setActionCommand(this.cmdClose);
+
+		nameLabel = new JLabel("姓名：" + this.name); // 姓名
+		nameLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
+		nameLabel.setBounds(10, 158, 164, 39);
+
+
+
+
+
+
 	}
-	
-	class TimeActionListener implements ActionListener{
-		private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		
-		public TimeActionListener() {
-			Timer timerThd = new Timer(1000, this);
-			timerThd.start();
-		}
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			timeField.setText(sdf.format(new Date()).toString());
-		}
-	}
+
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -266,7 +248,8 @@ public class MainMenu extends JFrame implements ActionListener {
 			}else { // 退出
 				int result = JOptionPane.showConfirmDialog(null, "是否退出？", "退出", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				if(result == JOptionPane.OK_OPTION) {
-					ClientMainFrame.close();
+					this.dispose();
+					ClientMainFrame.back();
 				}
 			}
 		} catch (ClassNotFoundException ex) {
@@ -277,18 +260,18 @@ public class MainMenu extends JFrame implements ActionListener {
 			throw new RuntimeException(ex);
 		}
 	}
-	
+
 	public void set(String newName, Double newMoney) {
 		DecimalFormat df = new DecimalFormat("0.00");
 		this.money = "" + df.format(newMoney);
 		this.name = newName;
-		nameLabel.setText(newName);
-		moneyLabel.setText(money);
+		l1.setText("Welcome "+name+"!");
+		l2.setText("身份："+type+"   账户余额："+this.money);
 	}
-	
+
 	public void set(Double newMoney) {
 		DecimalFormat df = new DecimalFormat("0.00");
 		this.money = "" + df.format(Double.parseDouble(money) - newMoney);
-		moneyLabel.setText(money);
+		l2.setText("身份："+type+"   账户余额："+money);
 	}
 }

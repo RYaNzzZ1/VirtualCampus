@@ -212,7 +212,7 @@ public class LibraryManage extends JFrame {
         buttonGroup.add(pressRadioButton);
         pressRadioButton.setFont(new Font("宋体", Font.BOLD, 25));
 
-        stockRadioButton = new JRadioButton("库存");
+        stockRadioButton = new JRadioButton("库存上限");
         buttonGroup.add(stockRadioButton);
         stockRadioButton.setFont(new Font("宋体", Font.BOLD, 25));
 
@@ -530,8 +530,8 @@ public class LibraryManage extends JFrame {
      * @param e 点击事件
      */
     protected void AddbookAvt(ActionEvent e) {
-        if ((!this.isNumeric(addStockText.getText())) || (Integer.valueOf(addStockText.getText()) < 0)) {
-            JOptionPane.showMessageDialog(null, "库存请输入正整数！", "警告", JOptionPane.WARNING_MESSAGE);
+        if ((!this.isNumeric(addStockText.getText())) || (Integer.valueOf(addStockText.getText()) <= 0)) {
+            JOptionPane.showMessageDialog(null, "库存上限请输入正整数！", "警告", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -630,14 +630,14 @@ public class LibraryManage extends JFrame {
             mes.setData(para);
         }
         if (stockRadioButton.isSelected()) {
-            if ((!this.isNumeric(modifiedText.getText())) || (Integer.valueOf(modifiedText.getText()) < 0)) {
-                JOptionPane.showMessageDialog(null, "库存请输入正整数！", "警告", JOptionPane.WARNING_MESSAGE);
+            if ((!this.isNumeric(modifiedText.getText())) || (Integer.valueOf(modifiedText.getText()) <= 0)) {
+                JOptionPane.showMessageDialog(null, "库存上限请输入正整数！", "警告", JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
             ArrayList<String> para = new ArrayList<String>();
             para.add(oldIDText.getText());
-            para.add("Stock");
+            para.add("Max");
             para.add(modifiedText.getText());
             mes.setData(para);
         }

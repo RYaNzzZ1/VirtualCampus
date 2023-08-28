@@ -119,7 +119,7 @@ public class LibraryUserServer extends Library_DbAccess {
         try {
             for (int i = 0; i < bookList.size(); i++) {
                 Book tbook = bookList.get(i);
-                if (tbook.getName().equals(fbookid) || tbook.getId().equals(fbookid))
+                if (tbook.getName().contains(fbookid) || tbook.getId().contains(fbookid))
                     resbook.add(tbook);
             }
 
@@ -199,22 +199,28 @@ public class LibraryUserServer extends Library_DbAccess {
 
             int result = 0;
             ResultSet rsr = s.executeQuery("select * from tb_BookList where ID='" + bookid + "'");
-            Integer stock = 0;
+            Integer Max=0;
+            Integer Stock = 0;
             Integer state = 0;
             if (rsr.next()) {
-                stock = rsr.getInt("Stock");
+                Max=rsr.getInt("Max");
+                Stock = rsr.getInt("Stock");
                 state = rsr.getInt("State");
             } else
                 return 0;
-            stock = stock + 1;
-
-            result = s.executeUpdate("update tb_BookList set Stock='" + stock + "' where ID='" + bookid + "'");
-            if (state == 0) {
-                result = s.executeUpdate("update tb_BookList set State=1 where ID='" + bookid + "'");
-            }
-            if (result > 0) {
-                res = result;
-                System.out.println("Return completion\t");
+            Stock = Stock + 1;
+            if(Stock>Max){
+                res=-1;
+                System.out.println("Invaild operation");
+            }else{
+                result = s.executeUpdate("update tb_BookList set Stock='" + Stock + "' where ID='" + bookid + "'");
+                if (state == 0) {
+                    result = s.executeUpdate("update tb_BookList set State=1 where ID='" + bookid + "'");
+                }
+                if (result > 0) {
+                    res = result;
+                    System.out.println("Return completion\t");
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -234,11 +240,11 @@ public class LibraryUserServer extends Library_DbAccess {
      */
     public int AddBook(String[] arr) {
         //return 0:书号已存在
-        int bstate = 0;
+        /*int bstate = 0;
         if (Integer.valueOf(arr[4]) == 0)
             bstate = 0;
         else
-            bstate = 1;
+            bstate = 1;*/
 
         int res = 0;
 
@@ -252,7 +258,7 @@ public class LibraryUserServer extends Library_DbAccess {
                 return 0;
 
             result = s.executeUpdate("insert into tb_BookList values('" + arr[0] + "','" + arr[1] + "','" + arr[2] +
-                    "','" + arr[3] + "','" + arr[4] + "','" + bstate + "')");
+                    "','" + arr[3] + "','" + arr[4] + "','" + arr[4] + "','" + 1 + "')");
 
             if (result > 0) {
                 res = result;
@@ -322,7 +328,7 @@ public class LibraryUserServer extends Library_DbAccess {
             ResultSet res = s.executeQuery("select count(*)  from tb_BookList where ID='" + bookid + "'");
             if (res != null) {
                 result = s.executeUpdate("update tb_BookList set " + attr + "='" + modattr + "' where ID='" + bookid + "'");
-                if (attr.equals("Stock")) {
+                if (attr.equals("Max")) {
                     int ms = Integer.valueOf(modattr);
                     if (ms == 0)
                         result = s.executeUpdate("update tb_BookList set State=0 where ID='" + bookid + "'");

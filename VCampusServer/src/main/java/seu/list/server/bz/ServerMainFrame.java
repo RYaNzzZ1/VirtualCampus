@@ -6,18 +6,13 @@ import seu.list.server.view.ServerFrame;
 import java.util.Vector;
 
 /**
- * 类{@code ServerMainFrame}为整个服务器端的程序入口，包含{@code public static void main}方法 <br>
- * 用于对服务端进行操作、交互 <br>
- * 数据成员为一系列服务器命令，类型: {@code public static final String} <br>
- * 服务器指令: <br>
+
  * 1. {@code help} 显示服务端使用帮助 <br>
  * 2. {@code launch} 启动服务器 <br>
  * 3. {@code close} 关闭服务器 <br>
  * 4. {@code reboot} 重启服务器 <br>
  * 5. {@code print all} 输出连接到服务器的所有客户端信息 <br>
- * 6. {@code exit} 退出服务端程序(同时会关闭正在运行的服务器线程) 
- * @author 吴慕陶
- * @version 1.0
+ * 6. {@code exit} 退出服务端程序(同时会关闭正在运行的服务器线程)
  */
 public class ServerMainFrame 
 {
@@ -35,8 +30,6 @@ public class ServerMainFrame
 	 * {@code main}方法，整个服务端程序的入口 <br>
 	 * 主体为{@code while}循环，在命令行输出使用提示，等待用户输入指令
 	 * @param args 系统命令行参数
-	 * @author 吴慕陶
-	 * @version 1.0
 	 */
 	public static void main(String[] args)
 	{
@@ -122,14 +115,7 @@ public class ServerMainFrame
 		while(!isClosed);
 		System.exit(0);
 	}
-	
-	/**
-	 * 
-	 * 重启服务器方法
-	 * @author 柳多荣
-	 * @version 1.0
-	 * @return 如果成功重启返回1，若服务器没有运行导致无法重启返回0
-	 */
+
 	public static int reboot() {
 		if(isRunning) {
 			srvThd.close();
@@ -141,17 +127,6 @@ public class ServerMainFrame
 			return 0;
 		}
 	}
-	
-	/**
-	 * 
-	 * 开始运行服务器的方法
-	 * @author 柳多荣
-	 * @version 1.0
-	 * @return 如果成功重启返回1，若服务器已经运行导致无法重启返回0
-	 */
-
-
-
 	public static int launch() {
 		if(!isRunning) {
 			srvThd = new Server(IConstant.SERVER_PORT);
@@ -165,25 +140,13 @@ public class ServerMainFrame
 
 
 
-	/**
-	 * 
-	 * 获取与服务器连接的客户端信息
-	 * @author 柳多荣
-	 * @version 1.0
-	 * @return 如果成功重启返回1，若服务器没有运行导致无法重启返回0
-	 */
 	public static Vector<String> getall(){
 		Vector<String> res = new Vector<String>();
 		res = ServerClientThreadMgr.getAll();
 		return res;
 	}
 	
-	/**
-	 * 
-	 * 退出服务端程序的方法
-	 * @author 柳多荣
-	 * @version 1.0
-	 */
+
 	public static void exitbtn() {
 		if(isRunning) {
 			srvThd.close();
@@ -193,14 +156,7 @@ public class ServerMainFrame
 		isClosed = true;
 		System.exit(0);
 	}
-	
-	/**
-	 * 
-	 * 关闭服务器方法
-	 * @author 柳多荣
-	 * @version 1.0
-	 * @return 如果成功重启返回1，若服务器导致没有执行关闭服务器的操作则返回0
-	 */
+
 	public static int closebtn() {
 		if(isRunning) {
 			srvThd.close();
@@ -212,11 +168,7 @@ public class ServerMainFrame
 		}
 	}
 	
-	/**
-	 * 打印服务端使用帮助
-	 * @author 吴慕陶
-	 * @version 1.0
-	 */
+
 	
 	public static void printHelp() {
 		System.out.println("----------------------欢迎使用虚拟校园系统-服务器端----------------------");

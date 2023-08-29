@@ -214,6 +214,12 @@ public class ClassAdminForModify extends JFrame {
 								break;
 							}
 						}
+						if(!newphone.matches("^1\\d{10}$")){
+							JOptionPane.showMessageDialog(null, "请输入正确的手机号！", "提示", JOptionPane.WARNING_MESSAGE);
+							//update table
+							UpdateStudent(StuAll);
+							break;
+						}
 						if(!newclssid.equals(oldclssid)) {
 							int classtempforadd = 0;
 							int newclasssize = 0;

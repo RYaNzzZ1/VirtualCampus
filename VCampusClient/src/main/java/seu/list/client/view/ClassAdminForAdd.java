@@ -173,8 +173,8 @@ public class ClassAdminForAdd extends JFrame {
 						String newname = stu.getStudentName().replaceAll("\\p{C}", "");
 						String newphone = stu.getStudentphone().replaceAll("\\p{C}", "");
 						
-						if(newphone.length() != 11) {
-							JOptionPane.showMessageDialog(null, "请正确填写电话号码（11位）！", "提示", JOptionPane.WARNING_MESSAGE);
+						if(!newphone.matches("^1\\d{10}$")) {
+							JOptionPane.showMessageDialog(null, "请正确填写电话号码！", "提示", JOptionPane.WARNING_MESSAGE);
 						}else {
 
 							//add

@@ -322,6 +322,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
             if(flag==0)
             {
                 JOptionPane.showMessageDialog(null, "验证码错误");
+                vcode.nextCode();//自动切换到下一个
             }
             if(flag==1)
             {

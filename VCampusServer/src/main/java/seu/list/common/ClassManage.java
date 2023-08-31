@@ -22,10 +22,10 @@ public class ClassManage implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String ClassID = null;
-	private String Major = null;
-	private String TeacherID = null;
-	private int ClassSize = 0;//exist students' number
+	private String classID = null;
+	private String major = null;
+	private String teacherID = null;
+	private int classSize = 0;//exist students' number
 	
 	public ClassManage() {
 		super();
@@ -33,46 +33,46 @@ public class ClassManage implements Serializable{
 	
 	public ClassManage(String classid, String teacherID, String major, int classsize)
 	{
-		ClassID = classid;
-		Major = major;
-		TeacherID = teacherID;
-		ClassSize = classsize;
+		classID = classid;
+		this.major = major;
+		this.teacherID = teacherID;
+		classSize = classsize;
 	}
 
 	public String getClassID() {
-		return ClassID;
+		return classID;
 	}
 
 	public void setClassID(String classID) {
-		ClassID = classID;
+		this.classID = classID;
 	}
 
 	public String getMajor() {
-		return Major;
+		return major;
 	}
 
 	public void setMajor(String major) {
-		Major = major;
+		this.major = major;
 	}
 
 	public String getTeacherID() {
-		return TeacherID;
+		return teacherID;
 	}
 
 	public void setTeacherID(String teacherID) {
-		TeacherID = teacherID;
+		this.teacherID = teacherID;
 	}
 
 	public int getClassSize() {
-		return ClassSize;
+		return classSize;
 	}
 
 	public void setClassSize(int classSize) {
-		ClassSize = classSize;
+		this.classSize = classSize;
 	}
 	
 	@Override
 	public String toString() {
-		return "Class{" + "ClassID" + ClassID + ", Major" + Major + ", TeacherID" + TeacherID + ", ClassSize" + ClassSize + "}";
+		return "Class{" + "ClassID" + classID + ", Major" + major + ", TeacherID" + teacherID + ", ClassSize" + classSize + "}";
 	}
 }

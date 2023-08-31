@@ -9,13 +9,13 @@ public class Dormitory implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private String userID;  //学生姓名
-	private String DormitoryID;  //宿舍号
-	private int StudentBunkID;  //床位
-	private int Water;  //水费
-	private int Electricity;  //电费
-	private int DormitoryScore;  //卫生评分
-	private String DormitoryMaintain;  //维修申请
-	private String StudentExchange;  //调换申请
+	private String dormitoryID;  //宿舍号
+	private int studentBunkID;  //床位
+	private int water;  //水费
+	private int electricity;  //电费
+	private int dormitoryScore;  //卫生评分
+	private String dormitoryMaintain;  //维修申请
+	private String studentExchange;  //调换申请
 
 	public Dormitory()
 	{
@@ -25,13 +25,13 @@ public class Dormitory implements Serializable{
 	public Dormitory(String userID,String DormitoryID, int StudentBunkID,int Water,int Electricity,int DormitoryScore,String DormitoryMaintain,String StudentExchange)
 	{
 		this.userID=userID;
-        this.DormitoryID=DormitoryID;
-        this.StudentBunkID=StudentBunkID;
-        this.Water=Water;
-        this.Electricity=Electricity;
-        this.DormitoryScore=DormitoryScore;
-        this.DormitoryMaintain=DormitoryMaintain;
-        this.StudentExchange=StudentExchange;
+        this.dormitoryID =DormitoryID;
+        this.studentBunkID =StudentBunkID;
+        this.water =Water;
+        this.electricity =Electricity;
+        this.dormitoryScore =DormitoryScore;
+        this.dormitoryMaintain =DormitoryMaintain;
+        this.studentExchange =StudentExchange;
     }
 
 	public String getuserID()
@@ -46,78 +46,78 @@ public class Dormitory implements Serializable{
 
 	public String getDormitoryID()
 	{
-        return DormitoryID;
+        return dormitoryID;
     }
 
     public void setDormitoryID(String DormitoryID)
     {
-        this.DormitoryID = DormitoryID;
+        this.dormitoryID = DormitoryID;
     }
 
     public int getStudentBunkID()
 	{
-        return StudentBunkID;
+        return studentBunkID;
     }
 
     public void setStudentBunkID(int StudentBunkID)
     {
-        this.StudentBunkID=StudentBunkID;
+        this.studentBunkID =StudentBunkID;
     }
 
     public int getWater()
 	{
-        return Water;
+        return water;
     }
 
     public void setWater(int Water)
     {
-        this.Water=Water;
+        this.water =Water;
     }
 
     public int getElectricity()
 	{
-        return Electricity;
+        return electricity;
     }
 
     public void setElectricity(int Electricity)
     {
-        this.Electricity=Electricity;
+        this.electricity =Electricity;
     }
 
     public int getDormitoryScore()
 	{
-        return DormitoryScore;
+        return dormitoryScore;
     }
 
     public void setDormitoryScore(int DormitoryScore)
     {
-        this.DormitoryScore=DormitoryScore;
+        this.dormitoryScore =DormitoryScore;
     }
 
     public String getDormitoryMaintain()
 	{
-        return DormitoryMaintain;
+        return dormitoryMaintain;
     }
 
     public void setDormitoryMaintain(String DormitoryMaintain)
     {
-        this.DormitoryMaintain=DormitoryMaintain;
+        this.dormitoryMaintain =DormitoryMaintain;
     }
 
     public String getStudentExchange()
    	{
-           return StudentExchange;
+           return studentExchange;
        }
 
     public void setStudentExchange(String StudentExchange)
     {
-    	this.StudentExchange=StudentExchange;
+    	this.studentExchange =StudentExchange;
     }
 
     @Override
     public String toString()
     {
-        return "Dormitory{" + "userID="+userID+"DormitoryID=" + DormitoryID + ", StudentBunkID=" + StudentBunkID +",Water="+Water+",Electricity="+Electricity+",DormitoryScore="+DormitoryScore+",DormitoryMaintain="+DormitoryMaintain+",StudentExchange="+StudentExchange+"}";
+        return "Dormitory{" + "userID="+userID+"DormitoryID=" + dormitoryID + ", StudentBunkID=" + studentBunkID +",Water="+ water +",Electricity="+ electricity +",DormitoryScore="+ dormitoryScore +",DormitoryMaintain="+ dormitoryMaintain +",StudentExchange="+ studentExchange +"}";
     }
 
     
@@ -151,30 +151,30 @@ public class Dormitory implements Serializable{
 	public Vector<String> getContent() {
 		Vector<String> dormitoryContents = new Vector<String>();
 		dormitoryContents.add(userID);
-		dormitoryContents.add(DormitoryID);
-		dormitoryContents.add(String.valueOf(StudentBunkID));
+		dormitoryContents.add(dormitoryID);
+		dormitoryContents.add(String.valueOf(studentBunkID));
     	//dormitoryContents.add(StudentBunkID);
-		dormitoryContents.add((String.valueOf(Water)));
+		dormitoryContents.add((String.valueOf(water)));
     	//dormitoryContents.add(Water);
-		dormitoryContents.add(String.valueOf(Electricity));
+		dormitoryContents.add(String.valueOf(electricity));
     	//dormitoryContents.add(Electricity);
-		dormitoryContents.add(String.valueOf(DormitoryScore));
+		dormitoryContents.add(String.valueOf(dormitoryScore));
     	//dormitoryContents.add(DormitoryScore);
-		dormitoryContents.add(DormitoryMaintain);
+		dormitoryContents.add(dormitoryMaintain);
     	//dormitoryContents.add(DormitoryMaintain);
-		dormitoryContents.add(StudentExchange);
+		dormitoryContents.add(studentExchange);
     	//dormitoryContents.add(StudentExchange);
 		return dormitoryContents;
 	}
     
 	public void setContent(Vector<String> content) {
 		userID = content.get(0);
-		DormitoryID = content.get(1);
-    	StudentBunkID = Integer.parseInt(content.get(2));
-    	Water = Integer.parseInt(content.get(3));
-    	Electricity = Integer.parseInt(content.get(4));
-    	DormitoryScore = Integer.parseInt(content.get(5));
-    	DormitoryMaintain =content.get(6);
-    	StudentExchange =content.get(7);
+		dormitoryID = content.get(1);
+    	studentBunkID = Integer.parseInt(content.get(2));
+    	water = Integer.parseInt(content.get(3));
+    	electricity = Integer.parseInt(content.get(4));
+    	dormitoryScore = Integer.parseInt(content.get(5));
+    	dormitoryMaintain =content.get(6);
+    	studentExchange =content.get(7);
 	}
 }

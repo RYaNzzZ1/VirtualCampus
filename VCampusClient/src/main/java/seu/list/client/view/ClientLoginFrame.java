@@ -303,22 +303,6 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
         }
         else if(arg0.getActionCommand().equals("jb_login"))
         {
-            //登录界面
-
-            Client ccs = new Client(this.socket);
-            User u=new User();
-            u.setPwd(jpf_password.getText());
-            u.setId(jtf_user.getText());
-            Message mes=new Message();
-            mes.setContent(u.getContent());
-            mes.setModuleType(ModuleType.User);
-            mes.setMessageType(MessageType.REQ_LOGIN);
-            Message res=ccs.sendRequestToServer(mes);
-            int sign=res.getUserType();
-            u = (User)res.getData();
-
-            //检验权限
-            //System.out.println(ccs.sign);
             if(flag==0)
             {
                 JOptionPane.showMessageDialog(null, "验证码错误");
@@ -326,10 +310,30 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
             }
             if(flag==1)
             {
-                if(sign==0||sign==1) {
+                //登录界面
+                Client ccs = new Client(this.socket);
+                User u=new User();
+                u.setPwd(jpf_password.getText());
+                u.setId(jtf_user.getText());
+                Message mes=new Message();
+                mes.setContent(u.getContent());
+                mes.setModuleType(ModuleType.User);
+                mes.setMessageType(MessageType.REQ_LOGIN);
+                Message res=ccs.sendRequestToServer(mes);
+                int sign=res.getUserType();
+                u = (User)res.getData();
+
+                if(sign==0||sign==1||sign==3) {
                     this.setVisible(false);
                     MainMenu csf = new MainMenu(sign, u.getId(), u.getPwd(), u.getName(), u.getMoney(), this.socket);
                     csf.setVisible(true);
+                    if(sign==3){//重复登录，之前的下线
+                        //获取之前的客户端并下线
+                        //Client pcs = new Client(this.socket);
+                        //.setMessageType(MessageType.REQ_LOGOUT);
+                        //res=pcs.sendRequestToServer(mes);
+                        JOptionPane.showMessageDialog(null,"重复登录，之前的连接已断开","提示",JOptionPane.WARNING_MESSAGE);
+                    }
                 }
                 else if(sign==2) {
                     JOptionPane.showMessageDialog(null,"用户名或密码错误！","错误",JOptionPane.ERROR_MESSAGE);

@@ -1,11 +1,11 @@
 package seu.list.server.bz;
 
 import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Vector;
+import java.net.Socket;
+import java.util.*;
 
 /**
  * 类{@code ServerClientThreadMgr}用于管理服务器上的客户端线程池 <br>
@@ -17,7 +17,32 @@ import java.util.Vector;
  */
 public class ServerClientThreadMgr {
 	private static Map<String, ServerSocketThread> clientThreadPool = new LinkedHashMap<String, ServerSocketThread>();
-
+	private static Map<String,String> allocation = new HashMap<String,String>();
+	/**
+	 * 绑定线程和对应的用户ID，通过用户ID查询对应线程
+	 * @param id 需要添加的客户端线程ID
+	 * @param uid 需要添加的用户ID
+	 * @return null
+	 * @author 谢睿沣
+	 * @version 1.0
+	 * @see Map#put(Object, Object)
+	 */
+	public synchronized static void bind(String uid,String id){
+		System.out.println("用户:"+uid+"绑定至"+"线程"+id);
+		allocation.put(uid,id);
+	}
+	public synchronized static void unbind(String uid){
+		System.out.println("用户:"+uid+"与"+"线程"+allocation.get(uid)+"解绑");
+		allocation.remove(uid);
+	}
+	public synchronized static ServerSocketThread getPreThread(String uid){
+		String preid=allocation.get(uid);
+		ServerSocketThread pres=clientThreadPool.get(preid);
+		return pres;
+	}
+	public synchronized static String getId(String uid){
+		return allocation.get(uid);
+	}
 	/**
 	 * 添加一个新的客户端线程到线程池中，不可重复，重复会覆盖原有线程
 	 * @param id 需要添加的客户端线程ID
@@ -76,6 +101,7 @@ public class ServerClientThreadMgr {
 		while(entries.hasNext()) {
 			Map.Entry<String, ServerSocketThread> entry = entries.next();
 			ServerSocketThread thd = entry.getValue();
+
 			thd.close();
 		}
 		clientThreadPool.clear();		

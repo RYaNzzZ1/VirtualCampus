@@ -10,13 +10,13 @@ public class Course implements java.io.Serializable{
 
 
 	private static final long serialVersionUID = 6424750174292826127L;
-	private  String Semester;
-	private String CourseID;
-	private String CourseMajor;
-	private String CourseName;
+	private  String semester;
+	private String courseID;
+	private String courseMajor;
+	private String courseName;
 	private String teacherID;
-	private String CourseState;
-	private String CourseType;
+	private String courseState;
+	private String courseType;
 
 
 
@@ -24,45 +24,45 @@ public class Course implements java.io.Serializable{
 	}
 
 	public Course(String semester, String courseID, String courseMajor, String courseName, String teacherID, String courseState, String courseType) {
-		Semester = semester;
-		CourseID = courseID;
-		CourseMajor = courseMajor;
-		CourseName = courseName;
+		this.semester = semester;
+		this.courseID = courseID;
+		this.courseMajor = courseMajor;
+		this.courseName = courseName;
 		this.teacherID = teacherID;
-		CourseState = courseState;
-		CourseType = courseType;
+		this.courseState = courseState;
+		this.courseType = courseType;
 	}
 
 	public String getSemester() {
-		return Semester;
+		return semester;
 	}
 
 	public void setSemester(String semester) {
-		Semester = semester;
+		this.semester = semester;
 	}
 
 	public String getCourseID() {
-		return CourseID;
+		return courseID;
 	}
 
 	public void setCourseID(String courseID) {
-		CourseID = courseID;
+		this.courseID = courseID;
 	}
 
 	public String getCourseMajor() {
-		return CourseMajor;
+		return courseMajor;
 	}
 
 	public void setCourseMajor(String courseMajor) {
-		CourseMajor = courseMajor;
+		this.courseMajor = courseMajor;
 	}
 
 	public String getCourseName() {
-		return CourseName;
+		return courseName;
 	}
 
 	public void setCourseName(String courseName) {
-		CourseName = courseName;
+		this.courseName = courseName;
 	}
 
 	public String getTeacherID() {
@@ -74,52 +74,52 @@ public class Course implements java.io.Serializable{
 	}
 
 	public String getCourseState() {
-		return CourseState;
+		return courseState;
 	}
 
 	public void setCourseState(String courseState) {
-		CourseState = courseState;
+		this.courseState = courseState;
 	}
 
 	public String getCourseType() {
-		return CourseType;
+		return courseType;
 	}
 
 	public void setCourseType(String courseType) {
-		CourseType = courseType;
+		this.courseType = courseType;
 	}
 
 	@Override
 	public String toString() {
 		return "Course{" +
-				"Semester='" + Semester + '\'' +
-				", CourseID='" + CourseID + '\'' +
-				", CourseMajor='" + CourseMajor + '\'' +
-				", CourseName='" + CourseName + '\'' +
+				"Semester='" + semester + '\'' +
+				", CourseID='" + courseID + '\'' +
+				", CourseMajor='" + courseMajor + '\'' +
+				", CourseName='" + courseName + '\'' +
 				", teacherID='" + teacherID + '\'' +
-				", CourseState='" + CourseState + '\'' +
-				", CourseType='" + CourseType + '\'' +
+				", CourseState='" + courseState + '\'' +
+				", CourseType='" + courseType + '\'' +
 				'}';
 	}
 
 	public Vector<String> getContent() {
 		Vector<String> courseContents = new Vector<String>();
-		courseContents.add(Semester);
-		courseContents.add(CourseID);
-		courseContents.add(CourseMajor);
-		courseContents.add(CourseName);
+		courseContents.add(semester);
+		courseContents.add(courseID);
+		courseContents.add(courseMajor);
+		courseContents.add(courseName);
 		courseContents.add(teacherID);
-		courseContents.add(CourseState);
-		courseContents.add(CourseType);
+		courseContents.add(courseState);
+		courseContents.add(courseType);
 		return courseContents;
 	}
 	public void setContent(Vector<String> content) {
-		Semester = content.get(0);
-		CourseID = content.get(1);
-		CourseMajor = content.get(2);
-		CourseName = content.get(3);
+		semester = content.get(0);
+		courseID = content.get(1);
+		courseMajor = content.get(2);
+		courseName = content.get(3);
 		teacherID = content.get(4);
-		CourseState=content.get(5);
-		CourseType=content.get(6);
+		courseState =content.get(5);
+		courseType =content.get(6);
 	}
 }

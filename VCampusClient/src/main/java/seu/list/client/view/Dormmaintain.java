@@ -5,6 +5,7 @@
 package seu.list.client.view;
 
 import seu.list.client.bz.Client;
+import seu.list.client.bz.ClientMainFrame;
 import seu.list.common.*;
 
 import javax.swing.*;
@@ -28,7 +29,6 @@ public class Dormmaintain extends JDialog {
 	private JTextField nametextField;
 	private JTextField dormIDtextField;
 	private JTextField maintaintextField;
-	static Socket socket;
 	public DormitoryStudentClient C;
 	public Dormitory dorm;
 
@@ -205,12 +205,8 @@ public class Dormmaintain extends JDialog {
 		mes.setUserType(0);
 		mes.setModuleType(ModuleType.Dormitory);
 		mes.setMessageType(MessageType.DormMaintain);
-		try {
-			socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
-		}catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		Client client = new Client(socket);
+
+		Client client = new Client(ClientMainFrame.socket);
 		ArrayList<String> para = new ArrayList<String>();
 		para.add(nametextField.getText());
 		para.add(dormIDtextField.getText());

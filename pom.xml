@@ -11,6 +11,7 @@
     <modules>
         <module>VCampusClient</module>
         <module>VCampusServer</module>
+
     </modules>
 
     <properties>

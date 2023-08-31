@@ -267,7 +267,7 @@ public class Shop_AdminFrame {
 		};
 		
 		for(int i=0;i<res.size();i++) {
-			String tempgoods[]=new String[4];
+			String[] tempgoods =new String[4];
 			tempgoods[0]=res.get(i).getGoodsid()+"";
 			tempgoods[1]=res.get(i).getGoodsname();
 			tempgoods[2]=res.get(i).getGoodsprice()+"";

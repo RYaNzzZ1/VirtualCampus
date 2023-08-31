@@ -33,7 +33,6 @@ public class Dormmodify extends JDialog {
 	//static Socket socket;
 	JComboBox modifyt = new JComboBox();
 	static DormitoryAdminClient C;
-	static Socket socket;
 	public ArrayList<Dormitory> allDormitoryContents;
 
 	/**

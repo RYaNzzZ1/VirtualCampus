@@ -301,7 +301,6 @@ public class ShopSever extends Shop_DbAccess {
         try {
             con = getConnection();
             s = con.createStatement();
-            System.out.println("在shopserver.getturnover这里");
             rs = s.executeQuery("select * from tb_Goods where GoodsID=-1");
             //double res= s.exe;
             rs.next();

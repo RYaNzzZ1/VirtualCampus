@@ -70,5 +70,8 @@ public final class MessageType {
     public static final String GoodsSearch_Name="SEARCH_GOODS_NAME";  //名称查找商品
     public static final String Buy="BUY_GOODS";  //学生购买
     public static final String ModifyGoods="MODIFY-GOODS"; //管理员改信息
-    
+
+    public static final String DormCommitApply ="DORM_COMMIT_APPLY";
+
+    public static final String DormDivestApply ="DORM_DIVEST_APPLY";
 }

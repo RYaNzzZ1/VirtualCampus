@@ -44,7 +44,6 @@ public class User implements java.io.Serializable {
         money = content.get(8);
     }
 
-    ;
 
     /**
      * @return 学号

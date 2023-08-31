@@ -250,15 +250,6 @@ public class ClientLoginFrame extends JFrame implements ActionListener,MouseList
 
     }
 
-//    public void paint(Graphics g) {
-//        super.paint(g);
-//        Graphics2D g2 = (Graphics2D) g;
-//        g2.setStroke(new BasicStroke(1.0f));
-//        g2.setColor(new Color(84,130,53));
-//        Line2D lin = new Line2D.Float(540, 161, 588, 161);
-//        g2.draw(lin);
-//    }
-
 
     /**
      * 事件响应

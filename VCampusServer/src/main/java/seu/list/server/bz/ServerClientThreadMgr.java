@@ -43,14 +43,7 @@ public class ServerClientThreadMgr {
 		return clientThreadPool.remove(id);	
 	}
 	
-	/**
-	 * 根据输入的ID查找对应的客户端线程，若存在，则返回该线程，不存在则返回{@code null}
-	 * @param id 需要获取的客户端线程ID
-	 * @return 如果id对应的线程存在，则返回该线程，不存在则返回{@code null}
-	 * @author 吴慕陶
-	 * @version 1.0
-	 * @see Map#get(Object)
-	 */
+
 	public synchronized static ServerSocketThread get(String id) {
 		ServerSocketThread ret = clientThreadPool.get(id);
 		return ret;

@@ -3,119 +3,119 @@ package seu.list.common;
 import java.io.Serializable;
 
 public class Student implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private String studentid = null;
-    private String studentName = null;
-    private String teacher = null;
-    private String major = null;
-    private String classid = null;
-    private Boolean studentgender = true;
-    private String studentorigion = null;
-    private String studentstatus = null;
-    private String studentphone = null;
-    private double studentcredit = 0.0;
+	private static final long serialVersionUID = 1L;
+	private String studentId = null;
+	private String studentName = null;
+	private String teacher = null;
+	private String major = null;
+	private String classId = null;
+	private Boolean studentGender = true;
+	private String studentOrigion = null;
+	private String studentStatus = null;
+	private String studentPhone = null;
+	private double studentCredit = 0.0;
 
-    public String getStudentid() {
-        return studentid;
-    }
+	public String getStudentId() {
+		return studentId;
+	}
 
-    public void setStudentid(String studentid) {
-        this.studentid = studentid;
-    }
+	public void setStudentId(String studentId) {
+		this.studentId = studentId;
+	}
 
-    public String getStudentName() {
-        return studentName;
-    }
+	public String getStudentName() {
+		return studentName;
+	}
 
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
+	}
 
-    public String getClassid() {
-        return classid;
-    }
+	public String getClassId() {
+		return classId;
+	}
 
-    public void setClassid(String classid) {
-        this.classid = classid;
-    }
+	public void setClassId(String classId) {
+		this.classId = classId;
+	}
 
-    public Boolean getStudentgender() {
-        return studentgender;
-    }
+	public Boolean getStudentGender() {
+		return studentGender;
+	}
 
-    public void setStudentgender(Boolean studentGender) {
-        this.studentgender = studentGender;
-    }
+	public void setStudentGender(Boolean studentGender) {
+		this.studentGender = studentGender;
+	}
 
-    public String getStudentorigion() {
-        return studentorigion;
-    }
+	public String getStudentOrigion() {
+		return studentOrigion;
+	}
 
-    public void setStudentorigion(String studentorigion) {
-        this.studentorigion = studentorigion;
-    }
+	public void setStudentOrigion(String studentOrigion) {
+		this.studentOrigion = studentOrigion;
+	}
 
-    public String getStudentstatus() {
-        return studentstatus;
-    }
+	public String getStudentStatus() {
+		return studentStatus;
+	}
 
-    public void setStudentstatus(String studentstatus) {
-        this.studentstatus = studentstatus;
-    }
+	public void setStudentStatus(String studentStatus) {
+		this.studentStatus = studentStatus;
+	}
 
-    public String getStudentphone() {
-        return studentphone;
-    }
+	public String getStudentPhone() {
+		return studentPhone;
+	}
 
-    public void setStudentphone(String studentphone) {
-        this.studentphone = studentphone;
-    }
+	public void setStudentPhone(String studentPhone) {
+		this.studentPhone = studentPhone;
+	}
 
-    public double getStudentcredit() {
-        return studentcredit;
-    }
+	public double getStudentCredit() {
+		return studentCredit;
+	}
 
-    public void setStudentcredit(int studentcredit) {
-        this.studentcredit = studentcredit;
-    }
+	public void setStudentCredit(int studentCredit) {
+		this.studentCredit = studentCredit;
+	}
 
-    public String getTeacherid() {
-        return teacher;
-    }
+	public String getTeacherid() {
+		return teacher;
+	}
 
-    public void setTeacherid(String teacherid) {
-        this.teacher = teacherid;
-    }
+	public void setTeacherid(String teacherid) {
+		this.teacher = teacherid;
+	}
 
-    public String getMajor() {
-        return major;
-    }
+	public String getMajor() {
+		return major;
+	}
 
-    public void setMajor(String major) {
-        this.major = major;
-    }
+	public void setMajor(String major) {
+		this.major = major;
+	}
 
-    public Student() {
-        super();
-    }
+	public Student() {
+		super();
+	}
 
-    public Student(String studentID, String name, String Teacher, String classID, String Major, String origin, String status, Boolean gender, String phone, double credit) {
-        this.classid = classID;
-        this.studentcredit = credit;
-        this.studentgender = gender;
-        this.studentid = studentID;
-        this.studentName = name;
-        this.studentorigion = origin;
-        this.studentphone = phone;
-        this.studentstatus = status;
-        this.teacher = Teacher;
-        this.major = Major;
-    }
+	public Student(String studentID, String name, String Teacher, String classID, String Major, String origin, String status, Boolean gender, String phone, double credit) {
+		this.classId = classID;
+		this.studentCredit = credit;
+		this.studentGender = gender;
+		this.studentId = studentID;
+		this.studentName = name;
+		this.studentOrigion = origin;
+		this.studentPhone = phone;
+		this.studentStatus = status;
+		this.teacher = Teacher;
+		this.major = Major;
+	}
 
-    @Override
-    public String toString() {
-        return "Student [Studentname=" + studentName + " StudentID=" + studentid + " Teacher=" + teacher + " ClassID=" + classid + " Major=" + major + " StudentOrigion=" +
-                studentorigion + " StudentStatus=" + studentstatus + " StudentGender=" + studentgender + " StudentPhone=" + studentphone + " StudentCredit=" + studentcredit + "]";
-    }
+	@Override
+	public String toString() {
+		return "Student [Studentname=" + studentName + " StudentID=" + studentId + " Teacher=" + teacher + " ClassID=" + classId + " Major=" + major + " StudentOrigion=" +
+				studentOrigion + " StudentStatus=" + studentStatus + " StudentGender=" + studentGender + " StudentPhone=" + studentPhone + " StudentCredit=" + studentCredit + "]";
+	}
 }
 

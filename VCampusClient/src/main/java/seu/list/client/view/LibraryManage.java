@@ -637,7 +637,7 @@ public class LibraryManage extends JFrame {
 
             ArrayList<String> para = new ArrayList<String>();
             para.add(oldIDText.getText());
-            para.add("Stock");
+            para.add("Max");
             para.add(modifiedText.getText());
             mes.setData(para);
         }

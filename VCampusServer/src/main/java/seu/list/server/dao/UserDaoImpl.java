@@ -4,8 +4,9 @@ import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.User;
 import seu.list.server.bz.ServerClientThreadMgr;
+import seu.list.server.bz.ServerSocketThread;
 import seu.list.server.db.SqlHelperImp;
-
+import java.net.Socket;
 import java.util.List;
 import java.util.Vector;
 
@@ -56,6 +57,18 @@ public class UserDaoImpl implements UserDao {
 						System.out.println("User " + u.getId() + " 验证成功 ");
 						mesToClient.setUserType(Integer.valueOf(user.getRole()));
 						mesToClient.setData(user);
+
+						String uid= user.getId();
+						String preid=ServerClientThreadMgr.getId(uid);
+						if(preid!=null) {//重复登录，下线之前登录的线程
+							ServerSocketThread prethread=ServerClientThreadMgr.getPreThread(uid);
+							prethread.close();
+							mesToClient.setUserType(3);
+							ServerClientThreadMgr.unbind(uid);
+						}
+						//绑定当前线程，用户状态变为在线
+						ServerClientThreadMgr.bind(user.getId(), this.id);
+						user.changeState(1);
 					}
 					break;
 				}
@@ -79,11 +92,15 @@ public class UserDaoImpl implements UserDao {
 					if(user==null){
 						System.out.println("此人不存在");
 					}else{
+						ServerClientThreadMgr.unbind(userID);
 						ServerClientThreadMgr.remove(this.id);
 						System.out.println("User " + u.getId() + " 登出成功 ");
+						user.setId(userID);
+						user.changeState(0);
 					}
 					break;
 				}
+
 				case MessageType.REQ_USERDEL:
 				{
 					String userID = this.mesFromClient.getContent().get(0);
@@ -135,6 +152,7 @@ public class UserDaoImpl implements UserDao {
 			} else
 				return null;
 		}
+
 	@Override
 	public boolean updateUser(String userID, String newID) {
 		String sql = "select * from tb_User where uID= ?";

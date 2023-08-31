@@ -2,10 +2,7 @@ package seu.list.client.view;
 
 import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
-import seu.list.common.Message;
-import seu.list.common.MessageType;
-import seu.list.common.ModuleType;
-import seu.list.common.Student;
+import seu.list.common.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -266,6 +263,16 @@ public class MainMenu extends JFrame implements ActionListener {
 			}else { // 退出
 				int result = JOptionPane.showConfirmDialog(null, "是否退出？", "退出", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				if(result == JOptionPane.OK_OPTION) {
+					Client ccs = new Client(this.socket);
+
+					User u=new User();
+					u.setId(this.uID);
+					Message mes=new Message();
+					mes.setContent(u.getContent());
+					mes.setModuleType(ModuleType.User);
+					mes.setMessageType(MessageType.REQ_LOGOUT);
+					Message res=ccs.sendRequestToServer(mes);
+
 					ClientMainFrame.close();
 				}
 			}

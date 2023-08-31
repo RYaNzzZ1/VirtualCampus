@@ -11,52 +11,63 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClassStudentForInvest extends JFrame {
 
-	private JPanel contentPane;
 	private JTextField money;
 	private ClassStudentClient CSC;
 	private Double Credit = 0.0;
 	private JPasswordField pwd;
 
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ClassStudentForInvest frame = new ClassStudentForInvest();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
-
-	/**
-	 * Create the frame.
-	 */
 	public ClassStudentForInvest(ClassStudentClient csc, final Double credit, final String id, final String PWD) {
 		CSC=csc;
-		setBounds(100, 100, 489, 300);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		setTitle("充值");
-		JLabel lblNewLabel = new JLabel("请输入您想要充值的金额");
-		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 18));
-		
-		JLabel lblNewLabel_1 = new JLabel("请输入您的密码");
-		lblNewLabel_1.setFont(new Font("宋体", Font.PLAIN, 18));
-		
+		//1.设置背景图片
+		JLabel backgroundImageLabel = new JLabel(new ImageIcon("VCampusClient/Image/ClassStudentForInvest.png"));
+		Toolkit k = Toolkit.getDefaultToolkit();
+		Dimension d = k.getScreenSize();
+		setBounds(d.width/2-843/2, d.height/2-553/2, 843, 585);
+		backgroundImageLabel.setBounds(0, 0, 843, 553);
+		setResizable(false);
+		setLayout(null);
+		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//2.绘制退出按钮
+		//得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+      /* backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+			}
+        });
+*/
+
+		//money输入框
+		money = new JTextField();
+		money.setBounds(268,135,646-268,189-135+6);
+		money.setFont(new Font("华文行楷",Font.BOLD,36));
+		add(money);
+		money.setOpaque(false);
+		money.setBorder(new EmptyBorder(0,0,0,0));
+		//密码输入框
+		pwd = new JPasswordField();
+		pwd.setBounds(270,261,646-268,189-135+6);
+		pwd.setFont(new Font("",Font.BOLD,36));
+		add(pwd);
+		pwd.setOpaque(false);
+		pwd.setBorder(new EmptyBorder(0,0,0,0));
+
+		add(backgroundImageLabel);
+		setVisible(true);
+		//确认按钮
 		JButton commitbtn = new JButton("确认");
+		commitbtn.setBounds(244,448,333-244,484-448+7);
+		add(commitbtn);
+		commitbtn.setOpaque(false);
+		//事件监听
 		commitbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(money.getText() == null)
@@ -96,7 +107,7 @@ public class ClassStudentForInvest extends JFrame {
 						if(in.equals(PWD)) {
 							JOptionPane.showMessageDialog(null, "充值完成！", "提示", JOptionPane.WARNING_MESSAGE);
 							Credit = credit + Double.parseDouble(money.getText());
-							
+
 							Message mes = new Message();
 							mes.setModuleType(ModuleType.Student);
 							mes.setMessageType(MessageType.ClassAdminUpdate);
@@ -105,13 +116,13 @@ public class ClassStudentForInvest extends JFrame {
 							sendData.add(Credit);
 							sendData.add(id);
 							mes.setData(sendData);
-							
+
 							Client client = new Client(ClientMainFrame.socket);
-							
+
 							Message serverResponse = new Message();
 							serverResponse = client.sendRequestToServer(mes);
 							int res = (int)serverResponse.getData();
-							
+
 							System.out.println(Credit);
 							close();
 						}else {
@@ -121,71 +132,33 @@ public class ClassStudentForInvest extends JFrame {
 				}
 			}
 		});
-		
-		money = new JTextField();
-		money.setColumns(10);
-		
-		JLabel lblNewLabel_2 = new JLabel("元");
-		lblNewLabel_2.setFont(new Font("宋体", Font.PLAIN, 18));
-		
+
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
+		//退出按钮
 		JButton exitbtn = new JButton("退出");
+		exitbtn.setBounds(508,446,333-244,484-448+7);
+		exitbtn.setOpaque(false);
+		add(exitbtn);
 		exitbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				close();
 			}
 		});
-		
-		pwd = new JPasswordField();
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(60)
-					.addComponent(commitbtn, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-					.addGap(112)
-					.addComponent(exitbtn, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(99, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(46)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblNewLabel_1, GroupLayout.PREFERRED_SIZE, 166, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(pwd))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 218, GroupLayout.PREFERRED_SIZE)
-							.addGap(35)
-							.addComponent(money, GroupLayout.PREFERRED_SIZE, 87, GroupLayout.PREFERRED_SIZE)))
-					.addGap(4)
-					.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-					.addGap(461))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(58)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel)
-						.addComponent(money, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblNewLabel_2))
-					.addGap(31)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel_1)
-						.addComponent(pwd, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))
-					.addGap(35)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(commitbtn)
-						.addComponent(exitbtn))
-					.addContainerGap())
-		);
-		contentPane.setLayout(gl_contentPane);
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(2);
-		setIconImage(Toolkit.getDefaultToolkit().getImage("VCampusClient/src/main/resources/image/xiaobiao.jpg"));
+
+
+
 	}
 	void close() {
 		CSC.update(Credit);
 		CSC.setEnabled(true);
 		this.dispose();
 	}
+	void close2()
+	{
+		CSC.setEnabled(true);
+		this.dispose();
+
+	}
+
 }

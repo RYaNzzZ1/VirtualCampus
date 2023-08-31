@@ -1,5 +1,6 @@
 package seu.list.client.view;
 
+import com.sun.xml.internal.bind.v2.model.core.ID;
 import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
 import seu.list.common.Goods;
@@ -10,67 +11,90 @@ import seu.list.common.ModuleType;
 import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-/**
- * 类{@code Goods_Addframe}为增加商品界面界面
- * 点击“增加”按钮后会进入到当前界面
- * @author 欧阳瑜
- * @version 1.0
- */
+
 public class Goods_Addframe {
 
 	private JFrame frame;
 	private JTextField IDtextField;private JTextField NametextField;
-	
+
 	private JLabel lblNewLabel_4;
-    private Shop_AdminFrame shop;
-    private JTextField PicetextField;
-    private JTextField NumbertextField;
+	private Shop_AdminFrame shop;
+	private JTextField PicetextField;
+	private JTextField NumbertextField;
+
 	/**
 	 * Launch the application.
 	 */
-	
+
 	public Goods_Addframe(Shop_AdminFrame a) {
 		this.shop=a;
 		initialize();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 * @param IDtextField 输入商品id
-	 * @param NametextField 输入商品名称
-	 * @param PicetextField 输入商品单价
-	 * @param NumbertextField 输入商品库存
-	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 466, 332);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		//绘制背景图片
+		JLabel backgroundImageLabel = new JLabel(new ImageIcon("VCampusClient/Image/Goods_Addframe.png"));
+		Toolkit k = Toolkit.getDefaultToolkit();
+		Dimension d = k.getScreenSize();
+		frame.setBounds(d.width/2-849/2, d.height/2-556/2, 849, 585);
+		backgroundImageLabel.setBounds(0, 0, 849, 556);
+		frame.setResizable(false);
+		frame.setLayout(null);
+		frame.add(backgroundImageLabel);
+
+		//2.绘制退出按钮
+		//得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+    /* backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+			}
+        });
+*/
+
+		//ID输入框
 		IDtextField = new JTextField();
-		IDtextField.setColumns(10);
-		
-		JLabel lblNewLabel = new JLabel("商品编号");
-		lblNewLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		
-		JLabel lblNewLabel_1 = new JLabel("商品名称");
-		lblNewLabel_1.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		
+		IDtextField.setFont(new Font("华文行楷",Font.BOLD,32));
+		IDtextField.setBounds(259,104,621-259,147-104);
+		IDtextField.setOpaque(false);
+		IDtextField.setBorder(new EmptyBorder(0,0,0,0));
+		frame.add(IDtextField);
+
+		//名称输入框
 		NametextField = new JTextField();
-		NametextField.setColumns(10);
-		
-		JLabel lblNewLabel_2 = new JLabel("单价");
-		lblNewLabel_2.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		
-		JLabel lblNewLabel_3 = new JLabel("库存");
-		lblNewLabel_3.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		
-		lblNewLabel_4 = new JLabel("请输入新商品的信息！");
-		lblNewLabel_4.setFont(new Font("微软雅黑", Font.BOLD, 20));
-		
+		NametextField.setFont(new Font("华文行楷",Font.BOLD,32));
+		NametextField.setBounds(259,180,621-259,147-104);
+		frame.add(NametextField);
+		NametextField.setOpaque(false);
+		NametextField.setBorder(new EmptyBorder(0,0,0,0));
+
+		//单价输入框
+		PicetextField = new JTextField();
+		PicetextField.setFont(new Font("华文行楷",Font.BOLD,32));
+		PicetextField.setBounds(259,254,621-259,147-104);
+		frame.add(PicetextField);
+		PicetextField.setOpaque(false);
+		PicetextField.setBorder(new EmptyBorder(0,0,0,0));
+		//库存输入款
+		NumbertextField = new JTextField();
+		NumbertextField.setFont(new Font("华文行楷",Font.BOLD,32));
+		NumbertextField.setBounds(259,332,621-259,147-104);
+		frame.add(NumbertextField);
+		NumbertextField.setOpaque(false);
+		NumbertextField.setBorder(new EmptyBorder(0,0,0,0));
+		frame.add(backgroundImageLabel);
+		//确定按钮
 		JButton btnNewButton = new JButton("确定");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -78,83 +102,26 @@ public class Goods_Addframe {
 				frame.dispose();
 			}
 		});
-		
+		btnNewButton.setBounds(242,448,335-242,485-448);
+		btnNewButton.setOpaque(false);
+		frame.add(btnNewButton);
+
+		//取消按钮
 		JButton btnNewButton_1 = new JButton("取消");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
 			}
 		});
-		
-		PicetextField = new JTextField();
-		PicetextField.setColumns(10);
-		
-		NumbertextField = new JTextField();
-		NumbertextField.setColumns(10);
-		GroupLayout groupLayout = new GroupLayout(frame.getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(124)
-					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel_4)
-						.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-							.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-								.addGroup(groupLayout.createSequentialGroup()
-									.addComponent(lblNewLabel)
-									.addGap(18)
-									.addComponent(IDtextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-								.addGroup(groupLayout.createSequentialGroup()
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(lblNewLabel_1)
-										.addComponent(lblNewLabel_2))
-									.addGap(18)
-									.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-										.addComponent(PicetextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(NametextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(NumbertextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-							.addComponent(lblNewLabel_3, Alignment.LEADING)))
-					.addContainerGap(126, Short.MAX_VALUE))
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(58)
-					.addComponent(btnNewButton)
-					.addPreferredGap(ComponentPlacement.RELATED, 202, Short.MAX_VALUE)
-					.addComponent(btnNewButton_1)
-					.addGap(76))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.TRAILING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(lblNewLabel_4, GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-					.addGap(18)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel)
-						.addComponent(IDtextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(21)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel_1)
-						.addComponent(NametextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(21)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel_2)
-						.addComponent(PicetextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addGap(21)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel_3)
-						.addComponent(NumbertextField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton)
-						.addComponent(btnNewButton_1))
-					.addContainerGap())
-		);
-		frame.getContentPane().setLayout(groupLayout);
-		
+		btnNewButton_1.setOpaque(false);
+		btnNewButton_1.setBounds(506,446,335-242,485-448);
+		frame.add(btnNewButton_1);
+
 		frame.setVisible(true);
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(2);
+		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	}
-	/**  
+
+	/**
 	 * 方法{@code void Addgoods()}点击确认后执行，利用当前输入的参数增加商品。
 	 */
 	protected void Addgoods() {
@@ -162,35 +129,31 @@ public class Goods_Addframe {
 		System.out.println(IDtextField.getText());
 		System.out.println(PicetextField.getText());
 		System.out.println(NumbertextField.getText());
-		for(int i=0;i<shop.getTable().getColumnCount();i++) {
-		if(IDtextField.getText().equals(shop.getTable().getValueAt(i, 0)))
-		{
-			JOptionPane.showMessageDialog(null, "ID重复！！", "提示", JOptionPane.WARNING_MESSAGE);
-		}
+		System.out.println(shop.getTable().getRowCount());
+		for(int i=0;i<shop.getTable().getRowCount();i++) {
+			if(IDtextField.getText().equals(shop.getTable().getValueAt(i, 0))) {
+				JOptionPane.showMessageDialog(null, "ID重复！！", "提示", JOptionPane.WARNING_MESSAGE);
+			}
 		}
 		if(!IDtextField.getText().matches("[0-9]*")) {
-		JOptionPane.showMessageDialog(null, "ID应为正整数！！", "提示", JOptionPane.WARNING_MESSAGE);
-		}
-		else if(!PicetextField.getText().matches("[0-9]+[.]{0,1}[0-9]*[dD]{0,1}"))
-		{
+			JOptionPane.showMessageDialog(null, "ID应为正整数！！", "提示", JOptionPane.WARNING_MESSAGE);
+		} else if(!PicetextField.getText().matches("[0-9]+[.]{0,1}[0-9]*[dD]{0,1}")) {
 			JOptionPane.showMessageDialog(null, "请输入合法的价格！！", "提示", JOptionPane.WARNING_MESSAGE);
-		}
-		else if(!NumbertextField.getText().matches("[0-9]*")) {
+		} else if(!NumbertextField.getText().matches("[0-9]*")) {
 			JOptionPane.showMessageDialog(null, "请输入合法库存！！", "提示", JOptionPane.WARNING_MESSAGE);
-		}
-		else {
-		Goods temp=new Goods(Integer.parseInt(IDtextField.getText()),NametextField.getText(),
-				Double.parseDouble(PicetextField.getText()),Integer.parseInt(NumbertextField.getText()));
-		
-		Message mes =new Message();
-		mes.setData(temp);
-		mes.setModuleType(ModuleType.Shop);
-		mes.setMessageType(MessageType.GoodsAdd);
-		Client client=new Client(ClientMainFrame.socket);
+		} else {
+			Goods temp=new Goods(Integer.parseInt(IDtextField.getText()),NametextField.getText(),
+					Double.parseDouble(PicetextField.getText()),Integer.parseInt(NumbertextField.getText()));
 
-		Message serverResponse = client.sendRequestToServer(mes); 
-		int res=(int)serverResponse.getData();
-		shop.show();
+			Message mes =new Message();
+			mes.setData(temp);
+			mes.setModuleType(ModuleType.Shop);
+			mes.setMessageType(MessageType.GoodsAdd);
+			Client client=new Client(ClientMainFrame.socket);
+
+			Message serverResponse = client.sendRequestToServer(mes);
+			int res=(int)serverResponse.getData();
+			shop.show();
 		}
 	}
 }

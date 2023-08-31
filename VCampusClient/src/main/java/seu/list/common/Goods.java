@@ -11,10 +11,10 @@ import java.io.Serializable;
 public class Goods implements Serializable{
 		private static final long serialVersionUID = 1L;
 	
-		private int GoodsID;
-		private String GoodsName;
-		private double GoodsPrice;
-		private int GoodsNumber;
+		private int goodsID;
+		private String goodsName;
+		private double goodsPrice;
+		private int goodsNumber;
 
 		public Goods() {
 			super();
@@ -27,45 +27,45 @@ public class Goods implements Serializable{
 		 * @param goodsnumber 库存
 		 */
 		public Goods(int goodsid,String goodsname,double goodsprice,int goodsnumber){
-			GoodsID=goodsid;
-			GoodsName=goodsname;
-			GoodsPrice=goodsprice;
-			GoodsNumber=goodsnumber;
+			goodsID =goodsid;
+			goodsName =goodsname;
+			goodsPrice =goodsprice;
+			goodsNumber =goodsnumber;
 		}
 
 		public int getGoodsid() {
-			return GoodsID;
+			return goodsID;
 		}
 
 		public void setGoodsid(int goodsid) {
-			GoodsID = goodsid;
+			goodsID = goodsid;
 		}
 		public String getGoodsname() {
-			return GoodsName;
+			return goodsName;
 		}
 
 		public void setGoodsname(String goodsname) {
-			GoodsName = goodsname;
+			goodsName = goodsname;
 		}
 
 		public double getGoodsprice() {
-			return GoodsPrice;
+			return goodsPrice;
 		}
 
 		public void setGoodsprice(double goodsprice) {
-			GoodsPrice = goodsprice;
+			goodsPrice = goodsprice;
 		}
 
 		public int getGoodsnumber() {
-			return GoodsNumber;
+			return goodsNumber;
 		}
 
 		public void setGoodsnumber(int goodsnumber) {
-			GoodsNumber = goodsnumber;
+			goodsNumber = goodsnumber;
 		}
 
 		@Override
 		public String toString() {
-			return "Goods{" + "GoodsID" + GoodsID + ", GoodsName" + GoodsName + ", GoodsPrice" + GoodsPrice + ", GoodsNumber" + GoodsNumber + "}";
+			return "Goods{" + "GoodsID" + goodsID + ", GoodsName" + goodsName + ", GoodsPrice" + goodsPrice + ", GoodsNumber" + goodsNumber + "}";
 		}
 }

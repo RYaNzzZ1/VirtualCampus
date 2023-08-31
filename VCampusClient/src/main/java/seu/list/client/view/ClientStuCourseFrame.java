@@ -310,11 +310,33 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 				Message rec = client.sendRequestToServer(clientReq);
 				System.out.println(rec.getContent());
 				//通信
+				if(rec.isSeccess())
+					display(rec);
+				else {
+					JOptionPane.showMessageDialog(null, "课程不存在", "错误", JOptionPane.ERROR_MESSAGE);
+					clientReq = new Message();//新建申请用于交换
+					User user = new User();
+					user.setId(userID);
+					clientReq.setContent(user.getContent());
+					clientReq.setModuleType(ModuleType.Course);
+					clientReq.setMessageType("REQ_SHOW_ALL_LESSON");
+					rec = client.sendRequestToServer(clientReq);
+
+					display(rec);
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "课程号不能为空", "错误", JOptionPane.ERROR_MESSAGE);
+				Message clientReq = new Message();//新建申请用于交换
+				User user = new User();
+				user.setId(userID);
+				clientReq.setContent(user.getContent());
+				clientReq.setModuleType(ModuleType.Course);
+				clientReq.setMessageType("REQ_SHOW_ALL_LESSON");
+				Message rec = client.sendRequestToServer(clientReq);
 
 				display(rec);
 			}
-			else
-				JOptionPane.showMessageDialog(null, "课程号不能为空", "错误", JOptionPane.ERROR_MESSAGE);
 			jtf1.setText("");
 		}
 		else if(e.getActionCommand() == "cancel") {

@@ -328,7 +328,7 @@ public class LibraryUserServer extends Library_DbAccess {
             ResultSet res = s.executeQuery("select count(*)  from tb_BookList where ID='" + bookid + "'");
             if (res != null) {
                 result = s.executeUpdate("update tb_BookList set " + attr + "='" + modattr + "' where ID='" + bookid + "'");
-                if (attr.equals("Stock")) {
+                if (attr.equals("Max")) {
                     int ms = Integer.valueOf(modattr);
                     if (ms == 0)
                         result = s.executeUpdate("update tb_BookList set State=0 where ID='" + bookid + "'");

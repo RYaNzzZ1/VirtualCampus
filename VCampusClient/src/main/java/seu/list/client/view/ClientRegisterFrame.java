@@ -21,7 +21,7 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 	private Socket socket;
 	private JTextField jtf_id;
 	private JTextField jtf_name;
-	private JPasswordField jtf_pwd;
+	private JTextField jtf_pwd;
 	private JTextField jtf_sex;
 	private JTextField jtf_age;
 	private JTextField jtf_grade;
@@ -29,11 +29,11 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 	private JTextField jtf_major;
 	JComboBox comboBox = new JComboBox();
 	String role;
+	boolean asstate=false;
 	/**
 	 * create the frame
 	 * @param socket 保证与服务端的通信
 	 */
-
 	public ClientRegisterFrame(Socket socket){
 		this.socket=socket;
 		setForeground(SystemColor.inactiveCaption);
@@ -125,7 +125,7 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 		jtf_name.setBounds(123, 138, 101, 27);
 		getContentPane().add(jtf_name);
 
-		jtf_pwd = new JPasswordField();
+		jtf_pwd = new JTextField();
 		jtf_pwd.setBackground(Color.white);
 		jtf_pwd.setBounds(123, 205, 101, 27);
 		getContentPane().add(jtf_pwd);
@@ -165,6 +165,11 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 		comboBox.setFont(new Font("华文楷体", Font.PLAIN, 15));
 		comboBox.setBounds(433, 242, 133, 33);
 		getContentPane().add(comboBox);
+		comboBox.addActionListener(e->{
+			if(comboBox.getSelectedItem()=="管理员"&&asstate==false) {
+				ClientAssistanceFrame caf = new ClientAssistanceFrame(this, socket);
+			}
+		});
 
 		jtf_major = new JTextField();
 		jtf_major.setColumns(10);
@@ -177,6 +182,7 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(2);
 	}
+
 
 	private void setBak() {
 		ImageIcon img = new ImageIcon("/VCampusClient/src/main/resources/image/registerback.jpg");
@@ -195,8 +201,9 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 
 		if (comboBox.getSelectedItem() =="学生")
 		{role="0";}
-		if (comboBox.getSelectedItem() =="管理员")
-		{role="1";}
+		if (comboBox.getSelectedItem() =="管理员") {
+			role="1";
+		}
 		
 		
 		//to check whether the input is right
@@ -240,7 +247,14 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 				i++;
 			
 			}
-			
+			if(!jtf_sex.getText().equals("男")&&!jtf_sex.getText().equals("女")) {
+				JOptionPane.showMessageDialog(null, "请正确输入性别！", "提示", JOptionPane.WARNING_MESSAGE);
+				flagall=false;
+			}
+			if(!jtf_pwd.getText().matches("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$")){
+				JOptionPane.showMessageDialog(null, "密码为6-16位，且必须包含数字和字母", "提示", JOptionPane.WARNING_MESSAGE);
+				flagall=false;
+			}
 			if(flagall) {
 				Student temp = new Student();
 				if(role.equals("0")) {//check the student
@@ -271,83 +285,80 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 						studenttemp++;
 					}
 				}
-				
-				
-				if(flag) {
+
+				 if(flag) {
 					if(temp.getMajor() != null && !jtf_major.getText().replaceAll("\\p{C}", "").equals(temp.getMajor())) {
 						JOptionPane.showMessageDialog(null,"请正确输入您的所属专业","错误",JOptionPane.ERROR_MESSAGE);
 					}else {
-						//exists
-						User user=new User();
-						user.setId(jtf_id.getText());
-						user.setAge(jtf_age.getText());
-						user.setGrade(jtf_grade.getText());
-						user.setMajor(jtf_major.getText());
-						user.setMoney(jtf_money.getText());
-						user.setName(jtf_name.getText());
-						user.setPwd(jtf_pwd.getText());
-						user.setSex(jtf_sex.getText());
-						user.setRole(role);
-						System.out.println(user);
-						Message clientreq=new Message();
-						clientreq.setModuleType(ModuleType.User);
-						clientreq.setMessageType(MessageType.REQ_REGISTER);
-						clientreq.setContent(user.getContent());
-						Client client=new Client(this.socket);
-						Message rec=client.sendRequestToServer(clientreq);
-						int sign=rec.getUserType();
+						if (role == "1" && asstate == false) {
+							JOptionPane.showMessageDialog(null, "辅助验证失败，无法注册为管理员", "错误", JOptionPane.ERROR_MESSAGE);
+							comboBox.setSelectedItem("学生");
+						} else {
+							User user = new User();
+							user.setId(jtf_id.getText());
+							user.setAge(jtf_age.getText());
+							user.setGrade(jtf_grade.getText());
+							user.setMajor(jtf_major.getText());
+							user.setMoney(jtf_money.getText());
+							user.setName(jtf_name.getText());
+							user.setPwd(jtf_pwd.getText());
+							user.setSex(jtf_sex.getText());
+							user.setRole(role);
+							System.out.println(user);
+							Message clientreq = new Message();
+							clientreq.setModuleType(ModuleType.User);
+							clientreq.setMessageType(MessageType.REQ_REGISTER);
+							clientreq.setContent(user.getContent());
+							Client client = new Client(this.socket);
+							Message rec = client.sendRequestToServer(clientreq);
+							int sign = rec.getUserType();
 
-						if(e.getActionCommand().equals("register"))
-						{
-							//System.out.print(ccs.sign);
-							//返回的权限
+							if (e.getActionCommand().equals("register")) {
+								//System.out.print(ccs.sign);
+								//返回的权限
 
-							if(sign==3)
-							{
-								JOptionPane.showMessageDialog(null,"您已经注册，请不要重复","错误",JOptionPane.ERROR_MESSAGE);
-							}
-							else if(sign==0||sign==1)
-							{
-								JOptionPane.showMessageDialog(null,"同学，恭喜注册成功","提示",JOptionPane.INFORMATION_MESSAGE);
-								
-								//update student message
-								if(role.equals("0")) {
-									if(jtf_sex.getText().equals("男")) {
-										temp.setStudentgender(true);
-									}else if(jtf_sex.getText().equals("女")) {
-										temp.setStudentgender(false);
-									}else {
-										//empty body
+								if (sign == 3) {
+									JOptionPane.showMessageDialog(null, "您已经注册，请不要重复", "错误", JOptionPane.WARNING_MESSAGE);
+								} else if (sign == 0 || sign == 1) {
+									JOptionPane.showMessageDialog(null, "注册成功", "提示", JOptionPane.INFORMATION_MESSAGE);
+
+									//update student message
+									if (role.equals("0")) {
+										if (jtf_sex.getText().equals("男")) {
+											temp.setStudentgender(true);
+										} else if (jtf_sex.getText().equals("女")) {
+											temp.setStudentgender(false);
+										} else {
+											//empty body
+										}
+										//temp.setStudentcredit(Double.parseDouble(jtf_money.getText()));
+										temp.setStudentcredit(Integer.parseInt(jtf_money.getText()));
+										temp.setStudentName(jtf_name.getText());
+
+										Message mes = new Message();
+										mes.setModuleType(ModuleType.Student);
+										mes.setMessageType(MessageType.ClassAdminUpdate);
+										List<Object> sendData = new ArrayList();
+										sendData.add(15);//name, origin, phone, status, gender ---- id
+										sendData.add(temp.getStudentName());
+										sendData.add(temp.getStudentorigion());
+										sendData.add(temp.getStudentphone());
+										sendData.add(temp.getStudentstatus());
+										sendData.add(temp.getStudentgender());
+										sendData.add(temp.getStudentid());
+										mes.setData(sendData);
+										client = null;
+										client = new Client(ClientMainFrame.socket);
+
+										Message serverResponse = new Message();
+										serverResponse = client.sendRequestToServer(mes);
+										int res = (int) serverResponse.getData();
 									}
-									//temp.setStudentcredit(Double.parseDouble(jtf_money.getText()));
-									temp.setStudentcredit(Integer.parseInt(jtf_money.getText()));
-									temp.setStudentName(jtf_name.getText());
-									
-									Message mes = new Message();
-									mes.setModuleType(ModuleType.Student);
-									mes.setMessageType(MessageType.ClassAdminUpdate);
-									List<Object> sendData = new ArrayList();
-									sendData.add(15);//name, origin, phone, status, gender ---- id
-									sendData.add(temp.getStudentName());
-									sendData.add(temp.getStudentorigion());
-									sendData.add(temp.getStudentphone());
-									sendData.add(temp.getStudentstatus());
-									sendData.add(temp.getStudentgender());
-									sendData.add(temp.getStudentid());
-									mes.setData(sendData);
-									client = null;
-									client = new Client(ClientMainFrame.socket);
-
-									Message serverResponse = new Message();
-									serverResponse = client.sendRequestToServer(mes);
-									int res = (int) serverResponse.getData();
+									this.dispose();
+									ClientLoginFrame ctf = new ClientLoginFrame(this.socket);
+								} else {
+									JOptionPane.showMessageDialog(null, "注册失败", "错误", JOptionPane.ERROR_MESSAGE);
 								}
-								this.dispose();
-								ClientLoginFrame ctf=new ClientLoginFrame(this.socket);
-							}
-							else
-							{
-								JOptionPane.showMessageDialog(null,"注册失败","错误",JOptionPane.ERROR_MESSAGE);
 							}
 						}
 					}
@@ -356,7 +367,7 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 					JOptionPane.showMessageDialog(null,"注册失败,请先在管理员处登记","错误",JOptionPane.ERROR_MESSAGE);
 				}
 			
-				
+				asstate=false;
 			}
 		}
 	}

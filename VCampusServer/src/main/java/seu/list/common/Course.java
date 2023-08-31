@@ -10,13 +10,13 @@ import java.util.Vector;
  */
 public class Course implements Serializable {
 	private static final long serialVersionUID = 6424750174292826127L;
-	private  String Semester;
-	private String CourseID;
-	private String CourseMajor;
-	private String CourseName;
+	private  String semester;
+	private String courseID;
+	private String courseMajor;
+	private String courseName;
 	private String teacherID;
-	private String CourseState;
-	private String CourseType;
+	private String courseState;
+	private String courseType;
 
 	/**
 	 * 无参构造器
@@ -35,69 +35,69 @@ public class Course implements Serializable {
 	 * @param courseType 课程类型
 	 */
 	public Course(String semester, String courseID, String courseMajor, String courseName, String teacherID, String courseState, String courseType) {
-		Semester = semester;
-		CourseID = courseID;
-		CourseMajor = courseMajor;
-		CourseName = courseName;
+		this.semester = semester;
+		this.courseID = courseID;
+		this.courseMajor = courseMajor;
+		this.courseName = courseName;
 		this.teacherID = teacherID;
-		CourseState = courseState;
-		CourseType = courseType;
+		this.courseState = courseState;
+		this.courseType = courseType;
 	}
 	/**
 	 *
 	 * @return 授课学期
 	 */
 	public String getSemester() {
-		return Semester;
+		return semester;
 	}
 	/**
 	 *
 	 * @param semester 书号
 	 */
 	public void setSemester(String semester) {
-		Semester = semester;
+		this.semester = semester;
 	}
 	/**
 	 *
 	 * @return 课程编号
 	 */
 	public String getCourseID() {
-		return CourseID;
+		return courseID;
 	}
 	/**
 	*
 	* @param courseID 课程编号
 	*/
 	public void setCourseID(String courseID) {
-		CourseID = courseID;
+		this.courseID = courseID;
 	}
 	/**
 	 *
 	 * @return 专业
 	 */
 	public String getCourseMajor() {
-		return CourseMajor;
+		return courseMajor;
 	}
 	/**
 	 *
 	 * @param courseMajor 专业
 	 */
 	public void setCourseMajor(String courseMajor) {
-		CourseMajor = courseMajor;
+		this.courseMajor = courseMajor;
 	}
 	/**
 	 *
 	 * @return 课程名称
 	 */
 	public String getCourseName() {
-		return CourseName;
+		return courseName;
 	}
 	/**
 	 *
 	 * @param courseName 课程名称
 	 */
 	public void setCourseName(String courseName) {
-		CourseName = courseName;
+		this.courseName = courseName;
 	}
 	/**
 	 *
@@ -118,40 +118,40 @@ public class Course implements Serializable {
 	 * @return 课程状态
 	 */
 	public String getCourseState() {
-		return CourseState;
+		return courseState;
 	}
 	/**
 	 *
 	 * @param courseState 课程状态
 	 */
 	public void setCourseState(String courseState) {
-		CourseState = courseState;
+		this.courseState = courseState;
 	}
 	/**
 	 *
 	 * @return 课程类型
 	 */
 	public String getCourseType() {
-		return CourseType;
+		return courseType;
 	}
 	/**
 	 *
 	 * @param courseType 课程类型
 	 */
 	public void setCourseType(String courseType) {
-		CourseType = courseType;
+		this.courseType = courseType;
 	}
 
 	@Override
 	public String toString() {
 		return "Course{" +
-				"Semester='" + Semester + '\'' +
-				", CourseID='" + CourseID + '\'' +
-				", CourseMajor='" + CourseMajor + '\'' +
-				", CourseName='" + CourseName + '\'' +
+				"Semester='" + semester + '\'' +
+				", CourseID='" + courseID + '\'' +
+				", CourseMajor='" + courseMajor + '\'' +
+				", CourseName='" + courseName + '\'' +
 				", teacherID='" + teacherID + '\'' +
-				", CourseState='" + CourseState + '\'' +
-				", CourseType='" + CourseType + '\'' +
+				", CourseState='" + courseState + '\'' +
+				", CourseType='" + courseType + '\'' +
 				'}';
 	}
 	/**
@@ -160,13 +160,13 @@ public class Course implements Serializable {
 	 */
 	public Vector<String> getContent() {
 		Vector<String> courseContents = new Vector<String>();
-		courseContents.add(Semester);
-		courseContents.add(CourseID);
-		courseContents.add(CourseMajor);
-		courseContents.add(CourseName);
+		courseContents.add(semester);
+		courseContents.add(courseID);
+		courseContents.add(courseMajor);
+		courseContents.add(courseName);
 		courseContents.add(teacherID);
-		courseContents.add(CourseState);
-		courseContents.add(CourseType);
+		courseContents.add(courseState);
+		courseContents.add(courseType);
 		return courseContents;
 	}
 	/**
@@ -174,12 +174,12 @@ public class Course implements Serializable {
 	 * @param content 课程信息
 	 */
 	public void setContent(Vector<String> content) {
-		Semester = content.get(0);
-		CourseID = content.get(1);
-		CourseMajor = content.get(2);
-		CourseName = content.get(3);
+		semester = content.get(0);
+		courseID = content.get(1);
+		courseMajor = content.get(2);
+		courseName = content.get(3);
 		teacherID = content.get(4);
-		CourseState=content.get(5);
-		CourseType=content.get(6);
+		courseState =content.get(5);
+		courseType =content.get(6);
 	}
 }

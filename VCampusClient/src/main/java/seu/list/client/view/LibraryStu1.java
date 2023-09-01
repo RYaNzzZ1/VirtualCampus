@@ -150,7 +150,7 @@ public class LibraryStu1 extends JFrame {
 
     //借书取消
     protected void qxLendAvt(ActionEvent e) {
-        LibraryStu d=new LibraryStu();
+        LibraryStu d=new LibraryStu(t.uID);
         dispose();
     }
 

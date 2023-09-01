@@ -35,13 +35,15 @@ public class LibraryStu extends JFrame {
 	private JButton qrLendButton,qrReturnButton,qxLendButton,qxReturnButton; //lendPane&returnPane
 	private JLabel lendLabel;
 	private JLabel returnLabel;
+	private String uID;
 	//private JTable table2;
 	JScrollPane scrollPane2;
 	JTable table;
 
 
 	//创建框架
-	public LibraryStu() {
+	public LibraryStu(String uID) {
+		this.uID=uID;
 		ArrayList<Book> booklist=new ArrayList<Book>();
 
 

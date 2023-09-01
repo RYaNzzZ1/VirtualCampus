@@ -13,7 +13,8 @@ public class Book implements java.io.Serializable{
 	private String author;
 	private Integer stock;  //库存
 	private String press;  //出版社：
-	private Boolean state;  //状态 0-不可借阅；1-可借阅
+	private Boolean state;  //状态 0-不可借阅；1-可借阅    记录: 0-借书 ，1-还书
+	private String scid;//借阅该书的学生ID
 
 	/**
 	 * 构造函数
@@ -23,7 +24,7 @@ public class Book implements java.io.Serializable{
 	 * @param press 出版社
 	 * @param jstock 库存
 	 */
-	public Book(String jid,String jname,String jauthor,String press,Integer jstock) {
+	public Book(String jid,String jname,String jauthor,String press,Integer jstock,String scid) {
 
 		this.setId(jid);
 		this.setName(jname);
@@ -136,5 +137,6 @@ public class Book implements java.io.Serializable{
 	public void setState(boolean st) {
 		this.state = st;
 	}
-
+	public void setScid(String scid){this.scid=scid;}
+	public String getscid(){return this.scid;}
 }

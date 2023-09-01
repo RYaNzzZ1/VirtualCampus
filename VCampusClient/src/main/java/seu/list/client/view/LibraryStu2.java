@@ -138,7 +138,7 @@ public class LibraryStu2 extends JFrame {
 
     //还书取消
     protected void qxReturnAvt(ActionEvent e) {
-        LibraryStu d=new LibraryStu();
+        LibraryStu d=new LibraryStu(t.uID);
         dispose();
     }
 }

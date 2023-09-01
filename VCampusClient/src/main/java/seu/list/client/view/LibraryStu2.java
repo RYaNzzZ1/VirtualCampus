@@ -108,13 +108,16 @@ public class LibraryStu2 extends JFrame {
         lendPane.setVisible(false);
         returnPane.setVisible(true);
 
-        Message mes =new Message();
-        Client client=new Client(ClientMainFrame.socket);
-        mes.setModuleType(ModuleType.Library);
-        mes.setMessageType(MessageType.LibraryBookReturn);
-        mes.setData(returnIDText.getText());
-        Message serverResponse=new Message();
-        serverResponse=client.sendRequestToServer(mes);
+        String []data=new String[2];
+		data[0]=returnIDText.getText();
+		data[1]=t.uID;
+		Message mes =new Message();
+		Client client=new Client(ClientMainFrame.socket);
+		mes.setModuleType(ModuleType.Library);
+		mes.setMessageType(MessageType.LibraryBookReturn);
+		mes.setData(data);
+		Message serverResponse=new Message();
+		serverResponse=client.sendRequestToServer(mes);
 
         int res = (int)serverResponse.getData();
         if(res==0) {

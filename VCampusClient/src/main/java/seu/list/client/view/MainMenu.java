@@ -224,7 +224,7 @@ public class MainMenu extends JFrame implements ActionListener {
 				}
 			}else if(e.getActionCommand().equals(this.cmdLib)) { //图书馆
 				if(userType == 0) {
-					LibraryStu libStu = new LibraryStu();
+					LibraryStu libStu = new LibraryStu(this.uID);
 					libStu.setVisible(true);
 				}else {
 					LibraryManage libMgr = new LibraryManage();

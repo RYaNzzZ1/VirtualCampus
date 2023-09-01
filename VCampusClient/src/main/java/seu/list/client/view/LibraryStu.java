@@ -35,7 +35,7 @@ public class LibraryStu extends JFrame {
 	private JButton qrLendButton,qrReturnButton,qxLendButton,qxReturnButton; //lendPane&returnPane
 	private JLabel lendLabel;
 	private JLabel returnLabel;
-	private String uID;
+	public String uID;
 	//private JTable table2;
 	JScrollPane scrollPane2;
 	JTable table;

@@ -2,10 +2,7 @@ package seu.list.client.view;
 
 import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
-import seu.list.common.Message;
-import seu.list.common.MessageType;
-import seu.list.common.ModuleType;
-import seu.list.common.Student;
+import seu.list.common.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -225,6 +222,7 @@ public class MainMenu extends JFrame implements ActionListener {
 			}else if(e.getActionCommand().equals(this.cmdLib)) { //图书馆
 				if(userType == 0) {
 					LibraryStu libStu = new LibraryStu(this.uID);
+					libStu.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 					libStu.setVisible(true);
 				}else {
 					LibraryManage libMgr = new LibraryManage();
@@ -233,6 +231,7 @@ public class MainMenu extends JFrame implements ActionListener {
 			}else if(e.getActionCommand().equals(this.cmdDorm)) { // 宿舍
 				if(userType == 0) {
 					DormitoryStudentClient dormStu = new DormitoryStudentClient(this.uID, this.socket);
+					dormStu.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 					dormStu.setVisible(true);
 				}else {
 					DormitoryAdminClient dormAdmin = new DormitoryAdminClient(ClientMainFrame.socket);
@@ -250,6 +249,16 @@ public class MainMenu extends JFrame implements ActionListener {
 				int result = JOptionPane.showConfirmDialog(null, "是否退出？", "退出", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
 				if(result == JOptionPane.OK_OPTION) {
 					this.dispose();
+
+					Client ccs = new Client(this.socket);
+					User u=new User();
+					u.setId(this.uID);
+					Message mes=new Message();
+					mes.setContent(u.getContent());
+					mes.setModuleType(ModuleType.User);
+					mes.setMessageType(MessageType.REQ_LOGOUT);
+					Message res=ccs.sendRequestToServer(mes);
+
 					ClientMainFrame.back();
 				}
 			}

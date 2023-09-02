@@ -32,6 +32,7 @@ public final class MessageType {
 
     //server操作LibraryUser
     public static final String LibraryBookGetAll = "LIB_GETALL";
+    public static final String LibraryBookGetLend = "LIB_GETLEND";
     public static final String LibraryBookAdd = "LIB_ADD";
     public static final String LibraryBookDelete = "LIB_DELETE";
     public static final String LibraryBookUpdate = "LIB_UPDATE";

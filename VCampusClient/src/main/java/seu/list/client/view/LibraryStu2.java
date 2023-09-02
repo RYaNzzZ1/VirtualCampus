@@ -9,6 +9,9 @@ import seu.list.common.ModuleType;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,17 +21,19 @@ import java.util.ArrayList;
 public class LibraryStu2 extends JFrame {
     //创建框架
     private JPanel contentPane;
-    private JPanel lendPane,returnPane; //借书、还书界面
+    private JPanel lendPane, returnPane; //借书、还书界面
     private JTextField returnIDText;
-    private JButton qrReturnButton,qxReturnButton; //lendPane&returnPane
+    private JButton qrReturnButton, qxReturnButton; //lendPane&returnPane
     private JLabel ReturnLabel;
     private LibraryStu t;
 
+    JScrollPane scrollPane2;
+    JTable table;
+
     public LibraryStu2(LibraryStu tem) {
         tem.dispose();
-        ArrayList<Book> booklist = new ArrayList<Book>();
 
-        t=tem;
+        t = tem;
 
         contentPane = new JPanel();
         lendPane = new JPanel();
@@ -44,14 +49,14 @@ public class LibraryStu2 extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null); // 使用绝对定位
         // 创建带有背景图片的JLabel
-        ImageIcon image = new ImageIcon("VCampusClient/Image/LibraryStu2.png");
+        ImageIcon image = new ImageIcon("VCampusClient/Image/LibraryStu2new.png");
         JLabel backlabel = new JLabel(image);
         //获取当前屏幕的尺寸（长、宽的值）
         Toolkit k = Toolkit.getDefaultToolkit();
         Dimension d = k.getScreenSize();
         //将当前窗口设置到屏幕正中央进行显示
-        setBounds(d.width / 2 - 847 / 2, d.height / 2 - 429 / 2, 847, 429);
-        backlabel.setSize(847, 429);
+        setBounds(d.width / 2 - 848 / 2, d.height / 2 - 594 / 2, 848, 594);
+        backlabel.setSize(848, 594);
         this.getLayeredPane().add(backlabel, new Integer(Integer.MIN_VALUE));
         backlabel.setOpaque(false); // 设置背景透明
         setResizable(false); //阻止用户拖拽改变窗口的大小
@@ -61,10 +66,83 @@ public class LibraryStu2 extends JFrame {
         returnIDText.setForeground(SystemColor.textText);
         returnIDText.setFont(new Font("华文行楷", Font.PLAIN, 32));
         returnIDText.setVisible(true);
-        returnIDText.setBounds(269, 154, 632-269, 193-154);
-        add(returnIDText,0);
+        returnIDText.setBounds(180, 497, 541 - 180, 537 - 497);
+        add(returnIDText, 0);
         returnIDText.setOpaque(false);
-        returnIDText.setBorder(new EmptyBorder(0,0,0,0));
+        returnIDText.setBorder(new EmptyBorder(0, 0, 0, 0));
+
+
+        ArrayList<Book> bookborringrecord = new ArrayList<Book>();
+        Message mes = new Message();
+        setLayout(null);
+        Client client = new Client(ClientMainFrame.socket);
+        mes.setModuleType(ModuleType.Library);
+        mes.setMessageType(MessageType.LibraryBookGetLend);
+        mes.setData(t.uID);
+        Message serverResponse = new Message();
+        serverResponse = client.sendRequestToServer(mes);
+        bookborringrecord = (ArrayList<Book>) serverResponse.getData();
+
+
+        Object[][] tableDate = new Object[bookborringrecord.size()][6];
+
+        for (int i = 0; i < bookborringrecord.size(); i++) {
+
+            tableDate[i][0] = bookborringrecord.get(i).getName();
+            tableDate[i][1] = bookborringrecord.get(i).getId();
+            tableDate[i][2] = bookborringrecord.get(i).getAuthor();
+            tableDate[i][3] = bookborringrecord.get(i).getPress();
+            tableDate[i][4] = String.valueOf(bookborringrecord.get(i).getStock());
+            if (bookborringrecord.get(i).getState() == true)
+                tableDate[i][5] = "已还";
+            else
+                tableDate[i][5] = "未还";
+        }
+
+
+        String[] tablename = {/*"序号",*/"书名", "书号", "作者", "出版社", "借阅者", "状态"};
+        DefaultTableModel dataModel1 = new DefaultTableModel(tableDate, tablename);
+        table = new JTable(dataModel1);
+        //table = new JTable(tableDate,tablename);
+		/*table.setBackground(Color.WHITE);
+		table.setFillsViewportHeight(true);*/
+
+        scrollPane2 = new JScrollPane();
+        scrollPane2.setOpaque(false);
+        scrollPane2.getViewport().setOpaque(false);
+        scrollPane2.setViewportView(table);
+        table.setBounds(0, 0, 774 - 81, 455 - 113);
+        add(scrollPane2);
+        scrollPane2.setBounds(81, 113, 774 - 81, 455 - 113);
+        scrollPane2.setVisible(true);
+        setVisible(true);
+
+        //透明化处理
+        table.setForeground(Color.BLACK);
+        table.setFont(new Font("Serif", Font.BOLD, 28));
+        table.setRowHeight(40);                //表格行高
+        table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setOpaque(false);    //设置透明
+        String[] Names = {
+                /*"序号",*/"书名", "书号", "作者", "出版社", "借阅者", "状态"};
+        for (int i = 0; i < 6; i++) {
+            table.getColumn(Names[i]).setCellRenderer(renderer);//单格渲染
+            TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+            column.setHeaderRenderer(renderer);//表头渲染
+        }
+        table.setOpaque(false);
+        table.getTableHeader().setOpaque(false);
+        table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+        scrollPane2.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+        scrollPane2.setOpaque(false);
+        scrollPane2.getViewport().setOpaque(false);
+        scrollPane2.setColumnHeaderView(table.getTableHeader());
+        scrollPane2.getColumnHeader().setOpaque(false);
+
+        add(scrollPane2);
+
 
         add(backlabel);
 
@@ -78,7 +156,7 @@ public class LibraryStu2 extends JFrame {
         qrReturnButton.setFont(new Font("华文行楷", Font.BOLD, 25));
         qrReturnButton.setBackground(Color.LIGHT_GRAY);
         qrReturnButton.setVisible(true);
-        qrReturnButton.setBounds(256, 274, 359-256, 331-274);
+        qrReturnButton.setBounds(576, 492, 673 - 576, 543 - 492);
         qrReturnButton.setVisible(true);
         add(qrReturnButton,-1);
         qrReturnButton.setOpaque(false);
@@ -93,7 +171,7 @@ public class LibraryStu2 extends JFrame {
         qxReturnButton.setFont(new Font("华文行楷", Font.BOLD, 25));
         qxReturnButton.setBackground(Color.LIGHT_GRAY);
         qxReturnButton.setVisible(true);
-        qxReturnButton.setBounds(524, 273, 359-256, 331-274);
+        qxReturnButton.setBounds(707, 492, 673 - 576, 543 - 492);
         qxReturnButton.setVisible(true);
         add(qxReturnButton,-1);
         qxReturnButton.setOpaque(false);

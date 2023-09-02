@@ -8,7 +8,6 @@ import seu.list.server.db.SqlHelperImp;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -44,6 +43,9 @@ public class LibraryUserServer extends Library_DbAccess {
         switch (this.mesFromClient.getMessageType()) {
             case MessageType.LibraryBookGetAll:
                 this.mesToClient.setData(this.createList());
+                break;
+            case MessageType.LibraryBookGetLend:
+                this.mesToClient.setData(this.createBorrowList(this.mesFromClient.getData().toString()));
                 break;
             case MessageType.LibraryBookAdd:
                 this.mesToClient.setData(this.AddBook((String[]) this.mesFromClient.getData()));
@@ -187,8 +189,8 @@ public class LibraryUserServer extends Library_DbAccess {
 
             int result = 0;
             ResultSet rsr = s.executeQuery("select * from tb_BookList where ID='" + bookid + "'");
-            Integer stock = 0;
-            Integer state = 0;
+            int stock = 0;
+            int state = 0;
             if (rsr.next()) {
                 stock = rsr.getInt("Stock");
                 state = rsr.getInt("State");
@@ -249,8 +251,8 @@ public class LibraryUserServer extends Library_DbAccess {
             int result = 0;
             ResultSet rsr = s.executeQuery("select * from tb_BookList where ID='" + bookid + "'");
             //Integer Max=0;
-            Integer Stock = 0;
-            Integer state = 0;
+            int Stock = 0;
+            int state = 0;
             if (rsr.next()) {
                 //Max=rsr.getInt("Max");
                 Stock = rsr.getInt("Stock");
@@ -258,8 +260,8 @@ public class LibraryUserServer extends Library_DbAccess {
             } else
                 return 0;
             //更新借阅记录表
-            boolean borrow=false;
-            ArrayList<Book> borrowbooklist = new ArrayList<>();
+            boolean borrow = false;
+            ArrayList<Book> borrowbooklist;
             borrowbooklist = createBorrowList(uid);
             for (int i = 0; i < borrowbooklist.size(); i++) {
                 Book tbook = borrowbooklist.get(i);
@@ -320,7 +322,7 @@ public class LibraryUserServer extends Library_DbAccess {
         int res = 0;
 
         try {
-            int result = 0;
+            int result;
             con = getConnection();
             s = con.createStatement();// 创建SQL语句对象
 
@@ -400,7 +402,7 @@ public class LibraryUserServer extends Library_DbAccess {
             if (res != null) {
                 result = s.executeUpdate("update tb_BookList set " + attr + "='" + modattr + "' where ID='" + bookid + "'");
                 if (attr.equals("Max")) {
-                    int ms = Integer.valueOf(modattr);
+                    int ms = Integer.parseInt(modattr);
                     if (ms == 0)
                         result = s.executeUpdate("update tb_BookList set State=0 where ID='" + bookid + "'");
                     else

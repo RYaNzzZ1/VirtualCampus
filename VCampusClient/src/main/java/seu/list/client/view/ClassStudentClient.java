@@ -85,7 +85,7 @@ public class ClassStudentClient extends JFrame {
 
 		int studenttemp = 0;
 		while(studenttemp < StuAll.size()) {
-			String tempid = StuAll.get(studenttemp).getStudentid();
+			String tempid = StuAll.get(studenttemp).getId();
 			id.replaceAll("\\p{C}", "");
 			tempid.replaceAll("\\p{C}", "");
 			if(tempid.equals(id)) {
@@ -116,7 +116,7 @@ public class ClassStudentClient extends JFrame {
 		studentid.setFont(new Font("华文行楷", Font.PLAIN, 24));
 		studentid.setBounds(545,91,783-545,128-91);
 		studentid.setText("null");
-		studentid.setText(id);
+		studentid.setText(thisStu.getStudentid());
 		add(studentid);
 		studentid.setOpaque(false);
 		studentid.setBorder(new EmptyBorder(0,0,0,0));

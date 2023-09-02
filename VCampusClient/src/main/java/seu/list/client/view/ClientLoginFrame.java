@@ -140,26 +140,31 @@ public class ClientLoginFrame extends JFrame implements ActionListener {
         else if(arg0.getActionCommand().equals("jb_login"))
         {
             //登录界面
-
-            Client ccs = new Client(this.socket);
-            User u=new User();
-            u.setPwd(jpf_password.getText());
-            u.setId(jtf_user.getText());
-            Message mes=new Message();
-            mes.setContent(u.getContent());
-            mes.setModuleType(ModuleType.User);
-            mes.setMessageType(MessageType.REQ_LOGIN);
-            Message res=ccs.sendRequestToServer(mes);
-            int sign=res.getUserType();
-            u = (User)res.getData();
-
             if(flag==0)
             {
                 JOptionPane.showMessageDialog(null, "验证码错误");
+                vcode.nextCode();//自动切换到下一个
             }
             if(flag==1)
             {
-                if(sign==0||sign==1) {
+                //登录界面
+                Client ccs = new Client(this.socket);
+                User u=new User();
+                u.setPwd(jpf_password.getText());
+                u.setId(jtf_user.getText());
+                Message mes=new Message();
+                mes.setContent(u.getContent());
+                mes.setModuleType(ModuleType.User);
+                mes.setMessageType(MessageType.REQ_LOGIN);
+                Message res=ccs.sendRequestToServer(mes);
+                int sign=res.getUserType();
+                u = (User)res.getData();
+
+                if(sign==0||sign==1||sign==30||sign==31) {
+                    if(sign>=30){//重复登录，之前的下线
+                        sign-=30;
+                        JOptionPane.showMessageDialog(null,"重复登录，之前的连接已断开","提示",JOptionPane.WARNING_MESSAGE);
+                    }
                     this.setVisible(false);
                     MainMenu csf = new MainMenu(sign, u.getId(), u.getPwd(), u.getName(), u.getMoney(), this.socket);
                     csf.setVisible(true);
@@ -170,6 +175,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener {
                 else{
                     JOptionPane.showMessageDialog(null,"用户名或密码错误！","错误",JOptionPane.ERROR_MESSAGE);
                 }
+
 
             }
         }

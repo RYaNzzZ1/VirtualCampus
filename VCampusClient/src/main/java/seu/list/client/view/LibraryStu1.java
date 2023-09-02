@@ -22,7 +22,7 @@ public class LibraryStu1 extends JFrame {
     private JTextField lendIDText;
     private JButton qrLendButton,qxLendButton; //lendPane&returnPane
     private LibraryStu t;
-
+    
     public LibraryStu1(LibraryStu tem) {
         tem.dispose();
         ArrayList<Book> booklist = new ArrayList<Book>();
@@ -119,13 +119,16 @@ public class LibraryStu1 extends JFrame {
         returnPane.setVisible(false);
         lendPane.setVisible(true);
 
-        Message mes =new Message();
-        Client client=new Client(ClientMainFrame.socket);
-        mes.setModuleType(ModuleType.Library);
-        mes.setMessageType(MessageType.LibraryBookLend);
-        mes.setData(lendIDText.getText());
-        Message serverResponse=new Message();
-        serverResponse=client.sendRequestToServer(mes);
+        String []data=new String[2];
+		data[0]=lendIDText.getText();
+		data[1]=t.uID;
+		Message mes =new Message();
+		Client client=new Client(ClientMainFrame.socket);
+		mes.setModuleType(ModuleType.Library);
+		mes.setMessageType(MessageType.LibraryBookLend);
+		mes.setData(data);
+		Message serverResponse=new Message();
+		serverResponse=client.sendRequestToServer(mes);
 
         int res = (int)serverResponse.getData();
 
@@ -147,7 +150,7 @@ public class LibraryStu1 extends JFrame {
 
     //借书取消
     protected void qxLendAvt(ActionEvent e) {
-        LibraryStu d=new LibraryStu();
+        LibraryStu d=new LibraryStu(t.uID);
         dispose();
     }
 

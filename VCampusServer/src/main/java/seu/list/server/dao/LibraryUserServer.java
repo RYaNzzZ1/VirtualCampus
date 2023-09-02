@@ -4,11 +4,14 @@ import seu.list.common.Book;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.server.db.Library_DbAccess;
+import seu.list.server.db.SqlHelperImp;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * @author 王映方
@@ -52,10 +55,10 @@ public class LibraryUserServer extends Library_DbAccess {
                 this.mesToClient.setData(this.FindBook(this.mesFromClient.getData().toString()));
                 break;
             case MessageType.LibraryBookLend:
-                this.mesToClient.setData(this.LendBook(this.mesFromClient.getData().toString()));
+                this.mesToClient.setData(this.LendBook((String[]) this.mesFromClient.getData()));
                 break;
             case MessageType.LibraryBookReturn:
-                this.mesToClient.setData(this.ReturnBook(this.mesFromClient.getData().toString()));
+                this.mesToClient.setData(this.ReturnBook((String[]) this.mesFromClient.getData()));
                 break;
             case MessageType.LibraryBookUpdate:
                 this.mesToClient.setData(this.ModifyBook((ArrayList<String>) this.mesFromClient.getData()));
@@ -105,7 +108,40 @@ public class LibraryUserServer extends Library_DbAccess {
         System.out.println("create completion\t");
         return bookList;
     }
+    /**
+     * 从数据库读取书籍借阅记录
+     *
+     * @return 书的列表
+     */
+    public ArrayList<Book> createBorrowList(String uid) {
+        ArrayList<Book> borrowbookList = new ArrayList<Book>();
+        try {
+            con = getConnection();
+            s = con.createStatement();// 创建SQL语句对象
+            rs = s.executeQuery("select * from tb_BookBorringRecord where scID='" + uid + "'");    // 查询学生借阅信息
 
+            //把数据库中的数据读入借阅列表
+            while (rs.next()) {
+                Book tempBook = new Book();
+                tempBook.setName(rs.getString("Name"));
+                tempBook.setId(rs.getString("ID"));
+                tempBook.setAuthor(rs.getString("Author"));
+                tempBook.setPress(rs.getString("Press"));
+                tempBook.setStock(rs.getInt("Num"));//保存记录编号
+                tempBook.setState((rs.getInt("State") == 0) ? false : true);
+                tempBook.setScid(uid);
+
+                borrowbookList.add(tempBook);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, rs, s);
+        }
+        System.out.println("create records completion\t");
+        return borrowbookList;
+    }
     /**
      * 通过书名或书号查找书籍
      *
@@ -134,15 +170,16 @@ public class LibraryUserServer extends Library_DbAccess {
     /**
      * 学生操作：借书
      *
-     * @param bookid 书号
+     * @param data 书号,学生ID
      * @return 操作结果<br>
      * return 0:书号不存在<br>
      * return {@code -}1:库存为0不可借<br>
      * return 正整数：操作正常
      */
-    public int LendBook(String bookid) { //用书号查找（唯一）
+    public int LendBook(String []data) { //用书号查找（唯一）
         //return 0:书号不存在  return -1:库存为0不可借
-
+        String bookid=data[0];
+        String uid=data[1];
         int res = 0;
         try {
             con = getConnection();
@@ -166,6 +203,16 @@ public class LibraryUserServer extends Library_DbAccess {
                     state = 1;
                 result = s.executeUpdate("update tb_BookList set Stock='" + stock + "' where ID='" + bookid + "'");
                 result = s.executeUpdate("update tb_BookList set State='" + state + "' where ID='" + bookid + "'");
+                //添加借阅记录
+                String sql="insert into tb_BookBorringRecord(Name,ID,Author,Press,scID,State) values(?,?,?,?,?,?)";
+                String []paras=new String[6];
+                paras[0]=rsr.getString("Name");
+                paras[1]=rsr.getString("ID");
+                paras[2]=rsr.getString("Author");
+                paras[3]=rsr.getString("Press");
+                paras[4]=uid;
+                paras[5]="0";//借阅
+                new SqlHelperImp().sqlUpdate(sql,paras);
             } else {
                 return -1;
             }
@@ -185,13 +232,15 @@ public class LibraryUserServer extends Library_DbAccess {
     /**
      * 学生操作：还书
      *
-     * @param bookid 书号
+     * @param data 书号,学生ID
      * @return 操作结果<br>
      * return 0:书号不存在<br>
      * return 正整数：操作正常
      */
-    public int ReturnBook(String bookid) {
+    public int ReturnBook(String[] data) {
         //return 0:书号不存在
+        String bookid=data[0];
+        String uid=data[1];
         int res = 0;
         try {
             con = getConnection();
@@ -199,21 +248,40 @@ public class LibraryUserServer extends Library_DbAccess {
 
             int result = 0;
             ResultSet rsr = s.executeQuery("select * from tb_BookList where ID='" + bookid + "'");
-            Integer Max=0;
+            //Integer Max=0;
             Integer Stock = 0;
             Integer state = 0;
             if (rsr.next()) {
-                Max=rsr.getInt("Max");
+                //Max=rsr.getInt("Max");
                 Stock = rsr.getInt("Stock");
                 state = rsr.getInt("State");
             } else
                 return 0;
-            Stock = Stock + 1;
-            if(Stock>Max){
+            //更新借阅记录表
+            boolean borrow=false;
+            ArrayList<Book> borrowbooklist = new ArrayList<>();
+            borrowbooklist = createBorrowList(uid);
+            for (int i = 0; i < borrowbooklist.size(); i++) {
+                Book tbook = borrowbooklist.get(i);
+                if (Objects.equals(tbook.getId(), bookid) && tbook.getState()==false) {
+                    int Num=tbook.getStock();//获取第一条记录的编号
+                    //s.executeUpdate("update tb_BookBorringRecord set State = 1 where ID='"+bookid+"'and scID='"+uid+"'");
+                    con = getConnection();
+                    s = con.createStatement();// 创建SQL语句对象
+                    s.executeUpdate("update tb_BookBorringRecord set State = 1 where Num='"+Num+"'");
+                    borrow=true;
+                    break;
+                }
+            }
+            if(borrow) {
+                Stock = Stock + 1;
+                /*if(Stock>Max){
                 res=-1;
                 System.out.println("Invaild operation");
-            }else{
-                result = s.executeUpdate("update tb_BookList set Stock='" + Stock + "' where ID='" + bookid + "'");
+                }else{*/
+                con = getConnection();
+                s = con.createStatement();// 创建SQL语句对象
+                result = s.executeUpdate("update tb_BookList set Stock='" + Stock + "' where ID='" + bookid + "' ");
                 if (state == 0) {
                     result = s.executeUpdate("update tb_BookList set State=1 where ID='" + bookid + "'");
                 }
@@ -221,6 +289,9 @@ public class LibraryUserServer extends Library_DbAccess {
                     res = result;
                     System.out.println("Return completion\t");
                 }
+                //}
+            }else{
+                return -1;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -258,7 +329,7 @@ public class LibraryUserServer extends Library_DbAccess {
                 return 0;
 
             result = s.executeUpdate("insert into tb_BookList values('" + arr[0] + "','" + arr[1] + "','" + arr[2] +
-                    "','" + arr[3] + "','" + arr[4] + "','" + arr[4] + "','" + 1 + "')");
+                    "','" + arr[3] + "','" + arr[4] + "','" + 1 + "','" + arr[4] + "')");
 
             if (result > 0) {
                 res = result;

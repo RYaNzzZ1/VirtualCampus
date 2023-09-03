@@ -206,8 +206,11 @@ public class ShopSever extends Shop_DbAccess {
             }
             con = getConnection();
             s = con.createStatement();
+            rs = s.executeQuery("select TurnOver from tb_Goods where GoodsID=" + "'-1'");
+            rs.next();
+            money += Double.parseDouble((rs.getString(1)));
             result = s.executeUpdate("update tb_Goods set TurnOver='" + money + "'where GoodsID='" + (-1) + "'");//第一行放营收额
-            closeConnection(con, rs, s);
+            closeConnection(con, this.rs, s);
             System.out.println(money);
         } catch (Exception e) {
             e.printStackTrace();

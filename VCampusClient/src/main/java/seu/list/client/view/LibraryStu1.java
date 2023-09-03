@@ -113,6 +113,8 @@ public class LibraryStu1 extends JFrame {
         this.setLocationRelativeTo(null);
 
     }
+
+    //借书确认响应
     protected void LendAvt(ActionEvent e) {
 
         contentPane.setVisible(false);
@@ -120,23 +122,22 @@ public class LibraryStu1 extends JFrame {
         lendPane.setVisible(true);
 
         String []data=new String[2];
-		data[0]=lendIDText.getText();
-		data[1]=t.uID;
-		Message mes =new Message();
-		Client client=new Client(ClientMainFrame.socket);
-		mes.setModuleType(ModuleType.Library);
-		mes.setMessageType(MessageType.LibraryBookLend);
-		mes.setData(data);
-		Message serverResponse=new Message();
-		serverResponse=client.sendRequestToServer(mes);
+        data[0]=lendIDText.getText();
+        data[1]=t.uID;
+        Message mes =new Message();
+        Client client=new Client(ClientMainFrame.socket);
+        mes.setModuleType(ModuleType.Library);
+        mes.setMessageType(MessageType.LibraryBookLend);
+        mes.setData(data);
+        Message serverResponse=new Message();
+        serverResponse=client.sendRequestToServer(mes);
 
         int res = (int)serverResponse.getData();
 
         if(res==0) {
             JOptionPane.showMessageDialog(null, "该书号不存在！", "警告", JOptionPane.WARNING_MESSAGE);
             return;
-        }else if(res==-1)
-        {
+        }else if(res==-1) {
             JOptionPane.showMessageDialog(null, "该书库存为0不可借", "警告", JOptionPane.WARNING_MESSAGE);
             return;
         }else if(res > 0)
@@ -146,6 +147,7 @@ public class LibraryStu1 extends JFrame {
 
 
         lendIDText.setText("");
+        dispose();
     }
 
     //借书取消

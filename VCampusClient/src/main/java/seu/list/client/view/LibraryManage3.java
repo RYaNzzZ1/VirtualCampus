@@ -232,6 +232,7 @@ public class LibraryManage3 extends JFrame {
         buttonGroup.clearSelection();
 
         t.SetTableShow();
+        dispose();
 
     }
 

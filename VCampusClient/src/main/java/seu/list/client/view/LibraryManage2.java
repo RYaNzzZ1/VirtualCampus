@@ -12,8 +12,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class LibraryManage2 extends JFrame {
@@ -123,6 +121,7 @@ public class LibraryManage2 extends JFrame {
         JOptionPane.showMessageDialog(null, "完成");
 
         t.SetTableShow();
+        dispose();
 
     }
 

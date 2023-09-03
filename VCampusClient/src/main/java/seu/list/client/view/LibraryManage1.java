@@ -177,17 +177,7 @@ public class LibraryManage1 extends JFrame {
         JOptionPane.showMessageDialog(null,"完成");
 
         t.SetTableShow();
-        contentPane.setVisible(true);
-        modifyPane.setVisible(false);
-        panel.setVisible(false);
-        addPane.setVisible(false);
-        deletePane.setVisible(false);
-
-        addNameText.setText("");
-        addIDText.setText("");
-        addAuthorText.setText("");
-        addPressText.setText("");
-        addStockText.setText("");
+        dispose();
     }
 
 

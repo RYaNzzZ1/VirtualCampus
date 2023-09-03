@@ -100,7 +100,7 @@ public class LibraryStu2 extends JFrame {
         }
 
 
-        String[] tablename = {/*"序号",*/"书名", "书号", "作者", "出版社", "借阅者", "状态"};
+        String[] tablename = {/*"序号",*/"书名", "书号", "作者", "出版社", "序号", "状态"};
         DefaultTableModel dataModel1 = new DefaultTableModel(tableDate, tablename);
         table = new JTable(dataModel1);
         //table = new JTable(tableDate,tablename);
@@ -212,6 +212,7 @@ public class LibraryStu2 extends JFrame {
         t.SetTableShow();
 
         returnIDText.setText("");
+        dispose();
     }
 
     //还书取消

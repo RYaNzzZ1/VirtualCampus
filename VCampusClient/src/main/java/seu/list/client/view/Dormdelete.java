@@ -6,18 +6,16 @@ package seu.list.client.view;
 
 import seu.list.client.bz.Client;
 import seu.list.client.bz.ClientMainFrame;
-import seu.list.common.*;
+import seu.list.common.Dormitory;
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
 
 import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -35,7 +33,7 @@ public class Dormdelete extends JDialog {
     /**
      * Create the dialog.
      */
-    public Dormdelete(DormitoryAdminClient c,Socket socket) {
+    public Dormdelete(DormitoryAdminClient c, Socket socket) {
         C = c;
         setVisible(true);
         setTitle("删除宿舍");
@@ -55,25 +53,14 @@ public class Dormdelete extends JDialog {
 
         setResizable(false); //阻止用户拖拽改变窗口的大小
 
-        //2.绘制退出按钮
-        //得到鼠标的坐标（用于推算对话框应该摆放的坐标）
-//		backgroundImageLabel.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				int x = e.getX();
-//				int y = e.getY();
-//				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
-//			}
-//		});
-
         //设置输入框
         DeuserIDField = new JTextField();
         DeuserIDField.setFont(new Font("微软雅黑", Font.PLAIN, 24));
         DeuserIDField.setColumns(20);
-        DeuserIDField.setBounds(278,231,365,44);
+        DeuserIDField.setBounds(278, 231, 365, 44);
         add(DeuserIDField);
         DeuserIDField.setOpaque(false);
-        DeuserIDField.setBorder(new EmptyBorder(0,0,0,0));
+        DeuserIDField.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         add(backgroundImageLabel);
 
@@ -85,7 +72,7 @@ public class Dormdelete extends JDialog {
                 okButton = new JButton("确定");
                 okButton.setActionCommand("OK");
                 getRootPane().setDefaultButton(okButton);
-                okButton.setBounds(266,354,102,56);
+                okButton.setBounds(266, 354, 102, 56);
                 add(okButton);
                 okButton.setOpaque(false);
                 okButton.addActionListener(new ActionListener() {
@@ -96,13 +83,12 @@ public class Dormdelete extends JDialog {
                         DeleteAct(e);
                         setVisible(false);
                     }
-
                 });
             }
             {
                 cancelButton = new JButton("取消");
                 cancelButton.setActionCommand("Cancel");
-                cancelButton.setBounds(540,352,102,56);
+                cancelButton.setBounds(540, 352, 102, 56);
                 add(cancelButton);
                 cancelButton.setOpaque(false);
                 cancelButton.addActionListener(new ActionListener() {
@@ -116,8 +102,10 @@ public class Dormdelete extends JDialog {
             }
         }
     }
+
     /**
      * 完成删除宿舍
+     *
      * @param
      */
     protected void DeleteAct(ActionEvent e) {
@@ -130,16 +118,14 @@ public class Dormdelete extends JDialog {
         Client client = new Client(ClientMainFrame.socket);
         System.out.println(DeuserIDField.getText());
         mes.setData(DeuserIDField.getText());
-        Message serverResponse=new Message();
-
-        serverResponse=client.sendRequestToServer(mes);
+        Message serverResponse = client.sendRequestToServer(mes);
 
         allDormitoryContents = (ArrayList<Dormitory>) serverResponse.getData();
         System.out.println(allDormitoryContents);
         C.setEnabled(true);
         C.updateFrameD(DeuserIDField.getText().toString());
         this.dispose();
-        JOptionPane.showMessageDialog(null,"完成","提示",JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "完成", "提示", JOptionPane.WARNING_MESSAGE);
     }
 
 }

@@ -35,6 +35,9 @@ public class DormApply extends JDialog {
         setVisible(true);
         setTitle("申请管理");
         setBounds(100, 100, 391, 283);
+
+        applyShow();
+
         //添加图标
         Image image = new ImageIcon("VCampusClient/src/main/resources/image/xiaobiao.jpg").getImage();
         setIconImage(image);
@@ -153,6 +156,17 @@ public class DormApply extends JDialog {
         this.setDefaultCloseOperation(2);
     }
 
+    private static void applyShow() {
+        Message mes = new Message();
+        mes.setUserType(1);
+        mes.setModuleType(ModuleType.Dormitory);
+        mes.setMessageType(MessageType.DormApplyShow);
+        Client client = new Client(ClientMainFrame.socket);
+        Message serverResponse = client.sendRequestToServer(mes);
+        ArrayList<Dormitory> dormitoriesWithApply = (ArrayList<Dormitory>) serverResponse.getData();
+        //展示
+    }
+
     private void applyDivestAct(ActionEvent e) {
         Message mes = new Message();
         mes.setUserType(1);
@@ -178,7 +192,6 @@ public class DormApply extends JDialog {
         mes.setMessageType(MessageType.DormCommitApply);
 
         Client client = new Client(ClientMainFrame.socket);
-        System.out.println("adsdhgifho");
         Message serverResponse = client.sendRequestToServer(mes);
 
         serverResponse = client.sendRequestToServer(mes);

@@ -370,8 +370,7 @@ public class Shop_AdminFrame {
         Message mes = new Message();
         mes.setMessageType(MessageType.Goodsgetturnover);
         mes.setModuleType(ModuleType.Shop);
-        Client client = null;
-        client = new Client(ClientMainFrame.socket);
+        Client client = new Client(ClientMainFrame.socket);
         Message serverResponse = client.sendRequestToServer(mes);
         Double total = (Double) serverResponse.getData();
         textField.setText(total + "");
@@ -387,8 +386,7 @@ public class Shop_AdminFrame {
         Message mes = new Message();
         mes.setMessageType(MessageType.Goodsgetall);
         mes.setModuleType(ModuleType.Shop);
-        Client client = null;
-        client = new Client(ClientMainFrame.socket);
+        Client client = new Client(ClientMainFrame.socket);
         Message serverResponse = client.sendRequestToServer(mes);
         GoodsList = (ArrayList<Goods>) serverResponse.getData();
 

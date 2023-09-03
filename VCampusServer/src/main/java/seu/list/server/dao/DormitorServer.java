@@ -62,6 +62,9 @@ public class DormitorServer extends Dormitory_DbAccess {
                     e3.printStackTrace();
                 }
                 break;
+            case MessageType.DormApplyShow:
+                this.mesToClient.setData(this.getDormitoriesByApply());
+                break;
             case MessageType.DormAdd:
                 try {
                     this.mesToClient.setData(this.Add((Dormitory) this.mesFromClient.getData()));
@@ -100,14 +103,14 @@ public class DormitorServer extends Dormitory_DbAccess {
                 break;
             case MessageType.DormCommitApply:
                 try {
-                    this.applySuccess();
+                    this.mesToClient.setData(this.applySuccess((ArrayList<String>) this.mesFromClient.getData()));
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
                 break;
             case MessageType.DormDivestApply:
                 try {
-                    this.applyFail();
+                    this.mesToClient.setData(this.applyFail((ArrayList<String>) this.mesFromClient.getData()));
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
@@ -125,68 +128,66 @@ public class DormitorServer extends Dormitory_DbAccess {
         }
     }
 
-    private void applyFail() throws SQLException {
+    private boolean applyFail(ArrayList<String> para) throws SQLException {
         con = this.getConnection();
         s = con.createStatement();
-        ResultSet rsUsrId1 = s.executeQuery("select * from tb_Dormitory where MaintainApply='Yes'");
-        while (rsUsrId1.next()) {
-            String usrID = rsUsrId1.getString(1);
-            System.out.println("usrID=" + usrID);
-            s.executeUpdate("update tb_Dormitory set MaintainApply='No'" + "where userID='" + usrID + "'");
-            ResultSet rsDormMaintain = s.executeQuery("select * from tb_Dormitory where userID='" + usrID + "'");
-            rsDormMaintain.next();
-            String maintain = rsDormMaintain.getString(7).split("-")[0];
-            System.out.println("dormMaintain=" + maintain);
-            rsDormMaintain.close();
-            s.executeUpdate("update tb_Dormitory set DormitoryMaintain='" + maintain + "-驳回"+"'where userID='" + usrID + "'");
+        int paraSize = para.size() / 2;
+        for (int i = 0; i < paraSize; i += 2) {
+            String uID = para.get(i);
+            String applyType = para.get(i + 1);
+            if (applyType.equals("MaintainApply")) {
+                s.executeUpdate("update tb_Dormitory set MaintainApply='No'" + "where userID='" + uID + "'");
+                ResultSet rsDormMaintain = s.executeQuery("select * from tb_Dormitory where userID='" + uID + "'");
+                rsDormMaintain.next();
+                String maintain = rsDormMaintain.getString(7).split("-")[0];
+                System.out.println("dormMaintain=" + maintain);
+                rsDormMaintain.close();
+                s.executeUpdate("update tb_Dormitory set DormitoryMaintain='" + maintain + "-否决" + "'where userID='" + uID + "'");
+            } else if (applyType.equals("ExchangeApply")) {
+                s.executeUpdate("update tb_Dormitory set ExchangeApply='No'" + "where userID='" + uID + "'");
+                ResultSet rsDormExchange = s.executeQuery("select * from tb_Dormitory where userID='" + uID + "'");
+                rsDormExchange.next();
+                String dormitoryExchange = rsDormExchange.getString(8).split("-")[0];
+                System.out.println("dormExchange=" + dormitoryExchange);
+                rsDormExchange.close();
+                s.executeUpdate("update tb_Dormitory set DormitoryID='" + dormitoryExchange + "'where userID='" + uID + "'");
+                s.executeUpdate("update tb_Dormitory set StudentExchange='" + dormitoryExchange + "-否决" + "'where userID='" + uID + "'");
+            } else {
+                return false;
+            }
         }
-        rsUsrId1.close();
-        ResultSet rsUsrId2 = s.executeQuery("select * from tb_Dormitory where ExchangeApply='Yes'");
-        while (rsUsrId2.next()) {
-            String usrID = rsUsrId2.getString("userID");
-            System.out.println("usrID=" + usrID);
-            s.executeUpdate("update tb_Dormitory set ExchangeApply='No'" + "where userID='" + usrID + "'");
-            ResultSet rsDormExchange = s.executeQuery("select * from tb_Dormitory where userID='" + usrID + "'");
-            rsDormExchange.next();
-            String dormitoryExchange = rsDormExchange.getString(8).split("-")[0];
-            System.out.println("dormExchange=" + dormitoryExchange);
-            rsDormExchange.close();
-            //s.executeUpdate("update tb_Dormitory set DormitoryID='" + dormitoryExchange + "'where userID='" + usrID + "'");
-            s.executeUpdate("update tb_Dormitory set StudentExchange='" + dormitoryExchange +"-驳回"+ "'where userID='" + usrID + "'");
-        }
-        rsUsrId2.close();
+        return true;
     }
 
-    private void applySuccess() throws SQLException {
+    private boolean applySuccess(ArrayList<String> para) throws SQLException {
         con = this.getConnection();
         s = con.createStatement();
-        ResultSet rsUsrId1 = s.executeQuery("select * from tb_Dormitory where MaintainApply='Yes'");
-        while (rsUsrId1.next()) {
-            String usrID = rsUsrId1.getString(1);
-            System.out.println("usrID=" + usrID);
-            s.executeUpdate("update tb_Dormitory set MaintainApply='No'" + "where userID='" + usrID + "'");
-            ResultSet rsDormMaintain = s.executeQuery("select * from tb_Dormitory where userID='" + usrID + "'");
-            rsDormMaintain.next();
-            String maintain = rsDormMaintain.getString(7).split("-")[0];
-            System.out.println("dormMaintain=" + maintain);
-            rsDormMaintain.close();
-            s.executeUpdate("update tb_Dormitory set DormitoryMaintain='" + maintain + "-成功"+"'where userID='" + usrID + "'");
+        int paraSize = para.size() / 2;
+        for (int i = 0; i < paraSize; i += 2) {
+            String uID = para.get(i);
+            String applyType = para.get(i + 1);
+            if (applyType.equals("MaintainApply")) {
+                s.executeUpdate("update tb_Dormitory set MaintainApply='No'" + "where userID='" + uID + "'");
+                ResultSet rsDormMaintain = s.executeQuery("select * from tb_Dormitory where userID='" + uID + "'");
+                rsDormMaintain.next();
+                String maintain = rsDormMaintain.getString(7).split("-")[0];
+                System.out.println("dormMaintain=" + maintain);
+                rsDormMaintain.close();
+                s.executeUpdate("update tb_Dormitory set DormitoryMaintain='" + maintain + "-成功" + "'where userID='" + uID + "'");
+            } else if (applyType.equals("ExchangeApply")) {
+                s.executeUpdate("update tb_Dormitory set ExchangeApply='No'" + "where userID='" + uID + "'");
+                ResultSet rsDormExchange = s.executeQuery("select * from tb_Dormitory where userID='" + uID + "'");
+                rsDormExchange.next();
+                String dormitoryExchange = rsDormExchange.getString(8).split("-")[0];
+                System.out.println("dormExchange=" + dormitoryExchange);
+                rsDormExchange.close();
+                s.executeUpdate("update tb_Dormitory set DormitoryID='" + dormitoryExchange + "'where userID='" + uID + "'");
+                s.executeUpdate("update tb_Dormitory set StudentExchange='" + dormitoryExchange + "-成功" + "'where userID='" + uID + "'");
+            } else {
+                return false;
+            }
         }
-        rsUsrId1.close();
-        ResultSet rsUsrId2 = s.executeQuery("select * from tb_Dormitory where ExchangeApply='Yes'");
-        while (rsUsrId2.next()) {
-            String usrID = rsUsrId2.getString("userID");
-            System.out.println("usrID=" + usrID);
-            s.executeUpdate("update tb_Dormitory set ExchangeApply='No'" + "where userID='" + usrID + "'");
-            ResultSet rsDormExchange = s.executeQuery("select * from tb_Dormitory where userID='" + usrID + "'");
-            rsDormExchange.next();
-            String dormitoryExchange = rsDormExchange.getString(8).split("-")[0];
-            System.out.println("dormExchange=" + dormitoryExchange);
-            rsDormExchange.close();
-            s.executeUpdate("update tb_Dormitory set DormitoryID='" + dormitoryExchange + "'where userID='" + usrID + "'");
-            s.executeUpdate("update tb_Dormitory set StudentExchange='" + dormitoryExchange + "-成功" + "'where userID='" + usrID + "'");
-        }
-        rsUsrId2.close();
+        return true;
     }
 
     /**
@@ -474,6 +475,38 @@ public class DormitorServer extends Dormitory_DbAccess {
             closeConnection(con, rs, s);
         }
         System.out.println("get all information");
+        return dorm;
+    }
+
+    private ArrayList<Dormitory> getDormitoriesByApply() //从数据库中获取所有数据
+    {
+        // TODO Auto-generated method stub
+        ArrayList<Dormitory> dorm = new ArrayList<>();
+        try {
+            con = getConnection();
+            s = con.createStatement();// 创建SQL语句对象
+            rs = s.executeQuery("select * from tb_Dormitory where MaintainApply=" + "'Yes'" + " or " + "ExchangeApply=" + "'Yes'"); // 查询商品信息
+            // 把数据库中的数据读入
+
+            while (rs.next()) {
+                Dormitory temp = new Dormitory();
+                temp.setuserID(rs.getString("userID"));
+                temp.setDormitoryID(rs.getString("DormitoryID"));
+                temp.setStudentBunkID(rs.getInt("StudentBunkID"));
+                temp.setWater(rs.getInt("Water"));
+                temp.setElectricity(rs.getInt("Electricity"));
+                temp.setDormitoryScore(rs.getInt("DormitoryScore"));
+                temp.setDormitoryMaintain(rs.getString("DormitoryMaintain"));
+                temp.setStudentExchange(rs.getString("StudentExchange"));
+                System.out.println(temp);
+                dorm.add(temp);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, rs, s);
+        }
+        System.out.println("get Apply information");
         return dorm;
     }
 

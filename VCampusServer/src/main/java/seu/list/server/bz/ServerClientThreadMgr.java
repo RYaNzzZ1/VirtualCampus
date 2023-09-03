@@ -3,6 +3,7 @@ package seu.list.server.bz;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
+import seu.list.common.User;
 
 import java.net.Socket;
 import java.util.*;
@@ -35,6 +36,17 @@ public class ServerClientThreadMgr {
 		System.out.println("用户:"+uid+"与"+"线程"+allocation.get(uid)+"解绑");
 		allocation.remove(uid);
 	}
+	public synchronized static void unbindbyid(String id){
+		for(String key:allocation.keySet()){
+			if(allocation.get(key)==id){
+				unbind(key);
+				User user=new User();
+				user.setId(key);
+				user.changeState(0);
+				break;
+			}
+		}
+	}
 	public synchronized static ServerSocketThread getPreThread(String uid){
 		String preid=allocation.get(uid);
 		ServerSocketThread pres=clientThreadPool.get(preid);
@@ -53,7 +65,7 @@ public class ServerClientThreadMgr {
 	 * @see Map#put(Object, Object)
 	 */
 	public synchronized static ServerSocketThread add(String id, ServerSocketThread clientThreadSrv) {
-		return clientThreadPool.put(id, clientThreadSrv);		
+		return clientThreadPool.put(id, clientThreadSrv);
 	}
 
 	/**
@@ -65,9 +77,9 @@ public class ServerClientThreadMgr {
 	 * @see Map#remove(Object)
 	 */
 	public synchronized static ServerSocketThread remove(String id) {
-		return clientThreadPool.remove(id);	
+		return clientThreadPool.remove(id);
 	}
-	
+
 
 	public synchronized static ServerSocketThread get(String id) {
 		ServerSocketThread ret = clientThreadPool.get(id);
@@ -80,10 +92,10 @@ public class ServerClientThreadMgr {
 	 * @author 吴慕陶
 	 * @version 1.0
 	 */
-	public synchronized static Map<String, ServerSocketThread> getPool(){	
+	public synchronized static Map<String, ServerSocketThread> getPool(){
 		return clientThreadPool;
 	}
-	
+
 	/**
 	 * 清空整个客户端线程池，会关闭所有客户端线程
 	 * @author 吴慕陶
@@ -97,9 +109,9 @@ public class ServerClientThreadMgr {
 
 			thd.close();
 		}
-		clientThreadPool.clear();		
+		clientThreadPool.clear();
 	}
-	
+
 	/**
 	 * 对所有客户端发送消息
 	 * @param mes 对所有客户端发送的消息
@@ -114,7 +126,7 @@ public class ServerClientThreadMgr {
 			thd.sendMesToClient(mes);
 		}
 	}
-	
+
 	/**
 	 * 打印目前连接到服务器上的所有客户端的信息
 	 * @author 吴慕陶
@@ -125,7 +137,7 @@ public class ServerClientThreadMgr {
 			System.out.println("目前没有客户端连接到服务器！");
 			return;
 		}
-		
+
 		Iterator<Map.Entry<String, ServerSocketThread>> entries = clientThreadPool.entrySet().iterator();
 		System.out.println("目前连接到服务器上的客户端: ");
 		while(entries.hasNext()) {
@@ -134,7 +146,7 @@ public class ServerClientThreadMgr {
 			System.out.println("客户端线程ID: " + thd.getCliThdID() + ", ip地址: " + thd.getIP());
 		}
 	}
-	
+
 	/**
 	 * 返回目前连接到服务器上的所有客户端的信息
 	 * @author 柳多荣
@@ -147,7 +159,7 @@ public class ServerClientThreadMgr {
 			System.out.println("目前没有客户端连接到服务器！");
 			return res;
 		}
-		
+
 		Iterator<Map.Entry<String, ServerSocketThread>> entries = clientThreadPool.entrySet().iterator();
 		System.out.println("目前连接到服务器上的客户端: ");
 		while(entries.hasNext()) {

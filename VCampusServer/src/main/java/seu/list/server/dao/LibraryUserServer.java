@@ -398,11 +398,17 @@ public class LibraryUserServer extends Library_DbAccess {
             s = con.createStatement();// 创建SQL语句对象
 
             //检查书号是否存在
-            ResultSet res = s.executeQuery("select count(*)  from tb_BookList where ID='" + bookid + "'");
-            if (res != null) {
+            ResultSet res = s.executeQuery("select *  from tb_BookList where ID='" + bookid + "'");
+            if (res.next()) {
+                int oldstock=res.getInt("Stock");
                 result = s.executeUpdate("update tb_BookList set " + attr + "='" + modattr + "' where ID='" + bookid + "'");
-                if (attr.equals("Max")) {
+                if (attr.equals("Stock")) {
+                    int oldmax= res.getInt("Max");
+                    int newmax=oldmax+Integer.valueOf(modattr)-oldstock;
+                    String newMax= String.valueOf(newmax);
                     int ms = Integer.parseInt(modattr);
+                    //同时提高上限
+                    result = s.executeUpdate("update tb_BookList set Max='"+newMax+"' where ID='" + bookid + "'");
                     if (ms == 0)
                         result = s.executeUpdate("update tb_BookList set State=0 where ID='" + bookid + "'");
                     else

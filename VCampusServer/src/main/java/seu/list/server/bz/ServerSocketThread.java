@@ -152,7 +152,7 @@ public class ServerSocketThread extends Thread {
 				break;
 			}
 			case ModuleType.Dormitory: {// 宿舍模块
-				DormitorServer dormitoryServer = new DormitorServer(message);
+				DormitoryServer dormitoryServer = new DormitoryServer(message);
 				dormitoryServer.execute();
 				serverResponse = dormitoryServer.getMesToClient();
 				System.out.println(serverResponse.getData());

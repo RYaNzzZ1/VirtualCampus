@@ -177,8 +177,6 @@ public class DormApply extends JDialog {
         System.out.println("adsdhgifho");
         Message serverResponse = client.sendRequestToServer(mes);
 
-        serverResponse = client.sendRequestToServer(mes);
-
         C.setEnabled(true);
 
         this.dispose();
@@ -194,15 +192,11 @@ public class DormApply extends JDialog {
         Client client = new Client(ClientMainFrame.socket);
         Message serverResponse = client.sendRequestToServer(mes);
 
-        serverResponse = client.sendRequestToServer(mes);
-
         C.setEnabled(true);
 
         this.dispose();
         JOptionPane.showMessageDialog(null, "完成", "提示", JOptionPane.WARNING_MESSAGE);
     }
-
-
 }
 
 

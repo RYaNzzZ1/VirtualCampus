@@ -12,7 +12,7 @@ import seu.list.server.db.Dormitory_DbAccess;
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DormitorServer extends Dormitory_DbAccess {
+public class DormitoryServer extends Dormitory_DbAccess {
     Connection con = null;
     Statement s = null;
     ResultSet rs = null;
@@ -22,7 +22,7 @@ public class DormitorServer extends Dormitory_DbAccess {
 
     ArrayList<Dormitory> dormitories = new ArrayList<Dormitory>();
 
-    public DormitorServer(Message mesFromClient) {
+    public DormitoryServer(Message mesFromClient) {
         super();
         this.mesFromClient = mesFromClient;
     }

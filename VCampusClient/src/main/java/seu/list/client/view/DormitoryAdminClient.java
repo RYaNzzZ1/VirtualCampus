@@ -192,11 +192,14 @@ public class DormitoryAdminClient extends JFrame {
             }
         });
 
+        //设置申请按钮
         JButton applyButton = new JButton("申请");
         applyButton.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-        applyButton.setBounds(104, 420, 120, 50);
+        applyButton.setBounds(105, 513, 120, 50);
         add(applyButton);
+        applyButton.setOpaque(false);
         applyButton.addActionListener(this::applyAct);
+
 
         //设置修改按钮
         JButton modifyNewButton = new JButton("修改");
@@ -215,13 +218,9 @@ public class DormitoryAdminClient extends JFrame {
         add(exitNewButton_1);
         exitNewButton_1.setOpaque(false);
 
-        exitNewButton_1.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
-                setVisible(false);
-            }
+        exitNewButton_1.addActionListener(e -> {
+            // TODO Auto-generated method stub
+            setVisible(false);
         });
 
 

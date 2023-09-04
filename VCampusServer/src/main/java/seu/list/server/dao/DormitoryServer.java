@@ -103,6 +103,9 @@ public class DormitoryServer extends Dormitory_DbAccess {
                 break;
             case MessageType.DormCommitApply:
                 try {
+                    for (String datum : (ArrayList<String>) this.mesFromClient.getData()) {
+                        System.out.println(datum);
+                    }
                     this.mesToClient.setData(this.applySuccess((ArrayList<String>) this.mesFromClient.getData()));
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
@@ -131,10 +134,11 @@ public class DormitoryServer extends Dormitory_DbAccess {
     private boolean applyFail(ArrayList<String> para) throws SQLException {
         con = this.getConnection();
         s = con.createStatement();
-        int paraSize = para.size() / 2;
-        for (int i = 0; i < paraSize; i += 2) {
-            String uID = para.get(i);
-            String applyType = para.get(i + 1);
+        System.out.println("dormserver:para:" + para);
+        for (int i = 0; i < para.size(); i += 2) {
+            String uID = para.get(i + 1);
+            String applyType = para.get(i);
+            System.out.println("applyType:" + applyType);
             if (applyType.equals("MaintainApply")) {
                 s.executeUpdate("update tb_Dormitory set MaintainApply='No'" + "where userID='" + uID + "'");
                 ResultSet rsDormMaintain = s.executeQuery("select * from tb_Dormitory where userID='" + uID + "'");
@@ -162,10 +166,9 @@ public class DormitoryServer extends Dormitory_DbAccess {
     private boolean applySuccess(ArrayList<String> para) throws SQLException {
         con = this.getConnection();
         s = con.createStatement();
-        int paraSize = para.size() / 2;
-        for (int i = 0; i < paraSize; i += 2) {
-            String uID = para.get(i);
-            String applyType = para.get(i + 1);
+        for (int i = 0; i < para.size(); i += 2) {
+            String uID = para.get(i + 1);
+            String applyType = para.get(i);
             if (applyType.equals("MaintainApply")) {
                 s.executeUpdate("update tb_Dormitory set MaintainApply='No'" + "where userID='" + uID + "'");
                 ResultSet rsDormMaintain = s.executeQuery("select * from tb_Dormitory where userID='" + uID + "'");

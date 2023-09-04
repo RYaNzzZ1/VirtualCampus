@@ -4,7 +4,7 @@ import seu.list.common.Book;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.server.db.Library_DbAccess;
-import seu.list.server.db.SqlHelperImp;
+import seu.list.server.db.SqlHelper;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -214,7 +214,7 @@ public class LibraryUserServer extends Library_DbAccess {
                 paras[3]=rsr.getString("Press");
                 paras[4]=uid;
                 paras[5]="0";//借阅
-                new SqlHelperImp().sqlUpdate(sql,paras);
+                new SqlHelper().sqlUpdate(sql,paras);
             } else {
                 return -1;
             }

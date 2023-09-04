@@ -1,15 +1,13 @@
 package seu.list.client.view;
 
-import seu.list.client.bz.Client;
-import seu.list.client.bz.ClientMainFrame;
+import seu.list.client.driver.Client;
+import seu.list.client.driver.ClientMainFrame;
 import seu.list.common.Book;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;
 
 import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -17,8 +15,6 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class LibraryManage extends JFrame {

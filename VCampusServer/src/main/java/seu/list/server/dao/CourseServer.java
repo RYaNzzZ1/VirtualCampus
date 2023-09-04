@@ -4,7 +4,7 @@ import seu.list.common.Course;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.User;
-import seu.list.server.db.SqlHelperImp;
+import seu.list.server.db.SqlHelper;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -15,15 +15,15 @@ import java.util.Vector;
  * @author 郭念宗
  * @version jdk1.8.0
  */
-public class CourseDaoImp implements CourseDao {
+public class CourseServer {
     // Modified by WU 8.16
     private Message mesFromClient;
     private Message mesToClient = new Message();
 
-    public CourseDaoImp() {
+    public CourseServer() {
     }
 
-    public CourseDaoImp(Message mesFromClient) {
+    public CourseServer(Message mesFromClient) {
         this.mesFromClient = mesFromClient;
     }
 
@@ -153,13 +153,12 @@ public class CourseDaoImp implements CourseDao {
     // Modified by WU 8.16
 
 
-    @Override
     public Course searchCourseByID(String courseID) {
         // TODO Auto-generated method stub
         String sql = "select * from tb_Class where cID =?";
         String[] paras = new String[1];
         paras[0] = courseID;
-        List<Course> cList = new SqlHelperImp().sqlCourseQuery(sql, paras);
+        List<Course> cList = new SqlHelper().sqlCourseQuery(sql, paras);
         if (cList != null && cList.size() > 0) {
             System.out.println(cList.get(0));
             return cList.get(0);
@@ -167,14 +166,13 @@ public class CourseDaoImp implements CourseDao {
             return null;
     }
 
-    @Override
     public List<Course> getAllCourse() {
         // TODO Auto-generated method stub
         String sql = "select * from tb_Class";
-        return new SqlHelperImp().sqlCourseQuery(sql, new String[]{});
+        return new SqlHelper().sqlCourseQuery(sql, new String[]{});
     }
 
-    @Override
+
     public boolean sigAddCourse(String courseID, String uID) {
         String[] paras2 = new String[3];
 
@@ -182,19 +180,18 @@ public class CourseDaoImp implements CourseDao {
         paras2[1] = uID;
         paras2[2] = courseID;
         String sql2 = "insert into tb_Stc(scID,uID,cID) values(?,?,?)";
-        return new SqlHelperImp().sqlUpdate(sql2, paras2);
+        return new SqlHelper().sqlUpdate(sql2, paras2);
     }
 
-    @Override
+
     public boolean sigRemoveCourse(String courseID, String uID) {
         String[] paras2 = new String[2];
         String sql2 = "delete from tb_Stc where uID = ? and cID = ?";
         paras2[0] = uID;
         paras2[1] = courseID;
-        return new SqlHelperImp().sqlUpdate(sql2, paras2);
+        return new SqlHelper().sqlUpdate(sql2, paras2);
     }
 
-    @Override
     public boolean genAddCourse(Course course) {
         // TODO Auto-generated method stub
         String sql = "insert into tb_Class(Semester,cID,CourseMajor,courseName,teacherID,CourseState,CourseType) values (?,?,?,?,?,?,?)";
@@ -206,16 +203,15 @@ public class CourseDaoImp implements CourseDao {
         paras[4] = course.getTeacherID();
         paras[5] = course.getCourseState();
         paras[6] = course.getCourseType();
-        return new SqlHelperImp().sqlUpdate(sql, paras);
+        return new SqlHelper().sqlUpdate(sql, paras);
     }
 
-    @Override
     public boolean genRemoveCourse(String courseName) {
         // TODO Auto-generated method stub
         String sql = "delete from tb_Class where courseName = ?";
         String[] paras = new String[1];
         paras[0] = courseName;
         System.out.println("课程名是：" + paras[0]);
-        return new SqlHelperImp().sqlUpdate(sql, paras);
+        return new SqlHelper().sqlUpdate(sql, paras);
     }
 }

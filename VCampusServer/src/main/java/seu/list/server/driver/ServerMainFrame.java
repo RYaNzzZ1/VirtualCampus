@@ -1,4 +1,4 @@
-package seu.list.server.bz;
+package seu.list.server.driver;
 
 import seu.list.common.IConstant;
 import seu.list.server.view.ServerFrame;

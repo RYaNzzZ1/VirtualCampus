@@ -1,11 +1,9 @@
 package seu.list.common;
 
 
-import seu.list.server.dao.CourseDaoImp;
-import seu.list.server.db.SqlHelperImp;
+import seu.list.server.dao.CourseServer;
+import seu.list.server.db.SqlHelper;
 
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -200,12 +198,12 @@ public class User implements java.io.Serializable {
         if(online==1){
             this.online="1";
             String sql="update tb_User set uOnline='" + "1" + "'where uID= ?";
-            new SqlHelperImp().sqlUpdate(sql, paras);
+            new SqlHelper().sqlUpdate(sql, paras);
         }
         else {
             this.online="0";
             String sql="update tb_User set uOnline='" + "0" + "'where uID= ?";
-            new SqlHelperImp().sqlUpdate(sql, paras);
+            new SqlHelper().sqlUpdate(sql, paras);
         }
     }
     /**
@@ -213,10 +211,10 @@ public class User implements java.io.Serializable {
      */
     public List<Course> getCourses() {
         String sql = "select * from tb_Stc where uID = ?";
-        List<String> courseIDset = new SqlHelperImp().sqlRelationQuery(sql, new String[]{id});
+        List<String> courseIDset = new SqlHelper().sqlRelationQuery(sql, new String[]{id});
         List<Course> cList = new ArrayList<Course>();
         for (String cID : courseIDset) {
-            cList.add(new CourseDaoImp().searchCourseByID(cID));
+            cList.add(new CourseServer().searchCourseByID(cID));
         }
         return cList;
     }

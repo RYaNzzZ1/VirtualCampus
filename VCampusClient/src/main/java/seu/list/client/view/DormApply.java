@@ -11,6 +11,10 @@ import javax.swing.*;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,11 +28,21 @@ public class DormApply extends JDialog {
     private JButton divestButton;
     private JButton cancelButton;
 
+
+    private JRadioButton exchangeButton;
+    private JRadioButton maintainButton;
+
+    private static JTable table;
+    private static JScrollPane scrollPane;
+
     private JPanel buttonPane;
     private JTextField DeuserIDField;
+    private JCheckBox[] jCheckBoxes;
 
     DormitoryAdminClient C;
     public ArrayList<Dormitory> allDormitoryContents;
+    private int dormSize;
+    private ArrayList<Dormitory> dormitoriesWithApply;
 
     public DormApply(DormitoryAdminClient c, Socket socket) {
         C = c;
@@ -156,15 +170,95 @@ public class DormApply extends JDialog {
         this.setDefaultCloseOperation(2);
     }
 
-    private static void applyShow() {
+    private void applyShow() {
         Message mes = new Message();
         mes.setUserType(1);
         mes.setModuleType(ModuleType.Dormitory);
         mes.setMessageType(MessageType.DormApplyShow);
         Client client = new Client(ClientMainFrame.socket);
         Message serverResponse = client.sendRequestToServer(mes);
-        ArrayList<Dormitory> dormitoriesWithApply = (ArrayList<Dormitory>) serverResponse.getData();
+        dormitoriesWithApply = (ArrayList<Dormitory>) serverResponse.getData();
+        dormSize = dormitoriesWithApply.size();
+        jCheckBoxes = new JCheckBox[dormSize];
+
         //展示
+        //显示宿舍信息的表格
+        scrollPane = new JScrollPane();
+        scrollPane.setEnabled(false);
+        scrollPane.setBounds(330, 100, 470, 400);
+        //表格放入带滑动条的容器中
+        table = new JTable();
+        table.setBackground(Color.WHITE);
+        scrollPane.setViewportView(table);
+        table.setBorder(new LineBorder(new Color(0, 0, 0)));
+        table.setRowHeight(25);
+        table.setModel(new DefaultTableModel(
+                new Object[][]{
+                },
+                new String[]{
+                        "学号", "宿舍号", "维修申请"
+                }
+        ) {
+            boolean[] columnEditables = new boolean[]{
+                    false, false, false
+            };
+
+            public boolean isCellEditable(int row, int column) {
+                return columnEditables[column];
+            }
+        });
+        // table.getColumnModel().getColumn(3).setPreferredWidth(79);
+        table.setBounds(0, 0, 470, 400);
+        table.getTableHeader().setReorderingAllowed(false);
+
+        scrollPane.setViewportView(table);
+
+
+        Object[][] dorminformation = {};
+        Object[] dormlist = {"学号", "宿舍号", "维修申请"};
+        DefaultTableModel model;
+        model = new DefaultTableModel(dorminformation, dormlist);
+
+
+        System.out.println("bbbbb");
+
+        for (int i = 0; i < dormitoriesWithApply.size(); i++) {
+            String[] arr = new String[3];
+            arr[0] = dormitoriesWithApply.get(i).getuserID();
+            arr[1] = dormitoriesWithApply.get(i).getDormitoryID();
+            arr[2] = dormitoriesWithApply.get(i).getDormitoryMaintain();
+
+            model.addRow(arr);
+            table.setModel(model);
+        }
+
+        //透明化处理
+        table.setForeground(Color.BLACK);
+        table.setFont(new Font("微软雅黑", Font.PLAIN, 22));
+        //table.getTableHeader().setFont(new Font("微软雅黑", Font.PLAIN, 5));
+        table.setRowHeight(40);                //表格行高
+        table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setOpaque(false);    //设置透明
+        String[] Names = {"学号", "宿舍号", "维修申请"};
+        for (int i = 0; i < 3; i++) {
+            //System.out.println(Names[i]);
+            //System.out.println(table.getColumn(Names[i]));
+            table.getColumn(Names[i]).setCellRenderer(renderer);//单格渲染
+            TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+            column.setHeaderRenderer(renderer);//表头渲染
+        }
+        table.setOpaque(false);
+        table.getTableHeader().setOpaque(false);
+        table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+        scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setColumnHeaderView(table.getTableHeader());
+        scrollPane.getColumnHeader().setOpaque(false);
+
+        add(scrollPane);
     }
 
     private void applyDivestAct(ActionEvent e) {
@@ -173,6 +267,23 @@ public class DormApply extends JDialog {
         mes.setModuleType(ModuleType.Dormitory);
         mes.setMessageType(MessageType.DormDivestApply);
 
+        String applyChoose = null;
+        if (exchangeButton.isSelected()) {
+            applyChoose = "ExchangeApply";
+        } else if (maintainButton.isSelected()) {
+            applyChoose = "MaintainApply";
+        }
+        if (applyChoose == null)
+            return;
+        ArrayList<String> para = new ArrayList<>();
+        for (int i = 0; i < jCheckBoxes.length; i++) {
+            if (jCheckBoxes[i].isSelected()) {
+                String uID = dormitoriesWithApply.get(i).getuserID();
+                para.add(applyChoose);
+                para.add(uID);
+            }
+        }
+        mes.setData(para);
         Client client = new Client(ClientMainFrame.socket);
         System.out.println("adsdhgifho");
         Message serverResponse = client.sendRequestToServer(mes);
@@ -188,6 +299,24 @@ public class DormApply extends JDialog {
         mes.setUserType(1);
         mes.setModuleType(ModuleType.Dormitory);
         mes.setMessageType(MessageType.DormCommitApply);
+
+        String applyChoose = null;
+        if (exchangeButton.isSelected()) {
+            applyChoose = "ExchangeApply";
+        } else if (maintainButton.isSelected()) {
+            applyChoose = "MaintainApply";
+        }
+        if (applyChoose == null)
+            return;
+        ArrayList<String> para = new ArrayList<>();
+        for (int i = 0; i < jCheckBoxes.length; i++) {
+            if (jCheckBoxes[i].isSelected()) {
+                String uID = dormitoriesWithApply.get(i).getuserID();
+                para.add(applyChoose);
+                para.add(uID);
+            }
+        }
+        mes.setData(para);
 
         Client client = new Client(ClientMainFrame.socket);
         Message serverResponse = client.sendRequestToServer(mes);

@@ -92,15 +92,15 @@ public class LibraryStu2 extends JFrame {
             tableDate[i][1] = bookborringrecord.get(i).getId();
             tableDate[i][2] = bookborringrecord.get(i).getAuthor();
             tableDate[i][3] = bookborringrecord.get(i).getPress();
-            tableDate[i][4] = String.valueOf(bookborringrecord.get(i).getStock());
+            //tableDate[i][4] = String.valueOf(bookborringrecord.get(i).getStock());
             if (bookborringrecord.get(i).getState() == true)
-                tableDate[i][5] = "已还";
+                tableDate[i][4] = "已还";
             else
-                tableDate[i][5] = "未还";
+                tableDate[i][4] = "未还";
         }
 
 
-        String[] tablename = {/*"序号",*/"书名", "书号", "作者", "出版社", "序号", "状态"};
+        String[] tablename = {/*"序号",*/"书名", "书号", "作者", "出版社", /*"序号",*/ "状态"};
         DefaultTableModel dataModel1 = new DefaultTableModel(tableDate, tablename);
         table = new JTable(dataModel1);
         //table = new JTable(tableDate,tablename);
@@ -126,8 +126,8 @@ public class LibraryStu2 extends JFrame {
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
         renderer.setOpaque(false);    //设置透明
         String[] Names = {
-                /*"序号",*/"书名", "书号", "作者", "出版社", "借阅者", "状态"};
-        for (int i = 0; i < 6; i++) {
+                /*"序号",*/"书名", "书号", "作者", "出版社", /*"序号",*/ "状态"};
+        for (int i = 0; i < 5; i++) {
             table.getColumn(Names[i]).setCellRenderer(renderer);//单格渲染
             TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
             column.setHeaderRenderer(renderer);//表头渲染

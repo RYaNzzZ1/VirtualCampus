@@ -71,7 +71,7 @@ public class DormitoryAdminClient extends JFrame {
         scrollPane.setViewportView(table);
         table.setBorder(new LineBorder(new Color(0, 0, 0)));
         table.setRowHeight(25);
-        //show();
+
         //table.setFont(new Font("华文行楷", Font.BOLD, 15));
         table.setModel(new DefaultTableModel(
                 new Object[][]{

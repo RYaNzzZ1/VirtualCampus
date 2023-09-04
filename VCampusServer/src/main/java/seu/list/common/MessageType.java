@@ -52,28 +52,28 @@ public final class MessageType {
     public static final String TestStudent = "TEST_STUDENT";
     
     //Dormitory
-    public static final String DormAdd="ADD_DORM";  //添加宿舍
-    public static final String DormDelete="REMOVE_DORM";  //删除宿舍
-    public static final String DormSearch="SEARCH_DORM";  //查找宿舍
-    public static final String DormAdShow="SHOW_AD_DORM";  //管理员显示
-    public static final String DormModify ="MODIFY_DORM"; 
+    public static final String DormAdd = "ADD_DORM";  //添加宿舍
+    public static final String DormDelete = "REMOVE_DORM";  //删除宿舍
+    public static final String DormSearch = "SEARCH_DORM";  //查找宿舍
+    public static final String DormAdShow = "SHOW_AD_DORM";  //管理员显示
+    public static final String DormModify = "MODIFY_DORM";
     public static final String DormStShow = "SHOW_ST_DORM";  //学生显示
     public static final String DormApplyShow = "SHOW_APPLY_DORM";  //学生显示
     public static final String DormMaintain = "MAINTAIN_DORM";  //维修设置
-    public static final String DormExcange="REXCHANGE_DORM";  //调换设置
-    public static final String DormUpdate="UPDATE_DORM";//更新id
+    public static final String DormExcange = "REXCHANGE_DORM";  //调换设置
+    public static final String DormUpdate = "UPDATE_DORM";//更新id
+    public static final String DormCommitApply = "DORM_COMMIT_APPLY";
+    public static final String DormDivestApply = "DORM_DIVEST_APPLY";
 
     //Shop
-    public static final String Goodsgetall="GETALL_GOODS";  
-    public static final String Goodsgetturnover="GET_TURNOVER"; //获得营收值
-    public static final String GoodsAdd="ADD_GOODS";  //管理员添加商品
-    public static final String GoodsDelete="REMOVE_GOODS";  //管理员删除商品
-    public static final String GoodsSearch_ID="SEARCH_GOODS_ID";  //ID查找商品
-    public static final String GoodsSearch_Name="SEARCH_GOODS_NAME";  //名称查找商品
-    public static final String Buy="BUY_GOODS";  //学生购买
-    public static final String ModifyGoods="MODIFY-GOODS"; //管理员改信息
+    public static final String Goodsgetall = "GETALL_GOODS";
+    public static final String Goodsgetturnover = "GET_TURNOVER"; //获得营收值
+    public static final String GoodsAdd = "ADD_GOODS";  //管理员添加商品
+    public static final String GoodsDelete = "REMOVE_GOODS";  //管理员删除商品
+    public static final String GoodsSearch_ID = "SEARCH_GOODS_ID";  //ID查找商品
+    public static final String GoodsSearch_Name = "SEARCH_GOODS_NAME";  //名称查找商品
+    public static final String Buy = "BUY_GOODS";  //学生购买
+    public static final String ModifyGoods = "MODIFY-GOODS"; //管理员改信息
 
-    public static final String DormCommitApply ="DORM_COMMIT_APPLY";
 
-    public static final String DormDivestApply ="DORM_DIVEST_APPLY";
 }

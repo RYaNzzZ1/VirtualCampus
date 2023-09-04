@@ -26,7 +26,6 @@ public class ServerFrame extends JFrame {
 		setBounds(d.width/2-640, d.height/2-360, 1280, 720);
 		backgroundImageLabel.setBounds(0, 0, 1280, 720);
 		setSize(1280,760);
-        //add(backgroundImageLabel);
         setResizable(false);
         add(backgroundImageLabel);
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -54,6 +53,7 @@ public class ServerFrame extends JFrame {
         });
 */
 
+
 		JButton btnNewButton_1 = new JButton("Launch");
         btnNewButton_1.setBounds(137, 139, 369 - 137, 227 - 139);
         btnNewButton_1.addActionListener(new ActionListener() {
@@ -61,6 +61,10 @@ public class ServerFrame extends JFrame {
                 int res = ServerMainFrame.launch();
                 if (res == 0) {
                     JOptionPane.showMessageDialog(null, "请勿重复启动服务器，或按help获取帮助", "错误", JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,"启动服务器成功","提示",JOptionPane.PLAIN_MESSAGE);
                 }
             }
         });
@@ -72,7 +76,11 @@ public class ServerFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int res = ServerMainFrame.closebtn();
                 if (res == 0) {
-                    JOptionPane.showMessageDialog(null, "还未启动服务器，或按help获取帮助", "错误", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "还未启动服务器", "错误", JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,"服务器关闭成功","提示",JOptionPane.PLAIN_MESSAGE);
                 }
             }
         });
@@ -84,7 +92,11 @@ public class ServerFrame extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int res = ServerMainFrame.reboot();
                 if (res == 0) {
-                    JOptionPane.showMessageDialog(null, "还未启动服务器，或按help获取帮助", "错误", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "还未启动服务器", "错误", JOptionPane.ERROR_MESSAGE);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,"重启服务器成功","提示",JOptionPane.PLAIN_MESSAGE);
                 }
             }
         });
@@ -98,8 +110,6 @@ public class ServerFrame extends JFrame {
                 if (res == 0) {
                     close();
                     ServerMainFrame.exitbtn();
-                } else {
-                    JOptionPane.showMessageDialog(null, "按help获取帮助", "提示", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
 		});

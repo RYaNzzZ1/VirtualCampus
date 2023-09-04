@@ -51,11 +51,12 @@ public class LibraryStu2 extends JFrame {
         // 创建带有背景图片的JLabel
         ImageIcon image = new ImageIcon("VCampusClient/Image/LibraryStu2new.png");
         JLabel backlabel = new JLabel(image);
+        backlabel.setBounds(0,0,848,594);
         //获取当前屏幕的尺寸（长、宽的值）
         Toolkit k = Toolkit.getDefaultToolkit();
         Dimension d = k.getScreenSize();
         //将当前窗口设置到屏幕正中央进行显示
-        setBounds(d.width / 2 - 848 / 2, d.height / 2 - 594 / 2, 848, 594);
+        setBounds(d.width / 2 - 848 / 2, d.height / 2 - 594 / 2, 848, 594+25);
         backlabel.setSize(848, 594);
         this.getLayeredPane().add(backlabel, new Integer(Integer.MIN_VALUE));
         backlabel.setOpaque(false); // 设置背景透明
@@ -100,7 +101,7 @@ public class LibraryStu2 extends JFrame {
         }
 
 
-        String[] tablename = {/*"序号",*/"书名", "书号", "作者", "出版社", /*"序号",*/ "状态"};
+        String[] tablename = {/*"序号",*/"书名", "书号", "作者", "出版社", "状态"};
         DefaultTableModel dataModel1 = new DefaultTableModel(tableDate, tablename);
         table = new JTable(dataModel1);
         //table = new JTable(tableDate,tablename);
@@ -126,7 +127,7 @@ public class LibraryStu2 extends JFrame {
         DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
         renderer.setOpaque(false);    //设置透明
         String[] Names = {
-                /*"序号",*/"书名", "书号", "作者", "出版社", /*"序号",*/ "状态"};
+                /*"序号",*/"书名", "书号", "作者", "出版社", "状态"};
         for (int i = 0; i < 5; i++) {
             table.getColumn(Names[i]).setCellRenderer(renderer);//单格渲染
             TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
@@ -212,7 +213,7 @@ public class LibraryStu2 extends JFrame {
         t.SetTableShow();
 
         returnIDText.setText("");
-        dispose();
+        //dispose();
     }
 
     //还书取消

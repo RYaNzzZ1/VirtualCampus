@@ -22,7 +22,7 @@ public class ClassManage implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private String ClassID = null;
+	private String classID = null;
 	private String Major = null;
 	private String TeacherID = null;
 	private int ClassSize = 0;//exist students' number
@@ -33,18 +33,18 @@ public class ClassManage implements Serializable{
 	
 	public ClassManage(String classid, String teacherID, String major, int classsize)
 	{
-		ClassID = classid;
+		classID = classid;
 		Major = major;
 		TeacherID = teacherID;
 		ClassSize = classsize;
 	}
 
 	public String getClassID() {
-		return ClassID;
+		return classID;
 	}
 
 	public void setClassID(String classID) {
-		ClassID = classID;
+		this.classID = classID;
 	}
 
 	public String getMajor() {
@@ -73,6 +73,6 @@ public class ClassManage implements Serializable{
 	
 	@Override
 	public String toString() {
-		return "Class{" + "ClassID" + ClassID + ", Major" + Major + ", TeacherID" + TeacherID + ", ClassSize" + ClassSize + "}";
+		return "Class{" + "ClassID" + classID + ", Major" + Major + ", TeacherID" + TeacherID + ", ClassSize" + ClassSize + "}";
 	}
 }

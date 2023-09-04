@@ -31,6 +31,7 @@ public final class MessageType {
 
     //server操作LibraryUser
     public static final String LibraryBookGetAll = "LIB_GETALL";
+    public static final String LibraryBookGetLend = "LIB_GETLEND";
     public static final String LibraryBookAdd = "LIB_ADD";
     public static final String LibraryBookDelete = "LIB_DELETE";
     public static final String LibraryBookUpdate = "LIB_UPDATE";  
@@ -56,8 +57,9 @@ public final class MessageType {
     public static final String DormSearch="SEARCH_DORM";  //查找宿舍
     public static final String DormAdShow="SHOW_AD_DORM";  //管理员显示
     public static final String DormModify ="MODIFY_DORM"; 
-    public static final String DormStShow="SHOW_ST_DORM";  //学生显示
-    public static final String DormMaintain="MAINTAIN_DORM";  //维修设置
+    public static final String DormStShow = "SHOW_ST_DORM";  //学生显示
+    public static final String DormApplyShow = "SHOW_APPLY_DORM";  //学生显示
+    public static final String DormMaintain = "MAINTAIN_DORM";  //维修设置
     public static final String DormExcange="REXCHANGE_DORM";  //调换设置
     public static final String DormUpdate="UPDATE_DORM";//更新id
 
@@ -70,5 +72,8 @@ public final class MessageType {
     public static final String GoodsSearch_Name="SEARCH_GOODS_NAME";  //名称查找商品
     public static final String Buy="BUY_GOODS";  //学生购买
     public static final String ModifyGoods="MODIFY-GOODS"; //管理员改信息
-    
+
+    public static final String DormCommitApply ="DORM_COMMIT_APPLY";
+
+    public static final String DormDivestApply ="DORM_DIVEST_APPLY";
 }

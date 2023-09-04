@@ -25,7 +25,7 @@ import java.net.SocketException;
  * @see Thread
  */
 public class ServerSocketThread extends Thread {
-	private Socket clientSocket = null;	
+	private Socket clientSocket = null;
 	private String id = null;
 	private boolean isClosed = false;
 
@@ -33,7 +33,7 @@ public class ServerSocketThread extends Thread {
 	 * 类{@code ServerSocketThread}的构造器，接收服务器主线程传入的参数，初始化{@code Socket}和线程ID
 	 * @param socket 该客户端线程对应的客户端{@code Socket}
 	 * @param id 该客户端线程的ID，由服务器主线程分配
-	 * @author 吴慕陶 
+	 * @author 吴慕陶
 	 * @version 1.0
 	 */
 	public ServerSocketThread(Socket socket, String id) {
@@ -59,32 +59,33 @@ public class ServerSocketThread extends Thread {
 			//start try
 			String cliIP = this.getIP();
 			System.out.println("已与客户端建立连接，当前客户端ip为：" + cliIP);
-			
+
 			while(!this.isClosed && !this.clientSocket.isClosed()) {
-				Message message = new Message();						
+				Message message = new Message();
 				ObjectInputStream request = new ObjectInputStream(clientSocket.getInputStream());
 				message = (Message)request.readObject();
 
 				System.out.println("-------------已收到客户端发送的请求-------------");
-				
+
 				if(message.isOffline()) { // 收到客户端的下线通知
 					System.out.println("客户端已下线，IP为: " + cliIP + ", 线程ID: " + this.id);
 					this.isClosed = true;
 					break;
 				}
-				
+
 				System.out.println("请求来自模块: " + message.getModuleType());
 				System.out.println("请求的操作类型: " + message.getMessageType());
-				
+
 				Message serverResponse = this.processMes(message); // 处理消息
-					
+
 				this.sendMesToClient(serverResponse); // 这里统一发回数据给客户端
-				
+
 				System.out.println("-------------已将数据发回客户端-------------");
 				System.out.println("");
 			} // end while
-						
+
 		}catch(SocketException se) {
+			ServerClientThreadMgr.unbindbyid(this.id);//异常终止时解绑
 			System.out.println("Socket closed");
 			System.out.println("客户端线程: " + this.id + "已关闭");
 		}catch(IOException e) {
@@ -97,7 +98,7 @@ public class ServerSocketThread extends Thread {
 			}
 		}
 	}
-	
+
 	/**
 	 * 处理从客户端收到的消息，根据消息的{@code ModuleType}来将消息分配给不同模块的{@code DAO}类处理 <br>
 	 * 各模块的{@code DAO}类会根据消息的{@code MessageType}来执行不同的数据库操作 <br>
@@ -151,7 +152,7 @@ public class ServerSocketThread extends Thread {
 				break;
 			}
 			case ModuleType.Dormitory: {// 宿舍模块
-				DormitorServer dormitoryServer = new DormitorServer(message);
+				DormitoryServer dormitoryServer = new DormitoryServer(message);
 				dormitoryServer.execute();
 				serverResponse = dormitoryServer.getMesToClient();
 				System.out.println(serverResponse.getData());
@@ -162,7 +163,7 @@ public class ServerSocketThread extends Thread {
 		}
 		return serverResponse;
 	}
-	
+
 	/**
 	 * 该方法将{@code DAO}类处理完毕后返回，需要发回客户端的消息统一发回
 	 * @param mes 发送回客户端的消息
@@ -181,7 +182,7 @@ public class ServerSocketThread extends Thread {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * 该方法调用后将关闭客户端线程，会使客户端与服务器断开连接
 	 * @author 吴慕陶
@@ -196,7 +197,7 @@ public class ServerSocketThread extends Thread {
 		}
 		System.out.println("关闭客户端线程：" + this.id);
 	}
-	
+
 	/**
 	 * 获取该客户端线程ID
 	 * @return 客户端线程ID
@@ -206,7 +207,7 @@ public class ServerSocketThread extends Thread {
 	public String getCliThdID() {
 		return this.id;
 	}
-	
+
 	/**
 	 * 获取该线程对应的客户端IP地址
 	 * @return 该客户端线程对应的客户端IP地址

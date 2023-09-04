@@ -1,125 +1,151 @@
 package seu.list.common;
 
 
+import java.io.Serializable;
 import java.util.Vector;
+
 /**
  * @author 郭念宗
  * @version jdk1.8.0
  */
-public class Course implements java.io.Serializable{
+public class Course implements Serializable {
+    private static final long serialVersionUID = 6424750174292826127L;
+    private String Semester;
+    private String CourseID;
+    private String CourseMajor;
+    private String CourseName;
+    private String teacherID;
+    private String CourseState;
+    private String CourseType;
 
+    /**
+     * 无参构造器
+     */
 
-	private static final long serialVersionUID = 6424750174292826127L;
-	private  String Semester;
-	private String CourseID;
-	private String CourseMajor;
-	private String CourseName;
-	private String teacherID;
-	private String CourseState;
-	private String CourseType;
+    public Course() {
+    }
 
+    /**
+     * 构造函数
+     *
+     * @param semester    授课学期
+     * @param courseID    课程编号
+     * @param courseMajor 专业
+     * @param courseName  课程名称
+     * @param teacherID   授课教师
+     * @param courseState 课程状态
+     * @param courseType  课程类型
+     */
+    public Course(String semester, String courseID, String courseMajor, String courseName, String teacherID, String courseState, String courseType) {
+        Semester = semester;
+        CourseID = courseID;
+        CourseMajor = courseMajor;
+        CourseName = courseName;
+        this.teacherID = teacherID;
+        CourseState = courseState;
+        CourseType = courseType;
+    }
 
+    /**
+     * @return 授课学期
+     */
+    public String getSemester() {
+        return Semester;
+    }
 
-	public Course() {
-	}
+    /**
+     * @param semester 书号
+     */
+    public void setSemester(String semester) {
+        Semester = semester;
+    }
 
-	public Course(String semester, String courseID, String courseMajor, String courseName, String teacherID, String courseState, String courseType) {
-		Semester = semester;
-		CourseID = courseID;
-		CourseMajor = courseMajor;
-		CourseName = courseName;
-		this.teacherID = teacherID;
-		CourseState = courseState;
-		CourseType = courseType;
-	}
+    /**
+     * @return 课程编号
+     */
+    public String getCourseID() {
+        return CourseID;
+    }
 
-	public String getSemester() {
-		return Semester;
-	}
+    /**
+     * @param courseID 课程编号
+     */
+    public void setCourseID(String courseID) {
+        CourseID = courseID;
+    }
 
-	public void setSemester(String semester) {
-		Semester = semester;
-	}
+    public String getCourseMajor() {
+        return CourseMajor;
+    }
 
-	public String getCourseID() {
-		return CourseID;
-	}
+    public void setCourseMajor(String courseMajor) {
+        CourseMajor = courseMajor;
+    }
 
-	public void setCourseID(String courseID) {
-		CourseID = courseID;
-	}
+    public String getCourseName() {
+        return CourseName;
+    }
 
-	public String getCourseMajor() {
-		return CourseMajor;
-	}
+    public void setCourseName(String courseName) {
+        CourseName = courseName;
+    }
 
-	public void setCourseMajor(String courseMajor) {
-		CourseMajor = courseMajor;
-	}
+    public String getTeacherID() {
+        return teacherID;
+    }
 
-	public String getCourseName() {
-		return CourseName;
-	}
+    public void setTeacherID(String teacherID) {
+        this.teacherID = teacherID;
+    }
 
-	public void setCourseName(String courseName) {
-		CourseName = courseName;
-	}
+    public String getCourseState() {
+        return CourseState;
+    }
 
-	public String getTeacherID() {
-		return teacherID;
-	}
+    public void setCourseState(String courseState) {
+        CourseState = courseState;
+    }
 
-	public void setTeacherID(String teacherID) {
-		this.teacherID = teacherID;
-	}
+    public String getCourseType() {
+        return CourseType;
+    }
 
-	public String getCourseState() {
-		return CourseState;
-	}
+    public void setCourseType(String courseType) {
+        CourseType = courseType;
+    }
 
-	public void setCourseState(String courseState) {
-		CourseState = courseState;
-	}
+    @Override
+    public String toString() {
+        return "Course{" +
+                "Semester='" + Semester + '\'' +
+                ", CourseID='" + CourseID + '\'' +
+                ", CourseMajor='" + CourseMajor + '\'' +
+                ", CourseName='" + CourseName + '\'' +
+                ", teacherID='" + teacherID + '\'' +
+                ", CourseState='" + CourseState + '\'' +
+                ", CourseType='" + CourseType + '\'' +
+                '}';
+    }
 
-	public String getCourseType() {
-		return CourseType;
-	}
+    public Vector<String> getContent() {
+        Vector<String> courseContents = new Vector<String>();
+        courseContents.add(Semester);
+        courseContents.add(CourseID);
+        courseContents.add(CourseMajor);
+        courseContents.add(CourseName);
+        courseContents.add(teacherID);
+        courseContents.add(CourseState);
+        courseContents.add(CourseType);
+        return courseContents;
+    }
 
-	public void setCourseType(String courseType) {
-		CourseType = courseType;
-	}
-
-	@Override
-	public String toString() {
-		return "Course{" +
-				"Semester='" + Semester + '\'' +
-				", CourseID='" + CourseID + '\'' +
-				", CourseMajor='" + CourseMajor + '\'' +
-				", CourseName='" + CourseName + '\'' +
-				", teacherID='" + teacherID + '\'' +
-				", CourseState='" + CourseState + '\'' +
-				", CourseType='" + CourseType + '\'' +
-				'}';
-	}
-
-	public Vector<String> getContent() {
-		Vector<String> courseContents = new Vector<String>();
-		courseContents.add(Semester);
-		courseContents.add(CourseID);
-		courseContents.add(CourseMajor);
-		courseContents.add(CourseName);
-		courseContents.add(teacherID);
-		courseContents.add(CourseState);
-		courseContents.add(CourseType);
-		return courseContents;
-	}
-	public void setContent(Vector<String> content) {
-		Semester = content.get(0);
-		CourseID = content.get(1);
-		CourseMajor = content.get(2);
-		CourseName = content.get(3);
-		teacherID = content.get(4);
-		CourseState=content.get(5);
-		CourseType=content.get(6);
-	}
+    public void setContent(Vector<String> content) {
+        Semester = content.get(0);
+        CourseID = content.get(1);
+        CourseMajor = content.get(2);
+        CourseName = content.get(3);
+        teacherID = content.get(4);
+        CourseState = content.get(5);
+        CourseType = content.get(6);
+    }
 }

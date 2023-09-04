@@ -17,6 +17,7 @@ public class User implements java.io.Serializable {
 	private String pwd;//6
 	private String role;//7
 	private String money;//8
+	private String online;//9
 	private Vector<String> userContents;
 	
 	public void print() {
@@ -33,6 +34,7 @@ public class User implements java.io.Serializable {
 		pwd = content.get(6);
 		role = content.get(7);
 		money = content.get(8);
+		online=content.get(9);
 	};
 
 	public String getId() {
@@ -89,6 +91,7 @@ public class User implements java.io.Serializable {
 	public void setMoney(String money) {
 		this.money = money;
 	}
+	public boolean getOnline(){return online == "1";}
 	public Vector<String> getContent() {
 		userContents = new Vector<String>();
 		userContents.add(id);
@@ -100,6 +103,8 @@ public class User implements java.io.Serializable {
 		userContents.add(pwd);
 		userContents.add(role);
 		userContents.add(money);
+		userContents.add(online);
 		return userContents;
 	}
+
 }

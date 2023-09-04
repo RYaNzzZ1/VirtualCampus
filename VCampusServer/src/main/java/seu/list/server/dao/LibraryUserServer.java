@@ -113,7 +113,7 @@ public class LibraryUserServer extends Library_DbAccess {
     /**
      * 从数据库读取书籍借阅记录
      *
-     * @return 书的列表
+     * @return 未归还书的列表
      */
     public ArrayList<Book> createBorrowList(String uid) {
         ArrayList<Book> borrowbookList = new ArrayList<Book>();
@@ -132,8 +132,8 @@ public class LibraryUserServer extends Library_DbAccess {
                 tempBook.setStock(rs.getInt("Num"));//保存记录编号
                 tempBook.setState((rs.getInt("State") == 0) ? false : true);
                 tempBook.setScid(uid);
-
-                borrowbookList.add(tempBook);
+                if(tempBook.getState()==false)
+                    borrowbookList.add(tempBook);
             }
 
         } catch (Exception e) {

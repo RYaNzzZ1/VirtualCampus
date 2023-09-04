@@ -21,7 +21,7 @@ import java.util.Vector;
 
 public class ClassAdminClient extends JFrame {
 
-    private JPanel contentPane;
+
     private JTextField search;
     private JTable table;
     private DefaultTableModel model;

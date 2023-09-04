@@ -1,4 +1,4 @@
-package seu.list.server.bz;
+package seu.list.server.driver;
 
 import java.io.IOException;
 import java.net.ServerSocket;

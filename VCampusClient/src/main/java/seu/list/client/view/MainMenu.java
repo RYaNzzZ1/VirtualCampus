@@ -1,7 +1,7 @@
 package seu.list.client.view;
 
-import seu.list.client.bz.Client;
-import seu.list.client.bz.ClientMainFrame;
+import seu.list.client.driver.Client;
+import seu.list.client.driver.ClientMainFrame;
 import seu.list.common.*;
 
 import javax.swing.*;

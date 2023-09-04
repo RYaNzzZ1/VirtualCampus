@@ -2,7 +2,7 @@
 package seu.list.client.view;
 
 
-import seu.list.client.bz.Client;
+import seu.list.client.driver.Client;
 import seu.list.common.Course;
 import seu.list.common.Message;
 import seu.list.common.ModuleType;
@@ -15,8 +15,6 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.SQLException;

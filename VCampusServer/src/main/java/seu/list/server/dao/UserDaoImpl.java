@@ -55,7 +55,8 @@ public class UserDaoImpl implements UserDao {
 						mesToClient.setUserType(2);
 					}else{
 						System.out.println("User " + u.getId() + " 验证成功 ");
-						mesToClient.setUserType(Integer.valueOf(user.getRole()));
+						int usertype=Integer.valueOf(user.getRole());
+						mesToClient.setUserType(usertype);
 						mesToClient.setData(user);
 
 						String uid= user.getId();
@@ -63,7 +64,7 @@ public class UserDaoImpl implements UserDao {
 						if(preid!=null) {//重复登录，下线之前登录的线程
 							ServerSocketThread prethread=ServerClientThreadMgr.getPreThread(uid);
 							prethread.close();
-							mesToClient.setUserType(3);
+							mesToClient.setUserType(30+usertype);
 							ServerClientThreadMgr.unbind(uid);
 						}
 						//绑定当前线程，用户状态变为在线

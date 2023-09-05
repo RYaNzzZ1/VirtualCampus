@@ -207,9 +207,10 @@ public class LibraryStu2 extends JFrame {
             JOptionPane.showMessageDialog(null, "非法操作:库存已达上限！", "错误", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        else if(res > 0)
-            JOptionPane.showMessageDialog(null,"还书完成","提示",JOptionPane.WARNING_MESSAGE);
-
+        else if(res > 0) {
+            JOptionPane.showMessageDialog(null, "还书完成", "提示", JOptionPane.WARNING_MESSAGE);
+            dispose();
+        }
         t.SetTableShow();
 
         returnIDText.setText("");

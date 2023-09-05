@@ -315,7 +315,7 @@ public class ClientRegisterFrame extends JFrame implements ActionListener{
 									JOptionPane.showMessageDialog(null, "您已经注册，请不要重复", "错误", JOptionPane.WARNING_MESSAGE);
 								} else if (sign == 0 || sign == 1) {
 									JOptionPane.showMessageDialog(null, "注册成功", "提示", JOptionPane.INFORMATION_MESSAGE);
-
+									this.dispose();
 									//update student message
 									if (role.equals("0")) {
 										if (jtf_sex.getText().equals("男")) {

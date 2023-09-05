@@ -7,6 +7,7 @@ import seu.list.server.bz.ServerClientThreadMgr;
 import seu.list.server.bz.ServerSocketThread;
 import seu.list.server.db.SqlHelperImp;
 import java.net.Socket;
+import java.sql.*;
 import java.util.List;
 import java.util.Vector;
 
@@ -42,7 +43,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	public UserDaoImpl(Message mesFromClient, String id){this.mesFromClient=mesFromClient;this.id=id;}
-		public void excute(){
+		public void excute() {
 			User u=new User();
 			u.setContent(mesFromClient.getContent());
 			switch (this.mesFromClient.getMessageType()){
@@ -155,7 +156,7 @@ public class UserDaoImpl implements UserDao {
 		}
 
 	@Override
-	public boolean updateUser(String userID, String newID) {
+	public boolean updateUser(String userID, String newID)  {
 		String sql = "select * from tb_User where uID= ?";
 		String []paras=new String[1];
 		paras[0]= userID;
@@ -172,12 +173,21 @@ public class UserDaoImpl implements UserDao {
 	}
 
 		@Override
-		public User addUser(User user) {
+		public User addUser(User user)  {
 			// TODO 自动生成的方法存根
-			String sql = "insert into tb_User(uID, uName, uAge, uSex,uGrade, uMajor,uPwd,uRole,uMoney) values (?,?,?,?,?,?,?,?,?)";
-			String[] paras = new String[9];
+			List<User> allu=getAllUsers();
+			int nextuid=allu.size()+2301;//uid按顺序加1
+			String sql2="update tb_Student set uID = ? where StudentID= ? ";
+			String []paras1= new String[2];
+			paras1[0]=String.valueOf(nextuid);
+			paras1[1]=user.getId();
+			new SqlHelperImp().sqlUpdate(sql2, paras1);
+
+			String sql = "insert into tb_User(uID, uName, uAge, uSex,uGrade, uMajor,uPwd,uRole,uMoney,StudentID) values (?,?,?,?,?,?,?,?,?,?)";
+			String[] paras = new String[10];
 			System.out.println(user);
-			paras[0] = user.getId();
+			//paras[0] = user.getId();
+			paras[0]= String.valueOf(nextuid);
 			paras[1] = user.getName();
 			paras[2] = user.getAge();
 			paras[3] = user.getSex();
@@ -186,11 +196,34 @@ public class UserDaoImpl implements UserDao {
 			paras[6] = user.getPwd();
 			paras[7] = user.getRole();
 			paras[8] = user.getMoney();
+			if(paras[7]=="0")//学生
+				paras[9]=user.getId();
+			else
+				paras[9]="";
 			new SqlHelperImp().sqlUpdate(sql, paras);
 			return searchUser(user.getId());
 		}
 
-		@Override
+	/*public Connection getConnection() {
+		try {
+			// 装载驱动
+			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+			String dbpath = "VCampusServer\\src\\main\\resources\\vCampus.accdb";
+			String user = "";
+			String passwd = "";
+			// 建立连接F
+			String url = "jdbc:ucanaccess://" + dbpath;
+			conn= DriverManager.getConnection(url, user, passwd);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return conn;
+	}*/
+
+	@Override
 		public boolean delUser(String userID) {
 			if(this.searchUser(userID).getRole()=="1"){
 				return false;
@@ -224,15 +257,17 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 		public User getUserByPwd(Vector<String> content) {
-			String sql = "select * from tb_User where uID= ? and uPwd=?";
-			String[] paras = new String[2];
+			String sql = "select * from tb_User where (uID= ? or StudentID=?) and uPwd=?";
+			String[] paras = new String[3];
 			paras[0] = content.get(0);
-			paras[1] = content.get(6);
+			paras[1]=content.get(0);
+			paras[2] = content.get(6);
 			List<User> users = new SqlHelperImp().sqlUserQuery(sql, paras);
+
 			if (users != null && users.size() > 0) {
 				return users.get(0);
 			} else
 				return null;
 		}
-
+		//public String getStudentId(String uid){}
 	}

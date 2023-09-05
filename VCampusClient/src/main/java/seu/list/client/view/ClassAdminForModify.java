@@ -1,19 +1,16 @@
 package seu.list.client.view;
 
-import seu.list.client.bz.Client;
-import seu.list.client.bz.ClientMainFrame;
+import seu.list.client.driver.Client;
+import seu.list.client.driver.ClientMainFrame;
 import seu.list.common.*;
 
 import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -33,73 +30,74 @@ public class ClassAdminForModify extends JFrame {
 	private Vector<Integer> StudentIndex = null;
 	private Vector<Integer> ClassIndex = null;
 	private JLabel lblNewLabel_1;
+	private  JScrollPane scrollPane;
 
 	private enum MODEL {
 		ClASSMODIFY, STUDENTMODIFY, CLASSTEMP, STUDENTTEMP
 	};
 
 	private MODEL now = MODEL.STUDENTMODIFY;
-
-	/**
-	 * Launch the application.
-	 */
-	/*
-	 * public static void main(String[] args) { EventQueue.invokeLater(new
-	 * Runnable() { public void run() { try { ClassAdminForAdd frame = new
-	 * ClassAdminForAdd(); frame.setVisible(true); } catch (Exception e) {
-	 * e.printStackTrace(); } } }); }
-	 */
-
-	/**
-	 * Create the frame.
-	 */
 	public ClassAdminForModify(final ClassAdminClient cac, Vector<Student> Stu, Vector<ClassManage> Clss) {
 		CAC = cac;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 790, 480);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		setTitle("学生管理界面");
+		//背景图片
+		JLabel backgroundImageLabel = new JLabel(new ImageIcon("VCampusClient/Image/ClassAdminForModify.png"));
+		Toolkit k = Toolkit.getDefaultToolkit();
+		Dimension d = k.getScreenSize();
+		setBounds(d.width/2-949/2, d.height/2-534/2,949,555);
+		backgroundImageLabel.setBounds(0, 0, 949,534);
+		setResizable(false);
+		setLayout(null);
 
-		JButton Commitbtn = new JButton("确定");
+		//2.绘制退出按钮
+		//得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+   /*  backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+			}
+        });
+*/
 
-		Commitbtn.setFont(new Font("宋体", Font.PLAIN, 18));
-
-		JButton exitbtn = new JButton("返回");
-
-		exitbtn.setFont(new Font("宋体", Font.PLAIN, 18));
-
+		Font f=new Font("华文行楷",Font.BOLD,24);
 		final JComboBox selectmode = new JComboBox();
-		selectmode.setFont(new Font("宋体", Font.PLAIN, 18));
+		selectmode.setFont(f);
 		selectmode.addItem("学生");
 		selectmode.addItem("班级");
-		
+		selectmode.setBounds(165,75,150,108-75);
+		add(selectmode);
+
+
 		final JComboBox searchbtn = new JComboBox();
-		searchbtn.setFont(new Font("宋体", Font.PLAIN, 18));
+		searchbtn.setFont(f);
+		searchbtn.setBounds(457,80,130,112-77);
+		add(searchbtn);
 
-		JLabel lblNewLabel = new JLabel("模式");
-		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 24));
-
-		JScrollPane scrollPane = new JScrollPane();
-		
+		scrollPane = new JScrollPane();
 		searchdata = new JTextField();
-		searchdata.setFont(new Font("宋体", Font.PLAIN, 15));
-		searchdata.setColumns(10);
+		searchdata.setFont(f);
+		searchdata.setBounds(618,77,785-618,112-77);
+		add(searchdata);
+		searchdata.setOpaque(false);
+		searchdata.setBorder(new EmptyBorder(0,0,0,0));
 
 		table = new JTable();
 		table.setFont(new Font("Adobe 仿宋 Std R", Font.PLAIN, 12));
 		scrollPane.setViewportView(table);
+		table.setBounds(0,0,811-182,443-126);
+		scrollPane.setBounds(182,126,811-182,443-126);
+		add(scrollPane);
 
 		model1 = new DefaultTableModel(new Object[][] {},
-				new String[] { "\u73ED\u7EA7", "\u5B66\u53F7", "\u59D3\u540D", "\u8054\u7CFB\u7535\u8BDD" });
+				new String[] { "班级", "学号", "姓名", "电话" });
 		model2 = new DefaultTableModel(new Object[][] {},
-				new String[] { "\u73ED\u7EA7", "\u8001\u5E08", "\u4E13\u4E1A" });
+				new String[] { "班级", "老师", "专业" });
 
 		StuAll = Stu;
 		ClssAll = Clss;
-
 		if ((selectmode.getSelectedItem().toString()).equalsIgnoreCase("学生")) {
 			table.setModel(model1);// student
 			table.getColumnModel().getColumn(3).setPreferredWidth(144);
@@ -109,6 +107,28 @@ public class ClassAdminForModify extends JFrame {
 			searchbtn.addItem("班级");
 			searchbtn.addItem("学号");
 			searchbtn.addItem("姓名");
+			//透明化处理
+			table.setForeground(Color.BLACK);
+			table.setFont(new Font("华文行楷", Font.BOLD, 20));
+			table.setRowHeight(73);			//表格行高
+			table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+			table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+			DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+			String []str= {"班级", "学号", "姓名", "电话"};
+			renderer.setOpaque(false);    //设置透明
+			for(int i=0;i<str.length;i++){
+				table.getColumn(str[i]).setCellRenderer(renderer);//单格渲染
+				TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+				column.setHeaderRenderer(renderer);//表头渲染
+			}
+			table.setOpaque(false);
+			table.getTableHeader().setOpaque(false);
+			table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+			scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+			scrollPane.setOpaque(false);
+			scrollPane.getViewport().setOpaque(false);
+			scrollPane.setColumnHeaderView(table.getTableHeader());
+			scrollPane.getColumnHeader().setOpaque(false);
 		} else {
 			table.setModel(model2);// class
 			getClass_all();
@@ -117,6 +137,28 @@ public class ClassAdminForModify extends JFrame {
 			searchbtn.addItem("班级");
 			searchbtn.addItem("专业");
 			searchbtn.addItem("老师");
+			//透明化处理
+			table.setForeground(Color.BLACK);
+			table.setFont(new Font("华文行楷", Font.BOLD, 20));
+			table.setRowHeight(73);			//表格行高
+			table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+			table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+			DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+			String []str= {"班级", "老师","专业"};
+			renderer.setOpaque(false);    //设置透明
+			for(int i=0;i<str.length;i++){
+				table.getColumn(str[i]).setCellRenderer(renderer);//单格渲染
+				TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+				column.setHeaderRenderer(renderer);//表头渲染
+			}
+			table.setOpaque(false);
+			table.getTableHeader().setOpaque(false);
+			table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+			scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+			scrollPane.setOpaque(false);
+			scrollPane.getViewport().setOpaque(false);
+			scrollPane.setColumnHeaderView(table.getTableHeader());
+			scrollPane.getColumnHeader().setOpaque(false);
 		}
 
 		selectmode.addItemListener(new ItemListener() {
@@ -141,6 +183,28 @@ public class ClassAdminForModify extends JFrame {
 						searchbtn.addItem("学号");
 						searchbtn.addItem("姓名");
 						System.out.println("Model Change");
+						//透明化处理
+						table.setForeground(Color.BLACK);
+						table.setFont(new Font("华文行楷", Font.BOLD, 20));
+						table.setRowHeight(73);			//表格行高
+						table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+						table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+						DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+						String []str= {"班级", "学号", "姓名", "电话"};
+						renderer.setOpaque(false);    //设置透明
+						for(int i=0;i<str.length;i++){
+							table.getColumn(str[i]).setCellRenderer(renderer);//单格渲染
+							TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+							column.setHeaderRenderer(renderer);//表头渲染
+						}
+						table.setOpaque(false);
+						table.getTableHeader().setOpaque(false);
+						table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+						scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+						scrollPane.setOpaque(false);
+						scrollPane.getViewport().setOpaque(false);
+						scrollPane.setColumnHeaderView(table.getTableHeader());
+						scrollPane.getColumnHeader().setOpaque(false);
 					}
 				} else {
 					// class modify
@@ -160,12 +224,45 @@ public class ClassAdminForModify extends JFrame {
 						searchbtn.addItem("专业");
 						searchbtn.addItem("老师");
 						System.out.println("Model Change");
+						//透明化处理
+						table.setForeground(Color.BLACK);
+						table.setFont(new Font("华文行楷", Font.BOLD, 20));
+						table.setRowHeight(73);			//表格行高
+						table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+						table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+						DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+						String []str= {"班级", "老师","专业"};
+						renderer.setOpaque(false);    //设置透明
+						for(int i=0;i<str.length;i++){
+							table.getColumn(str[i]).setCellRenderer(renderer);//单格渲染
+							TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+							column.setHeaderRenderer(renderer);//表头渲染
+						}
+						table.setOpaque(false);
+						table.getTableHeader().setOpaque(false);
+						table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+						scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+						scrollPane.setOpaque(false);
+						scrollPane.getViewport().setOpaque(false);
+						scrollPane.setColumnHeaderView(table.getTableHeader());
+						scrollPane.getColumnHeader().setOpaque(false);
 					}
 				}
 			}
 
 		});
+		add (backgroundImageLabel);
+		JButton Commitbtn = new JButton("确定");
+		Commitbtn.setFont(new Font("宋体", Font.PLAIN, 18));
+		Commitbtn.setBounds(300,453,86,111-77);
+		add(Commitbtn);
+		Commitbtn.setOpaque(false);
 
+		JButton exitbtn = new JButton("返回");
+		exitbtn.setFont(new Font("宋体", Font.PLAIN, 18));
+		exitbtn.setBounds(585,453,86,111-77);
+		add(exitbtn);
+		exitbtn.setOpaque(false);
 		Commitbtn.addActionListener(new ActionListener() {
 			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
@@ -182,17 +279,17 @@ public class ClassAdminForModify extends JFrame {
 						stunow.setStudentid(table.getValueAt(i_row, 1).toString());
 						stunow.setStudentName(table.getValueAt(i_row, 2).toString());
 						stunow.setStudentphone(table.getValueAt(i_row, 3).toString());
-						
+
 						String newclssid = stunow.getClassid().replaceAll("\\p{C}", "");
 						String newid = stunow.getStudentid().replaceAll("\\p{C}", "");
 						String newname = stunow.getStudentName().replaceAll("\\p{C}", "");
 						String newphone = stunow.getStudentphone().replaceAll("\\p{C}", "");
-						
+
 						String oldclssid = StuAll.get(i_row).getClassid().replaceAll("\\p{C}", "");
 						String oldid = StuAll.get(i_row).getStudentid().replaceAll("\\p{C}", "");
 						String oldname = StuAll.get(i_row).getStudentName().replaceAll("\\p{C}", "");
 						String oldphone = StuAll.get(i_row).getStudentphone().replaceAll("\\p{C}", "");
-						
+
 						//System.out.println(newname);
 						if(!newid.equals(oldid)) {
 							int studenttemp = 0;
@@ -252,7 +349,7 @@ public class ClassAdminForModify extends JFrame {
 								System.out.println("update class size");
 							}
 						}
-						
+
 						if(!newclssid.equals(oldclssid)) {
 							int classtempforadd = 0;
 							int oldclasssize = 0;
@@ -289,7 +386,7 @@ public class ClassAdminForModify extends JFrame {
 								|| !newphone.equals(oldphone)
 								|| !newid.equals(oldid)) {
 							Modified = true;
-//modify studentmanage student							
+//modify studentmanage student
 							Message mes = new Message();
 							mes.setModuleType(ModuleType.Student);
 							mes.setMessageType(MessageType.ClassAdminUpdate);
@@ -297,7 +394,7 @@ public class ClassAdminForModify extends JFrame {
 							sendData.add(10);// type -- update classid + studentid + studentname + studentphone
 							sendData.add(newclssid);// new data classid
 							//System.out.println(newclssid);
-							sendData.add(newid);// new data 
+							sendData.add(newid);// new data
 							//System.out.println(newid);
 							sendData.add(newname);
 							//System.out.println(newname);
@@ -321,7 +418,7 @@ public class ClassAdminForModify extends JFrame {
 							StuAll.get(i_row).setStudentName(newname);
 							StuAll.get(i_row).setStudentphone(newphone);
 							System.out.println("Student information is updated at Client!");
-							
+
 							if(!newid.equals(oldid)) {
 //update dormitory student here(update oldid with newid)
 								Dormitory c=new Dormitory();
@@ -341,7 +438,7 @@ public class ClassAdminForModify extends JFrame {
 								tempdata.add(oldid);
 								tempdata.add(newid);
 								mes.setContent(tempdata);
-								
+
 								client = null;
 								client = new Client(ClientMainFrame.socket);
 
@@ -349,7 +446,7 @@ public class ClassAdminForModify extends JFrame {
 								serverResponse = new Message();
 								serverResponse = client.sendRequestToServer(mes);
 								System.out.println("update user dormitory confirmed!");
-//update user here(update oldid with newid)	
+//update user here(update oldid with newid)
 								User user = new User();
 								mes = null;
 								mes = new Message();
@@ -400,18 +497,18 @@ public class ClassAdminForModify extends JFrame {
 						clssnow.setClassID(table.getValueAt(i_row, 0).toString());
 						clssnow.setTeacherID(table.getValueAt(i_row, 1).toString());
 						clssnow.setMajor(table.getValueAt(i_row, 2).toString());
-						
+
 						String newclssid = clssnow.getClassID();
 						newclssid.replaceAll("\\p{C}", "");
 						String newteacher = clssnow.getTeacherID();
 						newteacher.replaceAll("\\p{C}", "");
 						String newmajor = clssnow.getMajor();
 						newmajor.replaceAll("\\p{C}", "");
-						
+
 						String oldclssid = ClssAll.get(i_row).getClassID().replaceAll("\\p{C}", "");
 						String oldteacher = ClssAll.get(i_row).getTeacherID().replaceAll("\\p{C}", "");
 						String oldmajor = ClssAll.get(i_row).getMajor().replaceAll("\\p{C}", "");
-						
+
 						if(!newclssid.equals(oldclssid)
 								|| !newteacher.equals(oldteacher)
 								|| !newmajor.equals(oldmajor)) {
@@ -442,7 +539,7 @@ public class ClassAdminForModify extends JFrame {
 							if(input == 0) {
 								//yes--update Class and Student
 								Modified = true;
-								
+
 								if(!newmajor.equals(oldmajor)) {
 									Message mes = new Message();
 									mes.setModuleType(ModuleType.Student);
@@ -458,11 +555,11 @@ public class ClassAdminForModify extends JFrame {
 									Message serverResponse = new Message();
 									serverResponse = client.sendRequestToServer(mes);
 									int res = (int) serverResponse.getData();
-									
+
 									table.setValueAt(newmajor, i_row, 2);
 									ClssAll.get(i_row).setMajor(newmajor);
 								}
-								
+
 								if(!newteacher.equals(oldteacher)) {
 									Message mes = new Message();
 									mes.setModuleType(ModuleType.Student);
@@ -478,11 +575,11 @@ public class ClassAdminForModify extends JFrame {
 									Message serverResponse = new Message();
 									serverResponse = client.sendRequestToServer(mes);
 									int res = (int) serverResponse.getData();
-									
+
 									table.setValueAt(newteacher, i_row, 1);
 									ClssAll.get(i_row).setTeacherID(newteacher);
 								}
-								
+
 								if(!newclssid.equals(oldclssid)) {
 									Message mes = new Message();
 									mes.setModuleType(ModuleType.Student);
@@ -498,11 +595,11 @@ public class ClassAdminForModify extends JFrame {
 									Message serverResponse = new Message();
 									serverResponse = client.sendRequestToServer(mes);
 									int res = (int) serverResponse.getData();
-									
+
 									table.setValueAt(newclssid, i_row, 0);
 									ClssAll.get(i_row).setClassID(newclssid);
 								}
-								
+
 								Message mes = new Message();
 								mes.setModuleType(ModuleType.Student);
 								mes.setMessageType(MessageType.ClassUpdate);
@@ -519,7 +616,7 @@ public class ClassAdminForModify extends JFrame {
 								Message serverResponse = new Message();
 								serverResponse = client.sendRequestToServer(mes);
 								int res = (int) serverResponse.getData();
-								
+
 								table.setValueAt(newclssid, i_row, 0);
 								table.setValueAt(newteacher, i_row, 1);
 								table.setValueAt(newmajor, i_row, 2);
@@ -539,7 +636,7 @@ public class ClassAdminForModify extends JFrame {
 						UpdateClass(ClssAll);
 						JOptionPane.showMessageDialog(null, "成功保存修改！", "提示", JOptionPane.WARNING_MESSAGE);
 					}
-					
+
 					Message mes = new Message();
 					mes.setModuleType(ModuleType.Student);
 					mes.setMessageType(MessageType.ClassAdminGetAll);
@@ -564,17 +661,17 @@ public class ClassAdminForModify extends JFrame {
 						stunow.setStudentid(table.getValueAt(i_row, 1).toString());
 						stunow.setStudentName(table.getValueAt(i_row, 2).toString());
 						stunow.setStudentphone(table.getValueAt(i_row, 3).toString());
-						
+
 						String newclssid = stunow.getClassid().replaceAll("\\p{C}", "");
 						String newid = stunow.getStudentid().replaceAll("\\p{C}", "");
 						String newname = stunow.getStudentName().replaceAll("\\p{C}", "");
 						String newphone = stunow.getStudentphone().replaceAll("\\p{C}", "");
-						
+
 						String oldclssid = StudentTemp.get(i_row).getClassid().replaceAll("\\p{C}", "");
 						String oldid = StudentTemp.get(i_row).getStudentid().replaceAll("\\p{C}", "");
 						String oldname = StudentTemp.get(i_row).getStudentName().replaceAll("\\p{C}", "");
 						String oldphone = StudentTemp.get(i_row).getStudentphone().replaceAll("\\p{C}", "");
-						
+
 						if(!newid.equals(oldid)) {
 							int studenttemp = 0;
 							Boolean okay = true;
@@ -631,7 +728,7 @@ public class ClassAdminForModify extends JFrame {
 								System.out.println("update class size");
 							}
 						}
-						
+
 						if(!newclssid.equals(oldclssid)) {
 							int classtempforadd = 0;
 							int oldclasssize = 0;
@@ -668,7 +765,7 @@ public class ClassAdminForModify extends JFrame {
 								|| !newphone.equals(oldphone)
 								|| !newid.equals(oldid)) {
 							Modified = true;
-							
+
 							Message mes = new Message();
 							mes.setModuleType(ModuleType.Student);
 							mes.setMessageType(MessageType.ClassAdminUpdate);
@@ -676,7 +773,7 @@ public class ClassAdminForModify extends JFrame {
 							sendData.add(10);// type -- update classid + studentid + studentname + studentphone
 							sendData.add(newclssid);// new data classid
 							//System.out.println(newclssid);
-							sendData.add(newid);// new data 
+							sendData.add(newid);// new data
 							//System.out.println(newid);
 							sendData.add(newname);
 							//System.out.println(newname);
@@ -724,7 +821,7 @@ public class ClassAdminForModify extends JFrame {
 								tempdata.add(oldid);
 								tempdata.add(newid);
 								mes.setContent(tempdata);
-								
+
 								client = null;
 								client = new Client(ClientMainFrame.socket);
 
@@ -732,7 +829,7 @@ public class ClassAdminForModify extends JFrame {
 								serverResponse = new Message();
 								serverResponse = client.sendRequestToServer(mes);
 								System.out.println("update user dormitory confirmed!");
-//update user here(update oldid with newid)				
+//update user here(update oldid with newid)
 								User user = new User();
 								mes = null;
 								mes = new Message();
@@ -782,18 +879,18 @@ public class ClassAdminForModify extends JFrame {
 						clssnow.setClassID(table.getValueAt(i_row, 0).toString());
 						clssnow.setTeacherID(table.getValueAt(i_row, 1).toString());
 						clssnow.setMajor(table.getValueAt(i_row, 2).toString());
-						
+
 						String newclssid = clssnow.getClassID();
 						newclssid.replaceAll("\\p{C}", "");
 						String newteacher = clssnow.getTeacherID();
 						newteacher.replaceAll("\\p{C}", "");
 						String newmajor = clssnow.getMajor();
 						newmajor.replaceAll("\\p{C}", "");
-						
+
 						String oldclssid = ClassTemp.get(i_row).getClassID().replaceAll("\\p{C}", "");
 						String oldteacher = ClassTemp.get(i_row).getTeacherID().replaceAll("\\p{C}", "");
 						String oldmajor = ClassTemp.get(i_row).getMajor().replaceAll("\\p{C}", "");
-						
+
 						if(!newclssid.equals(oldclssid)
 								|| !newteacher.equals(oldteacher)
 								|| !newmajor.equals(oldmajor)) {
@@ -823,7 +920,7 @@ public class ClassAdminForModify extends JFrame {
 							if(input == 0) {
 								//yes--update Class and Student
 								Modified = true;
-								
+
 								if(!newmajor.equals(oldmajor)) {
 									Message mes = new Message();
 									mes.setModuleType(ModuleType.Student);
@@ -839,11 +936,11 @@ public class ClassAdminForModify extends JFrame {
 									Message serverResponse = new Message();
 									serverResponse = client.sendRequestToServer(mes);
 									int res = (int) serverResponse.getData();
-									
+
 									table.setValueAt(newmajor, i_row, 2);
 									ClssAll.get(i_row).setMajor(newmajor);
 								}
-								
+
 								if(!newteacher.equals(oldteacher)) {
 									Message mes = new Message();
 									mes.setModuleType(ModuleType.Student);
@@ -859,11 +956,11 @@ public class ClassAdminForModify extends JFrame {
 									Message serverResponse = new Message();
 									serverResponse = client.sendRequestToServer(mes);
 									int res = (int) serverResponse.getData();
-									
+
 									table.setValueAt(newteacher, i_row, 1);
 									ClssAll.get(i_row).setTeacherID(newteacher);
 								}
-								
+
 								if(!newclssid.equals(oldclssid)) {
 									Message mes = new Message();
 									mes.setModuleType(ModuleType.Student);
@@ -879,11 +976,11 @@ public class ClassAdminForModify extends JFrame {
 									Message serverResponse = new Message();
 									serverResponse = client.sendRequestToServer(mes);
 									int res = (int) serverResponse.getData();
-									
+
 									table.setValueAt(newclssid, i_row, 0);
 									ClssAll.get(i_row).setClassID(newclssid);
 								}
-								
+
 								Message mes = new Message();
 								mes.setModuleType(ModuleType.Student);
 								mes.setMessageType(MessageType.ClassUpdate);
@@ -900,7 +997,7 @@ public class ClassAdminForModify extends JFrame {
 								Message serverResponse = new Message();
 								serverResponse = client.sendRequestToServer(mes);
 								int res = (int) serverResponse.getData();
-								
+
 								table.setValueAt(newclssid, i_row, 0);
 								table.setValueAt(newteacher, i_row, 1);
 								table.setValueAt(newmajor, i_row, 2);
@@ -922,7 +1019,7 @@ public class ClassAdminForModify extends JFrame {
 						UpdateClass(ClassTemp);
 						JOptionPane.showMessageDialog(null, "成功保存修改！", "提示", JOptionPane.WARNING_MESSAGE);
 					}
-					
+
 					Message mes = new Message();
 					mes.setModuleType(ModuleType.Student);
 					mes.setMessageType(MessageType.ClassAdminGetAll);
@@ -942,247 +1039,220 @@ public class ClassAdminForModify extends JFrame {
 
 		table.setRowHeight(25);
 		scrollPane.setViewportView(table);
-
 		JButton btnNewButton = new JButton("查找");
 		btnNewButton.setFont(new Font("宋体", Font.PLAIN, 18));
+		btnNewButton.setBounds(804,77,86,112-77);
+		add(btnNewButton);
+		btnNewButton.setOpaque(false);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(now == MODEL.STUDENTMODIFY || now == MODEL.STUDENTTEMP) {
 					//search student
 					switch(searchbtn.getSelectedIndex()) {
-					case 0:
-					{
-						//all
-						UpdateTable();
-						now = MODEL.STUDENTMODIFY;
-					}
-					break;
-					case 1:
-					{
-						//class
-						now = MODEL.STUDENTTEMP;
-						
-						StudentTemp = null;
-						StudentTemp = new Vector<Student>();
-						StudentIndex = null;
-						StudentIndex = new Vector<Integer>();
-						int i_search = 0;
-						String sch = searchdata.getText();
-						while(i_search < StuAll.size()) {
-							//System.out.println(i_search);
-							String test = StuAll.get(i_search).getClassid();
-							test.replaceAll("\\p{C}", "");
-							sch.replaceAll("\\p{C}", "");
-							//System.out.println(test);
-							//System.out.println(sch);
-							//System.out.println(test.equals(sch));
-							if(test.equals(sch)) {
-								StudentTemp.add(StuAll.get(i_search));
-								StudentIndex.add(i_search);
-							}
-							i_search++;
+						case 0:
+						{
+							//all
+							UpdateTable();
+							now = MODEL.STUDENTMODIFY;
 						}
-						UpdateStudent(StudentTemp);
-						System.out.println("model change commit");
-					}
-					break;
-					case 2:
-					{
-						//student id
-						now = MODEL.STUDENTTEMP;
-						StudentTemp = null;
-						StudentTemp = new Vector<Student>();
-						StudentIndex = null;
-						StudentIndex = new Vector<Integer>();
-						int i_search = 0;
-						String sch = searchdata.getText();
-						while(i_search < StuAll.size()) {
-							String test = StuAll.get(i_search).getStudentid();
-							test.replaceAll("\\p{C}", "");
-							sch.replaceAll("\\p{C}", "");
-							if(test.equals(sch)) {
-								StudentTemp.add(StuAll.get(i_search));
-								StudentIndex.add(i_search);
-							}
-							i_search++;
-						}
-						UpdateStudent(StudentTemp);
-						System.out.println("model change commit");
-					}
-					break;
-					case 3:
-					{
-						//student name
-						now = MODEL.STUDENTTEMP;
-						StudentTemp = null;
-						StudentTemp = new Vector<Student>();
-						StudentIndex = null;
-						StudentIndex = new Vector<Integer>();
-						int i_search = 0;
-						String sch = searchdata.getText();
-						while(i_search < StuAll.size()) {
-							String test = StuAll.get(i_search).getStudentName();
-							test.replaceAll("\\p{C}", "");
-							sch.replaceAll("\\p{C}", "");
-							if(test.equals(sch)) {
-								StudentTemp.add(StuAll.get(i_search));
-								StudentIndex.add(i_search);
-							}
-							i_search++;
-						}
-						UpdateStudent(StudentTemp);
-						System.out.println("model change commit");
-					}
-					break;
-					default:
 						break;
+						case 1:
+						{
+							//class
+							now = MODEL.STUDENTTEMP;
+
+							StudentTemp = null;
+							StudentTemp = new Vector<Student>();
+							StudentIndex = null;
+							StudentIndex = new Vector<Integer>();
+							int i_search = 0;
+							String sch = searchdata.getText();
+							while(i_search < StuAll.size()) {
+								//System.out.println(i_search);
+								String test = StuAll.get(i_search).getClassid();
+								test.replaceAll("\\p{C}", "");
+								sch.replaceAll("\\p{C}", "");
+								//System.out.println(test);
+								//System.out.println(sch);
+								//System.out.println(test.equals(sch));
+								if(test.equals(sch)) {
+									StudentTemp.add(StuAll.get(i_search));
+									StudentIndex.add(i_search);
+								}
+								i_search++;
+							}
+							UpdateStudent(StudentTemp);
+							System.out.println("model change commit");
+						}
+						break;
+						case 2:
+						{
+							//student id
+							now = MODEL.STUDENTTEMP;
+							StudentTemp = null;
+							StudentTemp = new Vector<Student>();
+							StudentIndex = null;
+							StudentIndex = new Vector<Integer>();
+							int i_search = 0;
+							String sch = searchdata.getText();
+							while(i_search < StuAll.size()) {
+								String test = StuAll.get(i_search).getStudentid();
+								test.replaceAll("\\p{C}", "");
+								sch.replaceAll("\\p{C}", "");
+								if(test.equals(sch)) {
+									StudentTemp.add(StuAll.get(i_search));
+									StudentIndex.add(i_search);
+								}
+								i_search++;
+							}
+							UpdateStudent(StudentTemp);
+							System.out.println("model change commit");
+						}
+						break;
+						case 3:
+						{
+							//student name
+							now = MODEL.STUDENTTEMP;
+							StudentTemp = null;
+							StudentTemp = new Vector<Student>();
+							StudentIndex = null;
+							StudentIndex = new Vector<Integer>();
+							int i_search = 0;
+							String sch = searchdata.getText();
+							while(i_search < StuAll.size()) {
+								String test = StuAll.get(i_search).getStudentName();
+								test.replaceAll("\\p{C}", "");
+								sch.replaceAll("\\p{C}", "");
+								if(test.equals(sch)) {
+									StudentTemp.add(StuAll.get(i_search));
+									StudentIndex.add(i_search);
+								}
+								i_search++;
+							}
+							UpdateStudent(StudentTemp);
+							System.out.println("model change commit");
+						}
+						break;
+						default:
+							break;
 					}
+					//透明化处理
+					table.setForeground(Color.BLACK);
+					table.setFont(new Font("华文行楷", Font.BOLD, 20));
+					table.setRowHeight(73);			//表格行高
+					table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+					table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+					DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+					String []str= {"班级", "学号", "姓名", "电话"};
+					renderer.setOpaque(false);    //设置透明
+					for(int i=0;i<str.length;i++){
+						table.getColumn(str[i]).setCellRenderer(renderer);//单格渲染
+						TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+						column.setHeaderRenderer(renderer);//表头渲染
+					}
+					table.setOpaque(false);
+					table.getTableHeader().setOpaque(false);
+					table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+					scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+					scrollPane.setOpaque(false);
+					scrollPane.getViewport().setOpaque(false);
+					scrollPane.setColumnHeaderView(table.getTableHeader());
+					scrollPane.getColumnHeader().setOpaque(false);
 				}//end of student searching
 				else {
 					//search class
 					switch(searchbtn.getSelectedIndex()) {
-					case 0:
-					{
-						//all
-						UpdateTable();
-						now = MODEL.ClASSMODIFY;
-					}
-					break;
-					case 1:
-					{
-						//class
-						now = MODEL.CLASSTEMP;
-						ClassTemp = null;
-						ClassTemp = new Vector<ClassManage>();
-						ClassIndex = null;
-						ClassIndex = new Vector<Integer>();
-						int i_search = 0;
-						String sch = searchdata.getText();
-						while(i_search < ClssAll.size()) {
-							String test = ClssAll.get(i_search).getClassID();
-							test.replaceAll("\\p{C}", "");
-							sch.replaceAll("\\p{C}", "");
-							System.out.println(test);
-							System.out.println(sch);
-							System.out.println(test.equals(sch));
-							if(test.equals(sch)) {
-								ClassTemp.add(ClssAll.get(i_search));
-								ClassIndex.add(i_search);
-							}
-							i_search++;
+						case 0:
+						{
+							//all
+							UpdateTable();
+							now = MODEL.ClASSMODIFY;
 						}
-						UpdateClass(ClassTemp);
-						System.out.println("model change commit");
-					}
-					break;
-					case 2:
-					{
-						//major
-						now = MODEL.CLASSTEMP;
-						ClassTemp = null;
-						ClassTemp = new Vector<ClassManage>();
-						ClassIndex = null;
-						ClassIndex = new Vector<Integer>();
-						int i_search = 0;
-						String sch = searchdata.getText();
-						while(i_search < ClssAll.size()) {
-							String test = ClssAll.get(i_search).getMajor();
-							test.replaceAll("\\p{C}", "");
-							sch.replaceAll("\\p{C}", "");
-							if(test.equals(sch)) {
-								ClassTemp.add(ClssAll.get(i_search));
-								ClassIndex.add(i_search);
-							}
-							i_search++;
-						}
-						UpdateClass(ClassTemp);
-						System.out.println("model change commit");
-					}
-					break;
-					case 3:
-					{
-						//teacher
-						now = MODEL.CLASSTEMP;
-						ClassTemp = null;
-						ClassTemp = new Vector<ClassManage>();
-						ClassIndex = null;
-						ClassIndex = new Vector<Integer>();
-						int i_search = 0;
-						String sch = searchdata.getText();
-						while(i_search < ClssAll.size()) {
-							String test = ClssAll.get(i_search).getTeacherID();
-							test.replaceAll("\\p{C}", "");
-							sch.replaceAll("\\p{C}", "");
-							if(test.equals(sch)) {
-								ClassTemp.add(ClssAll.get(i_search));
-								ClassIndex.add(i_search);
-							}
-							i_search++;
-						}
-						UpdateClass(ClassTemp);
-						System.out.println("model change commit");
-					}
-					break;
-					default:
 						break;
+						case 1:
+						{
+							//class
+							now = MODEL.CLASSTEMP;
+							ClassTemp = null;
+							ClassTemp = new Vector<ClassManage>();
+							ClassIndex = null;
+							ClassIndex = new Vector<Integer>();
+							int i_search = 0;
+							String sch = searchdata.getText();
+							while(i_search < ClssAll.size()) {
+								String test = ClssAll.get(i_search).getClassID();
+								test.replaceAll("\\p{C}", "");
+								sch.replaceAll("\\p{C}", "");
+								System.out.println(test);
+								System.out.println(sch);
+								System.out.println(test.equals(sch));
+								if(test.equals(sch)) {
+									ClassTemp.add(ClssAll.get(i_search));
+									ClassIndex.add(i_search);
+								}
+								i_search++;
+							}
+							UpdateClass(ClassTemp);
+							System.out.println("model change commit");
+						}
+						break;
+						case 2:
+						{
+							//major
+							now = MODEL.CLASSTEMP;
+							ClassTemp = null;
+							ClassTemp = new Vector<ClassManage>();
+							ClassIndex = null;
+							ClassIndex = new Vector<Integer>();
+							int i_search = 0;
+							String sch = searchdata.getText();
+							while(i_search < ClssAll.size()) {
+								String test = ClssAll.get(i_search).getMajor();
+								test.replaceAll("\\p{C}", "");
+								sch.replaceAll("\\p{C}", "");
+								if(test.equals(sch)) {
+									ClassTemp.add(ClssAll.get(i_search));
+									ClassIndex.add(i_search);
+								}
+								i_search++;
+							}
+							UpdateClass(ClassTemp);
+							System.out.println("model change commit");
+						}
+						break;
+						case 3:
+						{
+							//teacher
+							now = MODEL.CLASSTEMP;
+							ClassTemp = null;
+							ClassTemp = new Vector<ClassManage>();
+							ClassIndex = null;
+							ClassIndex = new Vector<Integer>();
+							int i_search = 0;
+							String sch = searchdata.getText();
+							while(i_search < ClssAll.size()) {
+								String test = ClssAll.get(i_search).getTeacherID();
+								test.replaceAll("\\p{C}", "");
+								sch.replaceAll("\\p{C}", "");
+								if(test.equals(sch)) {
+									ClassTemp.add(ClssAll.get(i_search));
+									ClassIndex.add(i_search);
+								}
+								i_search++;
+							}
+							UpdateClass(ClassTemp);
+							System.out.println("model change commit");
+						}
+						break;
+						default:
+							break;
 					}
 				}//end of class searching
 				table.setEnabled(true);
 			}
 		});
 
-		
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(39)
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
-					.addGap(4)
-					.addComponent(selectmode, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(568, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(81)
-					.addComponent(Commitbtn, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 424, Short.MAX_VALUE)
-					.addComponent(exitbtn, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-					.addGap(67))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(57)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 662, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(47, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addContainerGap(418, Short.MAX_VALUE)
-					.addComponent(searchbtn, GroupLayout.PREFERRED_SIZE, 78, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(searchdata, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 83, GroupLayout.PREFERRED_SIZE)
-					.addGap(28))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(35)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(1)
-							.addComponent(selectmode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addGap(11)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(btnNewButton)
-						.addComponent(searchdata, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(searchbtn, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(Commitbtn)
-						.addComponent(exitbtn))
-					.addGap(35))
-		);
-		contentPane.setLayout(gl_contentPane);
+
 
 		exitbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -1190,18 +1260,11 @@ public class ClassAdminForModify extends JFrame {
 				close();
 			}
 		});
-		
-		lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setIcon(new ImageIcon("VCampusClient/src/main/resources/image/bgStudent1.png"));
-		lblNewLabel_1.setBounds(0, 0, 800, 100);
-		this.getContentPane().add(lblNewLabel_1);
-		
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(2);
+
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		setVisible(true);
 	}
-	
+
 	private void UpdateTable() {
 		if(now == MODEL.STUDENTMODIFY ) {
 			// student
@@ -1213,6 +1276,28 @@ public class ClassAdminForModify extends JFrame {
 			table.setModel(model1);
 			getStudent();
 			now = MODEL.STUDENTMODIFY;
+			//透明化处理
+			table.setForeground(Color.BLACK);
+			table.setFont(new Font("华文行楷", Font.BOLD, 20));
+			table.setRowHeight(73);			//表格行高
+			table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+			table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+			DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+			String []str= {"班级", "学号", "姓名", "电话"};
+			renderer.setOpaque(false);    //设置透明
+			for(int i=0;i<str.length;i++){
+				table.getColumn(str[i]).setCellRenderer(renderer);//单格渲染
+				TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+				column.setHeaderRenderer(renderer);//表头渲染
+			}
+			table.setOpaque(false);
+			table.getTableHeader().setOpaque(false);
+			table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+			scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+			scrollPane.setOpaque(false);
+			scrollPane.getViewport().setOpaque(false);
+			scrollPane.setColumnHeaderView(table.getTableHeader());
+			scrollPane.getColumnHeader().setOpaque(false);
 		}else {// class modify
 			while(model2.getRowCount() > 0) {
 				//System.out.println(table.getRowCount() - 1);
@@ -1222,9 +1307,31 @@ public class ClassAdminForModify extends JFrame {
 			table.setModel(model2);
 			getClass_all();
 			now = MODEL.ClASSMODIFY;
+			//透明化处理
+			table.setForeground(Color.BLACK);
+			table.setFont(new Font("华文行楷", Font.BOLD, 20));
+			table.setRowHeight(73);			//表格行高
+			table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+			table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+			DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+			String []str= {"班级", "老师","专业"};
+			renderer.setOpaque(false);    //设置透明
+			for(int i=0;i<str.length;i++){
+				table.getColumn(str[i]).setCellRenderer(renderer);//单格渲染
+				TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+				column.setHeaderRenderer(renderer);//表头渲染
+			}
+			table.setOpaque(false);
+			table.getTableHeader().setOpaque(false);
+			table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+			scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+			scrollPane.setOpaque(false);
+			scrollPane.getViewport().setOpaque(false);
+			scrollPane.setColumnHeaderView(table.getTableHeader());
+			scrollPane.getColumnHeader().setOpaque(false);
 		}
 	}
-	
+
 	private void UpdateStudent(Vector<Student> temp) {
 		// student
 		while(model1.getRowCount() > 0) {
@@ -1233,7 +1340,7 @@ public class ClassAdminForModify extends JFrame {
 			table.setModel(model1);
 		}
 		table.setModel(model1);
-		
+
 		String[] arr = new String[4];
 		for (int i = 0; i < temp.size(); i++) {
 			// 班级 学号 姓名 电话
@@ -1245,8 +1352,30 @@ public class ClassAdminForModify extends JFrame {
 			model1.addRow(arr);
 			table.setModel(model1);
 		}
+		//透明化处理
+		table.setForeground(Color.BLACK);
+		table.setFont(new Font("华文行楷", Font.BOLD, 20));
+		table.setRowHeight(73);			//表格行高
+		table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		String []str= {"班级", "学号", "姓名", "电话"};
+		renderer.setOpaque(false);    //设置透明
+		for(int i=0;i<str.length;i++){
+			table.getColumn(str[i]).setCellRenderer(renderer);//单格渲染
+			TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+			column.setHeaderRenderer(renderer);//表头渲染
+		}
+		table.setOpaque(false);
+		table.getTableHeader().setOpaque(false);
+		table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+		scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+		scrollPane.setOpaque(false);
+		scrollPane.getViewport().setOpaque(false);
+		scrollPane.setColumnHeaderView(table.getTableHeader());
+		scrollPane.getColumnHeader().setOpaque(false);
 	}
-	
+
 	private void UpdateClass(Vector<ClassManage> temp) {
 		while(model2.getRowCount() > 0) {
 			//System.out.println(table.getRowCount() - 1);
@@ -1264,6 +1393,28 @@ public class ClassAdminForModify extends JFrame {
 			model2.addRow(arr);
 			table.setModel(model2);
 		}
+		//透明化处理
+		table.setForeground(Color.BLACK);
+		table.setFont(new Font("华文行楷", Font.BOLD, 20));
+		table.setRowHeight(73);			//表格行高
+		table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		String []str= {"班级", "老师","专业"};
+		renderer.setOpaque(false);    //设置透明
+		for(int i=0;i<str.length;i++){
+			table.getColumn(str[i]).setCellRenderer(renderer);//单格渲染
+			TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+			column.setHeaderRenderer(renderer);//表头渲染
+		}
+		table.setOpaque(false);
+		table.getTableHeader().setOpaque(false);
+		table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+		scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+		scrollPane.setOpaque(false);
+		scrollPane.getViewport().setOpaque(false);
+		scrollPane.setColumnHeaderView(table.getTableHeader());
+		scrollPane.getColumnHeader().setOpaque(false);
 	}
 
 	public void getClass_all() {
@@ -1282,8 +1433,30 @@ public class ClassAdminForModify extends JFrame {
 			model2.addRow(arr);
 			table.setModel(model2);
 		}
+		//透明化处理
+		table.setForeground(Color.BLACK);
+		table.setFont(new Font("华文行楷", Font.BOLD, 20));
+		table.setRowHeight(73);			//表格行高
+		table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		String []str= {"班级", "老师","专业"};
+		renderer.setOpaque(false);    //设置透明
+		for(int i=0;i<str.length;i++){
+			table.getColumn(str[i]).setCellRenderer(renderer);//单格渲染
+			TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+			column.setHeaderRenderer(renderer);//表头渲染
+		}
+		table.setOpaque(false);
+		table.getTableHeader().setOpaque(false);
+		table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+		scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+		scrollPane.setOpaque(false);
+		scrollPane.getViewport().setOpaque(false);
+		scrollPane.setColumnHeaderView(table.getTableHeader());
+		scrollPane.getColumnHeader().setOpaque(false);
 	}
-	
+
 	private void setStudent(ClassManage classtemp) {
 		Message mes = new Message();
 		mes.setModuleType(ModuleType.Student);
@@ -1305,7 +1478,7 @@ public class ClassAdminForModify extends JFrame {
 		@SuppressWarnings("unused")
 		int res = (int) serverResponse.getData();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private void finalupdate() {
 		int i_clss = 0;
@@ -1340,22 +1513,7 @@ public class ClassAdminForModify extends JFrame {
 		}
 	}
 
-	/*
-	 * @SuppressWarnings("unchecked") private void addRow_Student() { // TODO
-	 * Auto-generated method stub Message mes = new Message();
-	 * mes.setMessageType(MessageType.ClassAdminGetAll);// operation type
-	 * mes.setModuleType(ModuleType.Student); Message serverresponse = new
-	 * Message(); Vector<Student> stu = new Vector<Student>();// your data Client
-	 * client = new Client(ClientMainFrame.socket); serverresponse =
-	 * client.sendRequestToServer(mes); stu = (Vector<Student>)
-	 * serverresponse.getData(); //String get = serverresponse.getData().toString();
-	 * //System.out.println(get); String[] arr = new String[6]; for (int i = 0; i <
-	 * stu.size(); i++) { //班级 学号 姓名 电话 arr[0] = stu.get(i).getClassid(); arr[1] =
-	 * stu.get(i).getStudentid(); arr[2] = stu.get(i).getStudentName(); arr[3] =
-	 * stu.get(i).getStudentphone();
-	 * 
-	 * model1.addRow(arr); table.setModel(model1); } }
-	 */
+
 
 	void close() {
 		finalupdate();

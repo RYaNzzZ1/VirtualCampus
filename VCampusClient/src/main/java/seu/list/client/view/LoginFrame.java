@@ -7,8 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-//import vc.bz.IUserSrv;
-//import vc.bz.impl.IUserSrvImpl;
+//import vc.driver.IUserSrv;
+//import vc.driver.impl.IUserSrvImpl;
 
 public class LoginFrame extends  JFrame implements  ActionListener{
     JPanel root =new JPanel();
@@ -118,57 +118,10 @@ public class LoginFrame extends  JFrame implements  ActionListener{
         this.setVisible(true);
     }
 
-    
+
     @Override
     public void actionPerformed(ActionEvent e) {
-    	/*
-        if(e.getSource()==login)
-        {
-            //IUserSrv us=new IUserSrvImpl();
-            User user=new User();
-            String acco=account.getText().trim();
-            //user.setAccount(acco);
-            //user.setPassword(new String(pass.getPassword()));
-            User retUser=null;
-            try {
-                //retUser = us.login(user);
-                if (retUser != null) {
-                    //QQLogger.clientLogger().info(user.getQqNo() + ":" + "楠岃瘉鎴愬姛");
-                    //retUser.setStatus(UserStatus.ONLINE);
-                    //new ClientMainFrm(retUser, us);
-                    // 鍚屾椂鍏抽棴鎺夌櫥闄嗙晫闈�
-                    this.dispose();
-                } else {
 
-                    JOptionPane.showMessageDialog(this, "鐢ㄦ埛鍚嶆垨瀵嗙爜閿欒", "璀﹀憡",
-                            JOptionPane.WARNING_MESSAGE);
-                }
-            } catch (ClassNotFoundException e1) {
-
-                e1.printStackTrace();
-            } catch (IOException e1) {
-                JOptionPane.showMessageDialog(this, "缃戠粶杩炴帴寮傚父锛岃妫�鏌ョ浉鍏抽厤缃紒", "璀﹀憡",
-                        JOptionPane.WARNING_MESSAGE);
-            }
-
-        } else if (e.getSource() == jbtnRegister) {
-
-            this.setVisible(false);
-            RegisterDlg r = new RegisterDlg();
-            r.setModalityType(ModalityType.APPLICATION_MODAL);
-            r.setVisible(true);
-            User u = r.getUser();
-            this.txtQqNo.setText(u.getQqNo());
-            r.dispose();
-            this.setVisible(true);
-        }
-        */
     }
-    
-    /*
-    static public void main(String[]args)
-    {
-        LoginFrame frame1=new LoginFrame();
-    }
-    */
+
 }

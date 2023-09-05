@@ -1,19 +1,15 @@
 package seu.list.client.view;
 
-import seu.list.client.bz.Client;
-import seu.list.client.bz.ClientMainFrame;
+import seu.list.client.driver.Client;
+import seu.list.client.driver.ClientMainFrame;
 import seu.list.common.*;
 
 import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -26,130 +22,183 @@ public class ClassAdminForAdd extends JFrame {
 	private DefaultTableModel model2;
 	private Vector<Student> StuAll = null;
 	private Vector<ClassManage> ClssAll = null;
+
 	private enum MODEL {
 		ClASSADD, STUDENTADD
 	};
 	private MODEL now = MODEL.STUDENTADD;
 	private ClassAdminClient CAC = null;
 	private JLabel lblNewLabel_1;
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ClassAdminForAdd frame = new ClassAdminForAdd();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
 
-	/**
-	 * Create the frame.
-	 */
 	public ClassAdminForAdd(final ClassAdminClient cac, Vector<Student> Stu, Vector<ClassManage> Clss) {
 		CAC = cac;
 		StuAll = Stu;
 		ClssAll = Clss;
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
 		setTitle("学生管理界面");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 573, 286);
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		
-		JButton Commitbtn = new JButton("确定");
-		
-		Commitbtn.setFont(new Font("宋体", Font.PLAIN, 15));
-		
-		JButton exitbtn = new JButton("返回");
-		
-		exitbtn.setFont(new Font("宋体", Font.PLAIN, 15));
-		
+		JLabel backgroundImageLabel = new JLabel(new ImageIcon("VCampusClient/Image/ClassAdminForAdd.png"));
+		Toolkit k = Toolkit.getDefaultToolkit();
+		Dimension d = k.getScreenSize();
+		setBounds(d.width/2-845/2, d.height/2-290, 845,605);
+		backgroundImageLabel.setBounds(0, 0, 845,580);
+		setResizable(false);
+		setLayout(null);
+
+		//2.绘制退出按钮
+		//得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+   /*  backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+			}
+        });*/
+
 		final JComboBox selectmode = new JComboBox();
 		selectmode.addItem("学生");
-		selectmode.addItem("班级");
-		
-		JLabel lblNewLabel = new JLabel("模式");
-		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 18));
-		
+		selectmode.addItem("班级");;
+		selectmode.setBounds(309,132,477-309,170-132);
+		add(selectmode);
+		selectmode.setFont(new Font("华文行楷",Font.BOLD,36));
 		JScrollPane scrollPane = new JScrollPane();
-		GroupLayout gl_contentPane = new GroupLayout(contentPane);
-		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(39)
-					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE)
-					.addGap(4)
-					.addComponent(selectmode, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(49, Short.MAX_VALUE))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(102)
-					.addComponent(Commitbtn, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
-					.addComponent(exitbtn, GroupLayout.PREFERRED_SIZE, 97, GroupLayout.PREFERRED_SIZE)
-					.addGap(102))
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(54)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 446, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(49, Short.MAX_VALUE))
-		);
-		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(43)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(1)
-							.addComponent(selectmode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addGap(34)
-					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 48, GroupLayout.PREFERRED_SIZE)
-					.addGap(38)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(Commitbtn)
-						.addComponent(exitbtn))
-					.addGap(47))
-		);
-		
 		table = new JTable();
-		
 		model1 = new DefaultTableModel(new Object[][] {{null, null, null, null}},
-				new String[] { "\u73ED\u7EA7", "\u5B66\u53F7", "\u59D3\u540D", "\u8054\u7CFB\u7535\u8BDD" });
+				new String[] { "班级", "学号", "姓名", "电话" });
 		model2 = new DefaultTableModel(new Object[][] {{null, null, null, null}},
-				new String[] { "\u73ED\u7EA7", "\u8001\u5E08", "\u4E13\u4E1A" });
-		
+				new String[] { "班级", "老师", "专业" });
 		if((selectmode.getSelectedItem().toString()).equalsIgnoreCase("学生")) {
 			table.setModel(model1);
 			now = MODEL.STUDENTADD;
-		}
-		else {
+			//透明化处理
+			table.setForeground(Color.BLACK);
+			table.setFont(new Font("华文行楷", Font.BOLD, 20));
+			table.setRowHeight(73);			//表格行高
+			table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+			table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+			DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+			String []str= {"班级", "学号", "姓名", "电话"};
+			renderer.setOpaque(false);    //设置透明
+			for(int i=0;i<str.length;i++){
+				table.getColumn(str[i]).setCellRenderer(renderer);//单格渲染
+				TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+				column.setHeaderRenderer(renderer);//表头渲染
+			}
+			table.setOpaque(false);
+			table.getTableHeader().setOpaque(false);
+			table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+			scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+			scrollPane.setOpaque(false);
+			scrollPane.getViewport().setOpaque(false);
+			scrollPane.setColumnHeaderView(table.getTableHeader());
+			scrollPane.getColumnHeader().setOpaque(false);
+
+
+		} else {
 			table.setModel(model2);
 			now = MODEL.ClASSADD;
+			//透明化处理
+			table.setForeground(Color.BLACK);
+			table.setFont(new Font("华文行楷", Font.BOLD, 20));
+			table.setRowHeight(73);    			//表格行高
+			table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+			table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+			DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+			String []str= { "班级", "老师", "专业" };
+			renderer.setOpaque(false);    //设置透明
+			for(int i=0;i<str.length;i++){
+				table.getColumn(str[i]).setCellRenderer(renderer);//单格渲染
+				TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+				column.setHeaderRenderer(renderer);//表头渲染
+			}
+			table.setOpaque(false);
+			table.getTableHeader().setOpaque(false);
+			table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+			scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+			scrollPane.setOpaque(false);
+			scrollPane.getViewport().setOpaque(false);
+			scrollPane.setColumnHeaderView(table.getTableHeader());
+			scrollPane.getColumnHeader().setOpaque(false);
 		}
-		
-		selectmode.addItemListener(new ItemListener() {
 
+		selectmode.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// TODO Auto-generated method stub
 				if((selectmode.getSelectedItem().toString()).equalsIgnoreCase("学生")) {
 					table.setModel(model1);
 					now = MODEL.STUDENTADD;
-				}
-				else {
+
+					//透明化处理
+					table.setForeground(Color.BLACK);
+					table.setFont(new Font("华文行楷", Font.BOLD, 20));
+					table.setRowHeight(73);   			//表格行高
+					table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+					table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+					DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+					String []str= {"班级", "学号", "姓名", "电话"};
+					renderer.setOpaque(false);    //设置透明
+					for(int i=0;i<str.length;i++){
+						table.getColumn(str[i]).setCellRenderer(renderer);//单格渲染
+						TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+						column.setHeaderRenderer(renderer);//表头渲染
+					}
+					table.setOpaque(false);
+					table.getTableHeader().setOpaque(false);
+					table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+					scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+					scrollPane.setOpaque(false);
+					scrollPane.getViewport().setOpaque(false);
+					scrollPane.setColumnHeaderView(table.getTableHeader());
+					scrollPane.getColumnHeader().setOpaque(false);
+
+
+				} else {
 					table.setModel(model2);
 					now = MODEL.ClASSADD;
+					//透明化处理
+					table.setForeground(Color.BLACK);
+					table.setFont(new Font("华文行楷", Font.BOLD, 20));
+					table.setRowHeight(73);   			//表格行高
+					table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+					table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+					DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+					String []str= { "班级", "老师", "专业" };
+					renderer.setOpaque(false);    //设置透明
+					for(int i=0;i<str.length;i++){
+						table.getColumn(str[i]).setCellRenderer(renderer);//单格渲染
+						TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+						column.setHeaderRenderer(renderer);//表头渲染
+					}
+					table.setOpaque(false);
+					table.getTableHeader().setOpaque(false);
+					table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+					scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+					scrollPane.setOpaque(false);
+					scrollPane.getViewport().setOpaque(false);
+					scrollPane.setColumnHeaderView(table.getTableHeader());
+					scrollPane.getColumnHeader().setOpaque(false);
 				}
 			}
-			
+
 		});
-		
+		table.setBounds(0,0,748-134,370-241);
+		scrollPane.setBounds(134,241,748-134,370-241);
+		scrollPane.setViewportView(table);
+		add(backgroundImageLabel);
+		add(scrollPane);
+
+
+		add(backgroundImageLabel);
+		//两个按钮
+		JButton Commitbtn = new JButton("确定");
+		Commitbtn.setBounds(263,425,364-263,478-425);
+		add(Commitbtn);
+		JButton exitbtn = new JButton("返回");
+		exitbtn.setBounds(527,425,364-263,478-425);
+		add(exitbtn);
+
 		Commitbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Boolean Modified = false;
@@ -161,8 +210,7 @@ public class ClassAdminForAdd extends JFrame {
 							table.getValueAt(0, 2) == null ||
 							table.getValueAt(0, 3) == null) {
 						JOptionPane.showMessageDialog(null, "请完善学生信息！", "提示", JOptionPane.WARNING_MESSAGE);
-					}
-					else {
+					} else {
 						Student stu = new Student();
 						stu.setClassid(table.getValueAt(0, 0).toString());
 						stu.setStudentid(table.getValueAt(0, 1).toString());
@@ -172,14 +220,14 @@ public class ClassAdminForAdd extends JFrame {
 						String newid = stu.getStudentid().replaceAll("\\p{C}", "");
 						String newname = stu.getStudentName().replaceAll("\\p{C}", "");
 						String newphone = stu.getStudentphone().replaceAll("\\p{C}", "");
-						
-						if(newphone.length() != 11) {
+
+						if(!newphone.matches("^1\\d{10}$")) {
 							JOptionPane.showMessageDialog(null, "请正确填写电话号码（11位）！", "提示", JOptionPane.WARNING_MESSAGE);
 						}else {
 
 							//add
 							Boolean flag = true;
-							
+
 							//check the id is unique
 							int i = 0;
 							while(i < StuAll.size()) {
@@ -191,7 +239,7 @@ public class ClassAdminForAdd extends JFrame {
 								}
 								i++;
 							}
-							
+
 							if(flag) {
 								flag = false;
 								i = 0;
@@ -209,23 +257,8 @@ public class ClassAdminForAdd extends JFrame {
 									}
 									i++;
 								}
-								
+
 								if(flag) {
-									/*flag = true;
-									int j = 0;
-									System.out.println("check id is of class");
-									//check whether the studentid is of the class
-									while(j < (ClssAll.get(clssid).getClassID()).length()) {
-										if(stu.getClassid().length() - 1 < j) {
-											flag = false;
-											break;
-										}else if(stu.getClassid().charAt(j) != ClssAll.get(clssid).getClassID().charAt(j)) {
-											flag = false;
-											break;
-										}else {
-											j++;
-										}
-									}*/
 									Message mes = new Message();
 									mes.setModuleType(ModuleType.Student);
 									mes.setMessageType(MessageType.ClassUpdate);
@@ -241,8 +274,8 @@ public class ClassAdminForAdd extends JFrame {
 									serverResponse = client.sendRequestToServer(mes);
 									int res = (int) serverResponse.getData();
 									System.out.println("update class size");
-									
-									
+
+
 									//add student here
 									Modified = true;
 									mes = null;
@@ -252,95 +285,52 @@ public class ClassAdminForAdd extends JFrame {
 									stu.setMajor(ClssAll.get(clssid).getMajor());
 									stu.setTeacherid(ClssAll.get(clssid).getTeacherID());
 									mes.setData(stu);
-									
+
 									client = null;
 									client = new Client(ClientMainFrame.socket);
-									
+
 									serverResponse = null;
 									serverResponse = new Message();
 									serverResponse = client.sendRequestToServer(mes);
 									res = (int)serverResponse.getData();
 									System.out.println("Add Student Confirmed!");
-									
-									StuAll.add(stu);	
-//add dormitory student here(id = stu.getStudentid())
-/*									mes = null;
-									mes = new Message();
-									mes.setModuleType(ModuleType.Dormitory);
-									mes.setMessageType(MessageType.DormAdd);
-									Dormitory c=new Dormitory();
-									c.setuserID(stu.getStudentid());
-									c.setDormitoryID("");
-									c.setStudentBunkID(0);
-									c.setDormitoryScore(0);
-									c.setWater(0);
-									c.setElectricity(0);
-									c.setDormitoryMaintain("");
-									c.setStudentExchange("");
-									mes.setData(c);
-									
-									client = null;
-									client = new Client(ClientMainFrame.socket);
-									
-									serverResponse = null;
-									serverResponse = new Message();
-									serverResponse = client.sendRequestToServer(mes);
-									System.out.println("Add Student Dormitory Confirmed!");
-*/
-									clear();
-									/*
-									if(flag) {
-										Message mes = new Message();
-										mes.setModuleType(ModuleType.Student);
-										mes.setMessageType(MessageType.ClassAdminAdd);
-										stu.setMajor(ClssAll.get(clssid).getMajor());
-										stu.setTeacherid(ClssAll.get(clssid).getTeacherID());
-										mes.setData(stu);
-										
-										Client client = new Client(ClientMainFrame.socket);
-										
-										Message serverResponse = new Message();
-										serverResponse = client.sendRequestToServer(mes);
-										int res = (int)serverResponse.getData();
-										System.out.println("Add Student Confirmed!");
-										
-										StuAll.add(stu);
-										
-										clear();
-									}else {
-										int input = JOptionPane.showConfirmDialog(null, "该学号所属班级与填写班级不一致，请您确认执行该操作", "提示",JOptionPane.YES_NO_OPTION);
-										if(input == 0) {//yes
-											Message mes = new Message();
-											mes.setModuleType(ModuleType.Student);
-											mes.setMessageType(MessageType.ClassAdminAdd);
-											stu.setMajor(ClssAll.get(clssid).getMajor());
-											stu.setTeacherid(ClssAll.get(clssid).getTeacherID());
-											mes.setData(stu);
-											
-											Client client = new Client(ClientMainFrame.socket);
-											
-											Message serverResponse = new Message();
-											serverResponse = client.sendRequestToServer(mes);
-											int res = (int)serverResponse.getData();
-											System.out.println("Add Student Confirmed!");
 
-											StuAll.add(stu);
-											
-											clear();
-										}
-									}*/
+									StuAll.add(stu);
+
+									clear();
 								}else {
 									JOptionPane.showMessageDialog(null, "不存在该班级！", "提示", JOptionPane.WARNING_MESSAGE);
 								}
-								
+
 							}else {
 								JOptionPane.showMessageDialog(null, "该学号的学生已经存在！", "提示", JOptionPane.WARNING_MESSAGE);
 							}
-						
+
 						}
 					}
-				}
-				else {
+					//透明化处理
+					table.setForeground(Color.BLACK);
+					table.setFont(new Font("华文行楷", Font.BOLD, 20));
+					table.setRowHeight(73);  			//表格行高
+					table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+					table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+					DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+					renderer.setOpaque(false);    //设置透明
+					String []Names={ "班级", "学号", "姓名", "电话" };
+					for(int i=0;i<4;i++){
+						table.getColumn(Names[i]).setCellRenderer(renderer);//单格渲染
+						TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+						column.setHeaderRenderer(renderer);//表头渲染
+					}
+					table.setOpaque(false);
+					table.getTableHeader().setOpaque(false);
+					table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+					scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+					scrollPane.setOpaque(false);
+					scrollPane.getViewport().setOpaque(false);
+					scrollPane.setColumnHeaderView(table.getTableHeader());
+					scrollPane.getColumnHeader().setOpaque(false);
+				} else {
 					//班级， 老师， 专业
 					if(table.getValueAt(0, 0) == null ||
 							table.getValueAt(0, 1) == null ||
@@ -358,11 +348,11 @@ public class ClassAdminForAdd extends JFrame {
 						newteacher.replaceAll("\\p{C}", "");
 						String newmajor = clss.getMajor();
 						newmajor.replaceAll("\\p{C}", "");
-						
+
 
 						//add
 						Boolean flag = true;
-						
+
 						//check the id is unique
 						int i = 0;
 						while(i < ClssAll.size()) {
@@ -381,21 +371,44 @@ public class ClassAdminForAdd extends JFrame {
 							mes.setModuleType(ModuleType.Student);
 							mes.setMessageType(MessageType.ClassAdd);
 							mes.setData(clss);
-							
+
 							Client client = new Client(ClientMainFrame.socket);
-							
+
 							Message serverResponse = new Message();
 							serverResponse = client.sendRequestToServer(mes);
 							int res = (int)serverResponse.getData();
 							System.out.println("Add Class Confirmed!");
-							
+
 							ClssAll.add(clss);
 							clear();
 						}else {
 							JOptionPane.showMessageDialog(null, "该班级已经存在！", "提示", JOptionPane.WARNING_MESSAGE);
 						}
-					
+
+
 					}
+					//透明化处理
+					table.setForeground(Color.BLACK);
+					table.setFont(new Font("华文行楷", Font.BOLD, 20));
+					table.setRowHeight(73);    			//表格行高
+					table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+					table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+					DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+					renderer.setOpaque(false);    //设置透明
+					String []Names={ "班级", "老师", "专业" };
+					for(int i=0;i<3;i++){
+						table.getColumn(Names[i]).setCellRenderer(renderer);//单格渲染
+						TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+						column.setHeaderRenderer(renderer);//表头渲染
+					}
+					table.setOpaque(false);
+					table.getTableHeader().setOpaque(false);
+					table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+					scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+					scrollPane.setOpaque(false);
+					scrollPane.getViewport().setOpaque(false);
+					scrollPane.setColumnHeaderView(table.getTableHeader());
+					scrollPane.getColumnHeader().setOpaque(false);
 				}
 				if(Modified) {
 					JOptionPane.showMessageDialog(null, "增加成功", "提示", JOptionPane.WARNING_MESSAGE);
@@ -403,30 +416,19 @@ public class ClassAdminForAdd extends JFrame {
 				table.setEnabled(true);
 			}
 		});
-		
-		table.setRowHeight(25);
-		scrollPane.setViewportView(table);
-		contentPane.setLayout(gl_contentPane);
-		
-		System.out.println("Student Mange of Add frame load success");
-		
+
+
+
 		exitbtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cac.setEnabled(true);
 				close();
 			}
 		});
-		
-		lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setVerticalAlignment(SwingConstants.BOTTOM);
-		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel_1.setIcon(new ImageIcon("VCampusClient/src/main/resources/image/bgStudent1.png"));
-		lblNewLabel_1.setBounds(0, 0, 800, 80);
-		this.getContentPane().add(lblNewLabel_1);
-		
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(2);
+		exitbtn.setOpaque(false);
+		Commitbtn.setOpaque(false);
 	}
+
 	void clear() {
 		if(now == MODEL.STUDENTADD) {
 			table.setModel(model1);
@@ -434,15 +436,14 @@ public class ClassAdminForAdd extends JFrame {
 			table.setValueAt("", 0, 1);
 			table.setValueAt("", 0, 2);
 			table.setValueAt("", 0, 3);
-		}
-		else {
+		} else {
 			table.setModel(model2);
 			table.setValueAt("", 0, 0);
 			table.setValueAt("", 0, 1);
 			table.setValueAt("", 0, 2);
 		}
 	}
-	
+
 	void close() {
 		CAC.setEnabled(true);
 		CAC.updateFrame(StuAll, ClssAll);

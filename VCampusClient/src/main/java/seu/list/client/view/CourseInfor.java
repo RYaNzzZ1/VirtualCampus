@@ -1,8 +1,5 @@
 package seu.list.client.view;
-//package seu.list.client.view;
-
-
-import seu.list.client.bz.Client;
+import seu.list.client.driver.Client;
 import seu.list.common.Course;
 import seu.list.common.Message;
 import seu.list.common.ModuleType;
@@ -15,14 +12,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.SQLException;
-/**
- * @author 郭念宗
- * @version jdk1.8.0
- */
+
 public class CourseInfor extends JDialog implements ActionListener {
-	private final int WIDTH=400;
-	private final int HEIGHT=450;
-	private final JPanel contentPanel = new JPanel();
 	private JTextField Semester;
 	private JTextField CourseID;
 	private JTextField CourseMajor;
@@ -33,138 +24,131 @@ public class CourseInfor extends JDialog implements ActionListener {
 	private Socket socket;
 	private String userID;
 
-	/**
-	 * Create the dialog.
-	 * @param ID 用户id
-	 * @param socket 与服务器通信的socket
-	 */
-	public  CourseInfor(String ID,Socket socket) {
+	public  CourseInfor(String ID,Socket socket,ClientCourseFrame tem) {
 		userID=ID;
 		this.socket=socket;
+		tem.dispose();
+
 		Client client=new Client(this.socket);
-		setBounds(100, 100, WIDTH, HEIGHT);
-		getContentPane().setLayout(null);
-		contentPanel.setBounds(0, 0, WIDTH, HEIGHT);
-		this.add(contentPanel);
-		contentPanel.setLayout(new FlowLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel);
+		//绘制背景图片
+		JLabel backgroundImageLabel = new JLabel(new ImageIcon("VCampusClient/Image/CourseInfor.png"));
+		Toolkit k = Toolkit.getDefaultToolkit();
+		Dimension d = k.getScreenSize();
+		setBounds(d.width/2-846/2, d.height/2-589/2, 846, 610);
+		backgroundImageLabel.setBounds(0, 0, 846,589);
+		setResizable(false);
+		setLayout(null);
 
-		JPanel buttonPane = new JPanel();
+		//2.绘制退出按钮
+		//得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+     /*backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+			}
+        });*/
 
-		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 
-
-		JButton confirmButtom = new JButton("确定");
-		confirmButtom.setFont(new Font("微软雅黑",Font.BOLD,20));
-		confirmButtom.addActionListener(this);
-		confirmButtom.setActionCommand("confirm");
-		buttonPane.add(confirmButtom);
-
-		Box box1= Box.createHorizontalBox();
-		Box box2= Box.createHorizontalBox();
-		Box box3= Box.createHorizontalBox();
-		Box box4= Box.createHorizontalBox();
-		Box box5= Box.createHorizontalBox();
-		Box box6= Box.createHorizontalBox();
-		Box box7= Box.createHorizontalBox();
-		Box box8=Box.createHorizontalBox();
-		Box boxH= Box.createVerticalBox();
+		setTitle("添加课程");
+		Font f=new Font("华文楷体",Font.BOLD,36);
 
 		CourseID = new JTextField();
-		CourseID.setColumns(10);
-
-		JLabel lblcourseID = new JLabel("课程ID");
-		lblcourseID.setFont(new Font("微软雅黑",Font.BOLD,20));
-		box1.add(CourseID);
-		box1.add(lblcourseID);
-
+		CourseID.setFont(f);
+		CourseID.setBounds(168,133,407-168,175-133);
+		add(CourseID);
+		CourseID.setOpaque(false);
+		CourseID.setBorder(new EmptyBorder(0,0,0,0));
 
 		CourseName = new JTextField();
-		CourseName.setColumns(10);
-		JLabel lblcourseName = new JLabel("课程名称");
-		lblcourseName.setFont(new Font("微软雅黑",Font.BOLD,20));
-		box2.add(CourseName);
-		box2.add(lblcourseName);
+		CourseName.setFont(f);
+		CourseName.setBounds(504,133,407-168,175-133);
+		add(CourseName);
+		CourseName.setOpaque(false);
+		CourseName.setBorder(new EmptyBorder(0,0,0,0));
+
+
 
 		CourseMajor = new JTextField();
-		CourseMajor.setColumns(10);
+		CourseMajor.setFont(f);
+		CourseMajor.setBounds(168,218,407-168,175-133);
+		add(CourseMajor);
+		CourseMajor.setOpaque(false);
+		CourseMajor.setBorder(new EmptyBorder(0,0,0,0));
 
-		JLabel lblcourseMajor = new JLabel("课程专业");
-		lblcourseMajor.setFont(new Font("微软雅黑",Font.BOLD,20));
-		box3.add(CourseMajor);
-		box3.add(lblcourseMajor);
+
 
 
 		teacherID = new JTextField();
-		teacherID.setColumns(10);
+		teacherID.setFont(f);
+		teacherID.setBounds(504,219,407-168,175-133);
+		add(teacherID);
+		teacherID.setOpaque(false);
+		teacherID.setBorder(new EmptyBorder(0,0,0,0));
 
-		JLabel lblteacherID = new JLabel("授课教师");
-		lblteacherID.setFont(new Font("微软雅黑",Font.BOLD,20));
-
-		box4.add(teacherID);
-		box4.add(lblteacherID);
 
 
 		Semester = new JTextField();
-		Semester.setColumns(10);
+		Semester.setFont(f);
+		Semester.setBounds(168,403,407-168,175-133);
+		add(Semester);
+		Semester.setOpaque(false);
+		Semester.setBorder(new EmptyBorder(0,0,0,0));
 
-		JLabel lblsemster = new JLabel("学年学期");
-		lblsemster.setFont(new Font("微软雅黑",Font.BOLD,20));
 
-		box5.add(Semester);
-		box5.add(lblsemster);
 
 
 
 		CourseState = new JTextField();
-		CourseState.setColumns(10);
+		CourseState.setFont(f);
+		CourseState.setBounds(168,302,407-168,175-133);
+		add(CourseState);
+		CourseState.setOpaque(false);
+		CourseState.setBorder(new EmptyBorder(0,0,0,0));
 
-		JLabel lblcourseState = new JLabel("课程状态");
-		lblcourseState.setFont(new Font("微软雅黑",Font.BOLD,20));
-		box6.add(CourseState);
-		box6.add(lblcourseState);
 
 
 
 		CourseType = new JTextField();
+		CourseType.setFont(f);
+		CourseType.setBounds(504,303,407-168,175-133);
+		add(CourseType);
+		CourseType.setOpaque(false);
+		CourseType.setBorder(new EmptyBorder(0,0,0,0));
 
-		CourseType.setColumns(10);
+		add(backgroundImageLabel);
+
+		JButton confirmButtom = new JButton("确定");
+		confirmButtom.setFont(new Font("微软雅黑",Font.BOLD,20));
+		confirmButtom.setBounds(253,502,352-253,50);
+		confirmButtom.addActionListener(this);
+		confirmButtom.setActionCommand("confirm");
+		add(confirmButtom);
+		confirmButtom.setOpaque(false);
 
 
-		JLabel lblcourseType = new JLabel("课程类型");
-		lblcourseType.setFont(new Font("微软雅黑",Font.BOLD,20));
+		JButton exit=new JButton("退出");
+		exit.setBounds(519,502,100,50);
+		add(exit);
+		exit.setOpaque(false);
+		exit.addActionListener(event->
+		{
+			try {
+				this.dispose();
+				ClientCourseFrame ccf = new ClientCourseFrame(userID,this.socket);
+			} catch (ClassNotFoundException e) {
+				throw new RuntimeException(e);
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			} catch (IOException e) {
+				throw new RuntimeException(e);
+			}
+		});
 
-		box7.add(CourseType);
-		box7.add(lblcourseType);
-
-		box8.add(Box.createHorizontalStrut(100));
-		box8.add(confirmButtom);
-		boxH.add(Box.createVerticalStrut(20));
-		boxH.add(box1);
-		boxH.add(Box.createVerticalStrut(15));
-		boxH.add(box2);
-		boxH.add(Box.createVerticalStrut(15));
-		boxH.add(box3);
-		boxH.add(Box.createVerticalStrut(15));
-		boxH.add(box4);
-		boxH.add(Box.createVerticalStrut(15));
-		boxH.add(box5);
-		boxH.add(Box.createVerticalStrut(15));
-		boxH.add(box6);
-		boxH.add(Box.createVerticalStrut(15));
-		boxH.add(box7);
-		boxH.add(Box.createVerticalStrut(25));
-		boxH.add(box8);
-		boxH.add(Box.createVerticalStrut(15));
-		contentPanel.add(boxH);
+		setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		this.setVisible(true);
-		this.setLocationRelativeTo(null);
 	}
-	/**
-	 * 事件响应
-	 * @param e 事件
-	 */
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand()=="confirm") {
 			Client client = new Client(this.socket);

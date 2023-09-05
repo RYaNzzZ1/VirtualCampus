@@ -1,8 +1,8 @@
 package seu.list.common;
 
 
-import seu.list.server.dao.CourseDaoImp;
-import seu.list.server.db.SqlHelperImp;
+import seu.list.server.dao.CourseServer;
+import seu.list.server.db.SqlHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,7 @@ public class User implements java.io.Serializable {
     private String pwd;//6
     private String role;//7
     private String money;//8
-
+    private String online;//9
 
     public void print() {
         System.out.print(id + "\n" + name + "\n" + age + "\n" + sex + "\n" + major + "\n" + grade + "\n" + pwd + "\n" + role + "\n" + money + "\n" + "\n");
@@ -42,9 +42,9 @@ public class User implements java.io.Serializable {
         pwd = content.get(6);
         role = content.get(7);
         money = content.get(8);
+        online=content.get(9);
     }
 
-    ;
 
     /**
      * @return 学号
@@ -168,6 +168,11 @@ public class User implements java.io.Serializable {
     public void setMoney(String money) {
         this.money = money;
     }
+    /**
+     * @return 在线状态
+     */
+    public boolean getState(){return online == "1";}
+
 
     /**
      * @return 用户信息
@@ -183,18 +188,33 @@ public class User implements java.io.Serializable {
         userContents.add(pwd);
         userContents.add(role);
         userContents.add(money);
+        userContents.add(online);
         return userContents;
     }
 
+    public void changeState(int online){
+        String []paras=new String[1];
+        paras[0]=this.id;
+        if(online==1){
+            this.online="1";
+            String sql="update tb_User set uOnline='" + "1" + "'where uID= ?";
+            new SqlHelper().sqlUpdate(sql, paras);
+        }
+        else {
+            this.online="0";
+            String sql="update tb_User set uOnline='" + "0" + "'where uID= ?";
+            new SqlHelper().sqlUpdate(sql, paras);
+        }
+    }
     /**
      * @return 用户已选课程
      */
     public List<Course> getCourses() {
         String sql = "select * from tb_Stc where uID = ?";
-        List<String> courseIDset = new SqlHelperImp().sqlRelationQuery(sql, new String[]{id});
+        List<String> courseIDset = new SqlHelper().sqlRelationQuery(sql, new String[]{id});
         List<Course> cList = new ArrayList<Course>();
         for (String cID : courseIDset) {
-            cList.add(new CourseDaoImp().searchCourseByID(cID));
+            cList.add(new CourseServer().searchCourseByID(cID));
         }
         return cList;
     }
@@ -212,6 +232,7 @@ public class User implements java.io.Serializable {
                 ", pwd='" + getPwd() + "'" +
                 ", role='" + getRole() + "'" +
                 ", money='" + getMoney() + "'" +
+                ", online='" + getState() + "'"+
                 "}";
     }
 }

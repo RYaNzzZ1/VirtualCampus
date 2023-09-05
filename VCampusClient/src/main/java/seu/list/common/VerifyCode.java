@@ -6,19 +6,19 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Random;
 
-public class VerifyCode extends JComponent implements MouseListener{
+public class VerifyCode extends JComponent implements MouseListener {
 
 	private String codes;
-	private int width = 40,height = 30;
-	private int codesLength=4;
+	private int width = 40, height = 50;
+	private int codesLength = 4;
 	private Random random = new Random();
-	
+
 	public VerifyCode() {
-		width = this.codesLength*16+(this.codesLength-1)*10;
-		setPreferredSize(new Dimension(width,height));
-		setSize(width,height);
+		width = this.codesLength * 16 + (this.codesLength - 1) * 10;
+		setPreferredSize(new Dimension(width, height));
+		setSize(width, height);
 		this.addMouseListener(this);
-	    setToolTipText("点击可更换验证码");
+		setToolTipText("点击可更换验证码");
 	}
 	
 	//得到生成的验证码

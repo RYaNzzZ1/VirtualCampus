@@ -5,92 +5,66 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.SQLException;
-/**
- * @author 郭念宗
- * @version jdk1.8.0
- */
 public class ClientTeacherFrame extends JFrame implements ActionListener {
-	JPanel jp1,jp2;
 	JButton courseManage,Quit;
-	JLabel jl1,jl2,jl3;
 	String number;
 	Socket socket;//传送数据
 	public ClientTeacherFrame(String number, Socket socket) throws ClassNotFoundException, SQLException,IOException, ClassNotFoundException {
 		this.socket = socket;
 		this.number = number;
 
-		setBak(); //调用背景方法
-		Container c = getContentPane(); //获取JFrame面板
+		//绘制背景图片
+		JLabel backgroundImageLabel = new JLabel(new ImageIcon("VCampusClient/Image/ClientTeacherFrame.PNG"));
+		Toolkit k = Toolkit.getDefaultToolkit();
+		Dimension d = k.getScreenSize();
+		setBounds(d.width/2-640, d.height/2-360, 1280, 720);
+		backgroundImageLabel.setBounds(0, 0, 1280, 720);
+		setSize(1280,760);
+		setResizable(false);
+		setLayout(null);
+		//2.绘制退出按钮
+		//得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+     /*backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+			}
+        });
+*/
 
-		//jp1及jp1上逐渐的初始化和添加
-		jp1 = new JPanel();
-		jp1.setOpaque(false);
-		jl1 = new JLabel("编号："+number);
-		jl2 = new JLabel("权限：教师");
-
-		jp1.add(jl1);
-		jp1.add(jl2);
-
-		//jp1及jp1上逐渐的初始化和添加
-		jp2 = new JPanel();
-		jp2.setOpaque(false);
-		jl3 = new JLabel("您好！欢迎登陆教师系统！");
-
-		//button初始化和注册监听
+		add(backgroundImageLabel);
+		//两个按钮
 		courseManage = new JButton("课程信息管理");
 		courseManage.addActionListener(this);
 		Quit = new JButton("退出");
 		Quit.addActionListener(this);
 
-		jl3.setBounds(20,20,200,15);
-		courseManage.setBounds(143, 67, 159, 40);
-		Quit.setBounds(143, 131, 159, 40);
-
-		jp2.add(jl3);
-		jp2.add(courseManage);
-		jp2.add(Quit);
-		jp2.setLayout(null);
-
-		//添加jp1和jp2
-		c.add(jp1,BorderLayout.NORTH);
-		c.add(jp2,BorderLayout.CENTER);
-
-		this.setSize(461, 286);
+		courseManage.setBounds(294,303,628-294,389-303);
+		Quit.setBounds(780,477,991-780,562-477);
+		add(courseManage);
+		add(Quit);
+		courseManage.setOpaque(false);
+		Quit.setOpaque(false);
 		this.setTitle("教师系统");
-//		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
-		this.setLocationRelativeTo(null);
-		
 
-		
-		//重写关闭事件
-		this.setDefaultCloseOperation(2);
 	}
-	/**
-	 * 设置背景
-	 */
-	private void setBak() {
-		// TODO Auto-generated method stub
-		((JPanel)this.getContentPane()).setOpaque(false);
-		ImageIcon img = new ImageIcon("image/");
-		JLabel background = new JLabel(img);
-		this.getLayeredPane().add(background, new Integer(Integer.MIN_VALUE));
-		background.setBounds(-110, -80, img.getIconWidth(), img.getIconHeight());
-	}
-	/**
-	 * 事件响应
-	 * @param arg0 事件
-	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		if(arg0.getSource() == courseManage)
 		{
 			try {
+				this.setVisible(false);
 				ClientCourseFrame ccf = new ClientCourseFrame(this.number,this.socket);
+
 			} catch (ClassNotFoundException | SQLException | IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

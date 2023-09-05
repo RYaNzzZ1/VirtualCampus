@@ -1,71 +1,75 @@
- 
+
 package seu.list.common;
 
 import java.io.Serializable;
+
 /**
  * 类{@code Goods}为商品类
+ *
  * @author 欧阳瑜
  * @version 1.0
- * 
  */
-public class Goods implements Serializable{
-		private static final long serialVersionUID = 1L;
-	
-		private int GoodsID;
-		private String GoodsName;
-		private double GoodsPrice;
-		private int GoodsNumber;
+public class Goods implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-		public Goods() {
-			super();
-		}
-		/**
-		 * 构造函数
-		 * @param goodsid 商品编号
-		 * @param goodsname 商品名
-		 * @param goodsprice 商品价格
-		 * @param goodsnumber 库存
-		 */
-		public Goods(int goodsid,String goodsname,double goodsprice,int goodsnumber){
-			GoodsID=goodsid;
-			GoodsName=goodsname;
-			GoodsPrice=goodsprice;
-			GoodsNumber=goodsnumber;
-		}
+    private int GoodsID;
+    private String GoodsName;
+    private double GoodsPrice;
+    private int GoodsNumber;
 
-		public int getGoodsid() {
-			return GoodsID;
-		}
+    public Goods() {
+        super();
+    }
 
-		public void setGoodsid(int goodsid) {
-			GoodsID = goodsid;
-		}
-		public String getGoodsname() {
-			return GoodsName;
-		}
+    /**
+     * 构造函数
+     *
+     * @param goodsid     商品编号
+     * @param goodsname   商品名
+     * @param goodsprice  商品价格
+     * @param goodsnumber 库存
+     */
+    public Goods(int goodsid, String goodsname, double goodsprice, int goodsnumber) {
+        GoodsID = goodsid;
+        GoodsName = goodsname;
+        GoodsPrice = goodsprice;
+        GoodsNumber = goodsnumber;
+    }
 
-		public void setGoodsname(String goodsname) {
-			GoodsName = goodsname;
-		}
+    public int getGoodsid() {
+        return GoodsID;
+    }
 
-		public double getGoodsprice() {
-			return GoodsPrice;
-		}
+    public void setGoodsid(int goodsid) {
+        GoodsID = goodsid;
+    }
 
-		public void setGoodsprice(double goodsprice) {
-			GoodsPrice = goodsprice;
-		}
+    public String getGoodsname() {
+        return GoodsName;
+    }
 
-		public int getGoodsnumber() {
-			return GoodsNumber;
-		}
+    public void setGoodsname(String goodsname) {
+        GoodsName = goodsname;
+    }
 
-		public void setGoodsnumber(int goodsnumber) {
-			GoodsNumber = goodsnumber;
-		}
+    public double getGoodsprice() {
+        return GoodsPrice;
+    }
 
-		@Override
-		public String toString() {
-			return "Goods{" + "GoodsID" + GoodsID + ", GoodsName" + GoodsName + ", GoodsPrice" + GoodsPrice + ", GoodsNumber" + GoodsNumber + "}";
-		}
+    public void setGoodsprice(double goodsprice) {
+        GoodsPrice = goodsprice;
+    }
+
+    public int getGoodsnumber() {
+        return GoodsNumber;
+    }
+
+    public void setGoodsnumber(int goodsnumber) {
+        GoodsNumber = goodsnumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Goods{" + "GoodsID" + GoodsID + ", GoodsName" + GoodsName + ", GoodsPrice" + GoodsPrice + ", GoodsNumber" + GoodsNumber + "}";
+    }
 }

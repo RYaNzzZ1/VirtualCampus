@@ -28,7 +28,7 @@ public class Tools {
         int num=0;
         while(rs.next()){
             if(rs.getString("Account").equals(data[0])&&
-            rs.getString("Password").equals(data[1])){
+                    rs.getString("Password").equals(data[1])){
                 System.out.println(rs.getString("Account")+"\t"+rs.getString("Password"));
                 if(rs.getString("Admin").equals("1")){
                     num=2;break;
@@ -38,7 +38,7 @@ public class Tools {
 
             }
         }
-       rs.close();
+        rs.close();
         return num;
     }
 }

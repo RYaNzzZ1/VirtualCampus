@@ -4,17 +4,15 @@
  */
 package seu.list.client.view;
 
-import seu.list.client.bz.Client;
+import seu.list.client.driver.Client;
+import seu.list.client.driver.ClientMainFrame;
 import seu.list.common.*;
 
 import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
 
@@ -53,11 +51,61 @@ public class Dormmaintain extends JDialog {
 		C=c;
 		setVisible(true);
 		setTitle("维修登记");
-		setBounds(100, 100, 450, 300);
-		//添加图标
-		Image image=new ImageIcon("VCampusClient/VCampusClient/src/main/resources/image/xiaobiao.jpg").getImage();
-		setIconImage(image);
-		
+		setLayout(null);
+
+		// 创建带有背景图片的JLabel
+		JLabel backgroundImageLabel = new JLabel(new ImageIcon("VCampusClient/Image/Dormmaintain.PNG"));
+		//获取当前屏幕的尺寸（长、宽的值）
+		Toolkit k = Toolkit.getDefaultToolkit();
+		Dimension d = k.getScreenSize();
+		backgroundImageLabel.setBounds(0, 0, 675, 605);
+		//将当前窗口设置到屏幕正中央进行显示
+		setBounds(d.width / 2 - 675 / 2, d.height / 2 - 605 / 2, 675, 605);
+		backgroundImageLabel.setOpaque(false); // 设置背景透明
+		setVisible(true);
+
+		setResizable(false); //阻止用户拖拽改变窗口的大小
+
+		//2.绘制退出按钮
+		//得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+//		backgroundImageLabel.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				int x = e.getX();
+//				int y = e.getY();
+//				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+//			}
+//		});
+
+		//设置输入框
+		nametextField = new JTextField();
+		nametextField.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		nametextField.setColumns(20);
+		nametextField.setBounds(197,155,375,44);
+		add(nametextField);
+		nametextField.setOpaque(false);
+		nametextField.setBorder(new EmptyBorder(0,0,0,0));
+
+		dormIDtextField = new JTextField();
+		dormIDtextField.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		dormIDtextField.setColumns(20);
+		dormIDtextField.setBounds(197,252,375,44);
+		add(dormIDtextField);
+		dormIDtextField.setOpaque(false);
+		dormIDtextField.setBorder(new EmptyBorder(0,0,0,0));
+
+
+		maintaintextField = new JTextField();
+		maintaintextField.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		maintaintextField.setColumns(20);
+		maintaintextField.setBounds(197,344,375,44);
+		add(maintaintextField);
+		maintaintextField.setOpaque(false);
+		maintaintextField.setBorder(new EmptyBorder(0,0,0,0));
+
+		add(backgroundImageLabel);
+
+		//设置按钮
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		{
 			buttonPane = new JPanel();
@@ -66,24 +114,30 @@ public class Dormmaintain extends JDialog {
 				okButton.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 				okButton.setActionCommand("OK");
 				getRootPane().setDefaultButton(okButton);
-				
+				okButton.setBounds(146,454,103,56);
+				add(okButton);
+				okButton.setOpaque(false);
+
 				okButton.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							// TODO Auto-generated method stub
-							MaintainAct(e);
-							setVisible(false);
-						}
-					
-					});
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						// TODO Auto-generated method stub
+						MaintainAct(e);
+						setVisible(false);
+					}
+
+				});
 			}
 			{
 				cancelButton = new JButton("取消");
 				cancelButton.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 				cancelButton.setActionCommand("Cancel");
-				
+				cancelButton.setBounds(430,453,103,56);
+				add(cancelButton);
+				cancelButton.setOpaque(false);
+
 				cancelButton.addActionListener(new ActionListener() {
-					
+
 					public void actionPerformed(ActionEvent e) {
 						// TODO Auto-generated method stub
 						setVisible(false);
@@ -91,109 +145,6 @@ public class Dormmaintain extends JDialog {
 				});
 			}
 		}
-		GroupLayout gl_buttonPane = new GroupLayout(buttonPane);
-		gl_buttonPane.setHorizontalGroup(
-			gl_buttonPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_buttonPane.createSequentialGroup()
-					.addGap(90)
-					.addComponent(okButton, GroupLayout.PREFERRED_SIZE, 88, GroupLayout.PREFERRED_SIZE)
-					.addGap(75)
-					.addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 91, GroupLayout.PREFERRED_SIZE)
-					.addGap(89))
-		);
-		gl_buttonPane.setVerticalGroup(
-			gl_buttonPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_buttonPane.createSequentialGroup()
-					.addGroup(gl_buttonPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(cancelButton, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
-						.addComponent(okButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addContainerGap(47, Short.MAX_VALUE))
-		);
-		buttonPane.setLayout(gl_buttonPane);
-		GroupLayout groupLayout = new GroupLayout(getContentPane());
-		groupLayout.setHorizontalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
-					.addGroup(groupLayout.createParallelGroup(Alignment.TRAILING)
-						.addComponent(contentPanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE)
-						.addComponent(buttonPane, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE))
-					.addGap(10))
-		);
-		groupLayout.setVerticalGroup(
-			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addComponent(contentPanel, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(buttonPane, GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE))
-		);
-		{
-			maintainLabel = new JLabel("维修登记");
-			maintainLabel.setFont(new Font("微软雅黑", Font.PLAIN, 25));
-		}
-		JLabel nameLabel = new JLabel("学号：");
-		nameLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		nameLabel.setBackground(new Color(240, 240, 240));
-		JLabel dormIDLabel = new JLabel("宿舍：");
-		dormIDLabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		JLabel maintainALabel = new JLabel("维修内容：");
-		maintainALabel.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		
-		nametextField = new JTextField();
-		nametextField.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		nametextField.setColumns(10);
-		
-		dormIDtextField = new JTextField();
-		dormIDtextField.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		dormIDtextField.setColumns(10);
-		
-		maintaintextField = new JTextField();
-		maintaintextField.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-		maintaintextField.setColumns(10);
-		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
-		gl_contentPanel.setHorizontalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addGap(72)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(maintainALabel)
-						.addComponent(dormIDLabel)
-						.addComponent(nameLabel))
-					.addGap(12)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(maintaintextField)
-						.addComponent(dormIDtextField, Alignment.LEADING)
-						.addComponent(nametextField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
-						.addComponent(maintainLabel, Alignment.LEADING))
-					.addContainerGap(111, Short.MAX_VALUE))
-		);
-		gl_contentPanel.setVerticalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPanel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(maintainLabel)
-					.addPreferredGap(ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(nameLabel)
-						.addComponent(nametextField, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPanel.createSequentialGroup()
-							.addGap(20)
-							.addComponent(dormIDLabel))
-						.addGroup(Alignment.TRAILING, gl_contentPanel.createSequentialGroup()
-							.addGap(18)
-							.addComponent(dormIDtextField, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)))
-					.addGap(18)
-					.addGroup(gl_contentPanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(maintainALabel, Alignment.TRAILING)
-						.addComponent(maintaintextField, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
-					.addGap(21))
-		);
-		contentPanel.setLayout(gl_contentPanel);
-		getContentPane().setLayout(groupLayout);
-		
-		//居中显示
-		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(2);
 	}
 /**
  * 宿舍维修申请登记
@@ -205,12 +156,8 @@ public class Dormmaintain extends JDialog {
 		mes.setUserType(0);
 		mes.setModuleType(ModuleType.Dormitory);
 		mes.setMessageType(MessageType.DormMaintain);
-		try {
-			socket = new Socket(IConstant.SERVER_ADDRESS,IConstant.SERVER_PORT);
-		}catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		Client client = new Client(socket);
+
+		Client client = new Client(ClientMainFrame.socket);
 		ArrayList<String> para = new ArrayList<String>();
 		para.add(nametextField.getText());
 		para.add(dormIDtextField.getText());

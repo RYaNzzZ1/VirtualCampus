@@ -1,4 +1,4 @@
-package seu.list.server.bz;
+package seu.list.server.driver;
 
 import seu.list.common.Message;
 import seu.list.common.MessageType;
@@ -116,7 +116,7 @@ public class ServerSocketThread extends Thread {
 		Message serverResponse = null;
 		switch(message.getModuleType()) {
 			case ModuleType.User: {// 用户管理模块
-				UserDaoImpl iud=new UserDaoImpl(message,this.id);
+				UserServer iud=new UserServer(message,this.id);
 				iud.excute();
 				serverResponse=iud.getMesToClient();
 				break;
@@ -132,7 +132,7 @@ public class ServerSocketThread extends Thread {
 			}
 			case ModuleType.Course: {
 				// 选课模块
-				CourseDaoImp courseServer = new CourseDaoImp(message);
+				CourseServer courseServer = new CourseServer(message);
 				courseServer.execute();
 				serverResponse = courseServer.getMesToClient();
 				System.out.println(serverResponse.getContent());

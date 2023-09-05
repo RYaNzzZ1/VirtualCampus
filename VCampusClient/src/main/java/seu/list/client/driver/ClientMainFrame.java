@@ -1,4 +1,4 @@
-package seu.list.client.bz;
+package seu.list.client.driver;
 
 import seu.list.client.view.ClientLoginFrame;
 import seu.list.common.IConstant;

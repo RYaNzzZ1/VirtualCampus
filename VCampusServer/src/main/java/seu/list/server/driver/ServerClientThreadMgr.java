@@ -1,11 +1,8 @@
-package seu.list.server.bz;
+package seu.list.server.driver;
 
 import seu.list.common.Message;
-import seu.list.common.MessageType;
-import seu.list.common.ModuleType;
 import seu.list.common.User;
 
-import java.net.Socket;
 import java.util.*;
 
 /**

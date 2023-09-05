@@ -54,7 +54,7 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-                            <mainClass>seu.list.client.bz.ClientMainFrame</mainClass> <!-- 此处为主入口-->
+                            <mainClass>seu.list.client.driver.ClientMainFrame</mainClass> <!-- 此处为主入口-->
                         </manifest>
                     </archive>
                 </configuration>

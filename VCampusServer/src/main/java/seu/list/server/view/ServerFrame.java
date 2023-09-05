@@ -1,6 +1,6 @@
 package seu.list.server.view;
 
-import seu.list.server.bz.ServerMainFrame;
+import seu.list.server.driver.ServerMainFrame;
 
 import javax.swing.*;
 import java.awt.*;

@@ -4,7 +4,7 @@
  */
 package seu.list.client.view;
 
-import seu.list.client.bz.Client;
+import seu.list.client.driver.Client;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.ModuleType;

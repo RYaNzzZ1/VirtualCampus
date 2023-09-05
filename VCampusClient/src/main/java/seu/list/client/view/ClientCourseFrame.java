@@ -60,7 +60,7 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 		jFrame.setLayout(null);
 		//2.绘制退出按钮
 		//得到鼠标的坐标（用于推算对话框应该摆放的坐标）
-    /* backgroundImageLabel.addMouseListener(new MouseAdapter() {
+     backgroundImageLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
 				int x = e.getX();
@@ -68,27 +68,27 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
 			}
         });
-*/
+
 		//下拉拉列表
 		String [] seOp = {"全部","课程号"};
 
 		jcb = new JComboBox(seOp);
 		jcb.setFont(new Font("华为行楷",Font.BOLD,36));
 		jcb.setBounds(450,148,200,197-148);
-		jFrame.add(jcb);
+		//jFrame.add(jcb);
 		jcb.setOpaque(false);
 		jcb.setBorder(BorderFactory.createBevelBorder(0));
 
 		jtf = new JTextField("课程编号");
 		jtf.setBounds(671,148,991-671,197-148);
 		jtf.setFont(new Font("华文行楷",Font.BOLD,36));
-		jFrame.add(jtf);
+		//jFrame.add(jtf);
 		jtf.setOpaque(false);
 		jtf.setBorder(new EmptyBorder(0,0,0,0));
 		jtf1 = new JTextField("课程名称");
 		jtf1.setBounds(759,587,909-759,633-587);
 		jtf1.setFont(new Font("华文行楷",Font.BOLD,36));
-		jFrame.add(jtf1);
+		//jFrame.add(jtf1);
 		jtf1.setOpaque(false);
 		jtf1.setBorder(new EmptyBorder(0,0,0,0));
 

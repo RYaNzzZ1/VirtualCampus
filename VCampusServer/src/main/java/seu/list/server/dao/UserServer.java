@@ -241,13 +241,14 @@ public class UserServer {
         paras[2] = content.get(6);
         List<User> users = new SqlHelper().sqlUserQuery(sql, paras);
 
-        String sql1 = "select * from tb_Student where uID = ?";
-        String[]paras1=new String[1];
-        paras1[0]=paras[0];
-        List<Student> students = new SqlHelper().sqlStudentCreditQuery(sql1,paras1);
-
-        if (users != null && users.size() > 0) {
+        if(users.get(0).getRole()=="0") {
+            String sql1 = "select * from tb_Student where uID = ?";
+            String[] paras1 = new String[1];
+            paras1[0] = paras[0];
+            List<Student> students = new SqlHelper().sqlStudentCreditQuery(sql1, paras1);
             users.get(0).setMoney(String.valueOf(students.get(0).getStudentcredit()));
+        }
+        if (users != null && users.size() > 0) {
             return users.get(0);
         } else
             return null;

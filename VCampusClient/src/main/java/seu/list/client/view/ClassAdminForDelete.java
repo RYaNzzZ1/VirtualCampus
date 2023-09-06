@@ -120,7 +120,7 @@ public class ClassAdminForDelete extends JFrame {
             searchbtn.addItem("姓名");
             //透明化处理
             table.setForeground(Color.BLACK);
-            table.setFont(new Font("华文行楷", Font.BOLD, 20));
+            table.setFont(new Font("楷体", Font.BOLD, 20));
             table.setRowHeight(73);            //表格行高
             table.setPreferredScrollableViewportSize(new Dimension(850, 500));
             table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -150,7 +150,7 @@ public class ClassAdminForDelete extends JFrame {
             searchbtn.addItem("老师");
             //透明化处理
             table.setForeground(Color.BLACK);
-            table.setFont(new Font("华文行楷", Font.BOLD, 20));
+            table.setFont(new Font("楷体", Font.BOLD, 20));
             table.setRowHeight(73);            //表格行高
             table.setPreferredScrollableViewportSize(new Dimension(850, 500));
             table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -210,7 +210,7 @@ public class ClassAdminForDelete extends JFrame {
                         System.out.println("Model Change");
                         //透明化处理
                         table.setForeground(Color.BLACK);
-                        table.setFont(new Font("华文行楷", Font.BOLD, 20));
+                        table.setFont(new Font("楷体", Font.BOLD, 20));
                         table.setRowHeight(73);            //表格行高
                         table.setPreferredScrollableViewportSize(new Dimension(850, 500));
                         table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -250,7 +250,7 @@ public class ClassAdminForDelete extends JFrame {
                         searchbtn.addItem("老师");
                         //透明化处理
                         table.setForeground(Color.BLACK);
-                        table.setFont(new Font("华文行楷", Font.BOLD, 20));
+                        table.setFont(new Font("楷体", Font.BOLD, 20));
                         table.setRowHeight(73);            //表格行高
                         table.setPreferredScrollableViewportSize(new Dimension(850, 500));
                         table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -669,7 +669,7 @@ public class ClassAdminForDelete extends JFrame {
 
                     //透明化处理
                     table.setForeground(Color.BLACK);
-                    table.setFont(new Font("华文行楷", Font.BOLD, 20));
+                    table.setFont(new Font("楷体", Font.BOLD, 20));
                     table.setRowHeight(73);            //表格行高
                     table.setPreferredScrollableViewportSize(new Dimension(850, 500));
                     table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -776,7 +776,7 @@ public class ClassAdminForDelete extends JFrame {
                     }
                     //透明化处理
                     table.setForeground(Color.BLACK);
-                    table.setFont(new Font("华文行楷", Font.BOLD, 20));
+                    table.setFont(new Font("楷体", Font.BOLD, 20));
                     table.setRowHeight(73);            //表格行高
                     table.setPreferredScrollableViewportSize(new Dimension(850, 500));
                     table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -823,7 +823,7 @@ public class ClassAdminForDelete extends JFrame {
             now = MODEL.STUDENTDELTE;
             //透明化处理
             table.setForeground(Color.BLACK);
-            table.setFont(new Font("华文行楷", Font.BOLD, 20));
+            table.setFont(new Font("楷体", Font.BOLD, 20));
             table.setRowHeight(73);            //表格行高
             table.setPreferredScrollableViewportSize(new Dimension(850, 500));
             table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -854,7 +854,7 @@ public class ClassAdminForDelete extends JFrame {
             now = MODEL.CLASSDELETE;
             //透明化处理
             table.setForeground(Color.BLACK);
-            table.setFont(new Font("华文行楷", Font.BOLD, 20));
+            table.setFont(new Font("楷体", Font.BOLD, 20));
             table.setRowHeight(73);            //表格行高
             table.setPreferredScrollableViewportSize(new Dimension(850, 500));
             table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -900,7 +900,7 @@ public class ClassAdminForDelete extends JFrame {
         }
         //透明化处理
         table.setForeground(Color.BLACK);
-        table.setFont(new Font("华文行楷", Font.BOLD, 20));
+        table.setFont(new Font("楷体", Font.BOLD, 20));
         table.setRowHeight(73);            //表格行高
         table.setPreferredScrollableViewportSize(new Dimension(850, 500));
         table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -941,7 +941,7 @@ public class ClassAdminForDelete extends JFrame {
         }
         //透明化处理
         table.setForeground(Color.BLACK);
-        table.setFont(new Font("华文行楷", Font.BOLD, 20));
+        table.setFont(new Font("楷体", Font.BOLD, 20));
         table.setRowHeight(73);            //表格行高
         table.setPreferredScrollableViewportSize(new Dimension(850, 500));
         table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -978,7 +978,7 @@ public class ClassAdminForDelete extends JFrame {
         }
         //透明化处理
         table.setForeground(Color.BLACK);
-        table.setFont(new Font("华文行楷", Font.BOLD, 20));
+        table.setFont(new Font("楷体", Font.BOLD, 20));
         table.setRowHeight(73);            //表格行高
         table.setPreferredScrollableViewportSize(new Dimension(850, 500));
         table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);

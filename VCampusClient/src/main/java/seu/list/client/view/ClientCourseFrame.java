@@ -15,6 +15,8 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.SQLException;
@@ -76,19 +78,13 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 		jFrame.add(jcb);
 		jcb.setOpaque(false);
 		jcb.setBorder(BorderFactory.createBevelBorder(0));
-
+		jtf1 = new JTextField("请输入课程名称");
 		jtf = new JTextField("课程编号");
 		jtf.setBounds(671,148,991-671,197-148);
 		jtf.setFont(new Font("华文行楷",Font.BOLD,36));
 		jFrame.add(jtf);
 		jtf.setOpaque(false);
 		jtf.setBorder(new EmptyBorder(0,0,0,0));
-		jtf1 = new JTextField("课程名称");
-		jtf1.setBounds(759,587,909-759,633-587);
-		jtf1.setFont(new Font("华文行楷",Font.BOLD,36));
-		jFrame.add(jtf1);
-		jtf1.setOpaque(false);
-		jtf1.setBorder(new EmptyBorder(0,0,0,0));
 
 
 		Object[][] courseinformation= {};
@@ -120,8 +116,8 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 		scrollPane = new JScrollPane(jtb1);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setPreferredSize(new Dimension(WIDTH-200,500));
-		jtb1.setBounds(0,0,1147-125,576-223);
-		scrollPane.setBounds(125,223,1147-125,576-223);
+		jtb1.setBounds(0,0,1155-257,610-219);
+		scrollPane.setBounds(257,219,1155-257,610-219);
 		jFrame.add(scrollPane);
 
 		//透明化处理
@@ -158,18 +154,18 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 		jco_Search.addActionListener(this);
 		jco_Search.setActionCommand("search");
 		jco_Add =new JButton("增加课程");
-		jco_Add.setBounds(627,582,1127-1015,200-144);
+		jco_Add.setBounds(114,239,1127-1015,200-144);
 		jco_Add.setFont(new Font("微软雅黑",Font.BOLD,20));
 		jco_Add.addActionListener(this);
 		jco_Add.setActionCommand("add");
 		jco_Delete =new JButton("移除课程");
-		jco_Delete.setBounds(930,581,1127-1015,200-144);
+		jco_Delete.setBounds(115,379,1127-1015,200-144);
 		jco_Delete.setFont(new Font("微软雅黑",Font.BOLD,20));
 		jco_Delete.addActionListener(this);
 		jco_Delete.setActionCommand("delete");
 		jFrame.setVisible(true);
 		exit=new JButton("退出");
-		exit.setBounds(1063,582,1127-1015,200-144);
+		exit.setBounds(113,518,1127-1015,200-144);
 		jFrame.add(exit);
 		jFrame.add(jco_Add);
 		jFrame.add(jco_Delete);
@@ -325,74 +321,130 @@ public class ClientCourseFrame extends JFrame implements ActionListener{
 
 		}
 		else if(e.getActionCommand()=="delete") {
-			Message clientReq = new Message();
-			clientReq.setModuleType(ModuleType.Course);
-			clientReq.setMessageType("REQ_REMOVE_LESSON");
-			Vector<String> reqContent = new Vector<String>();
-			reqContent.setSize(7);
-			reqContent.set(2,jtf1.getText());
-			clientReq.setContent(reqContent);
-			Message rec=client.sendRequestToServer(clientReq);
+			//删除课程增加弹窗
+			//绘制背景图片
+			jFrame.setVisible(false);
+			JFrame tem=new JFrame();
+			JLabel backgroundImageLabel = new JLabel(new ImageIcon("VCampusClient/Image/CancelCourse.JPG"));
+			Toolkit k = Toolkit.getDefaultToolkit();
+			Dimension d = k.getScreenSize();
+			tem.setBounds(d.width/2-827/2, d.height/2-381/2, 827,378);
+			backgroundImageLabel.setBounds(0, 0, 827,351);
+			tem.setResizable(false);
+			tem.setLayout(null);
+			tem.setVisible(true);
 
-			if(rec.isSeccess()){
-				clientReq.setMessageType("REQ_SHOW_ALL_LESSON");
-				rec=client.sendRequestToServer(clientReq);
 
-				Vector<String>	allCourseInfor = rec.getContent();
-				int rowNumber = allCourseInfor.size()/7;
-				String[][] allCourseTable = new String[rowNumber][7];
-				int storingPlace = 0;
-				for(int i=0;i<rowNumber;i++) {
-					for(int j=0;j<7;j++)
-						allCourseTable[i][j] = allCourseInfor.get(storingPlace++);
-				}
-				jtb1 = new JTable();
-				jtb1.setModel(new DefaultTableModel(
-						allCourseTable,
-						new String[] {
-								"学年学期","课程编号","专业","课程","授课教师","状态","类型"
-						}
-				));
-				jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);
-				jtb1.getColumnModel().getColumn(1).setPreferredWidth(161);
-				jtb1.getColumnModel().getColumn(2).setPreferredWidth(161);
-				jtb1.getColumnModel().getColumn(3).setPreferredWidth(161);
-				jtb1.getColumnModel().getColumn(4).setPreferredWidth(161);
-				jtb1.getColumnModel().getColumn(5).setPreferredWidth(161);
-				jtb1.getColumnModel().getColumn(6).setPreferredWidth(161);
-
-				jtb1.setPreferredSize(new Dimension(WIDTH-100,2000));
-				jtb1.setFont(new Font("微软雅黑",Font.BOLD,20));
-				jtb1.getTableHeader().setPreferredSize(new Dimension(1, 40));
-				jtb1.getTableHeader().setFont(new Font("宋体",Font.BOLD,25));
-				jtb1.setRowHeight(50);
-
-				scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-				scrollPane.setPreferredSize(new Dimension(WIDTH-200,500));
-				scrollPane.setViewportView(jtb1);
-				//透明化处理
-				jtb1.setForeground(Color.BLACK);
-				jtb1.setFont(new Font("Serif", Font.BOLD, 28));
-				jtb1.setRowHeight(40);    			//表格行高
-				jtb1.setPreferredScrollableViewportSize(new Dimension(850, 500));
-				jtb1.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-				DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-				renderer.setOpaque(false);    //设置透明
-				String []Names={"学年学期","课程编号","专业","课程","授课教师","状态","类型"};
-				for(int i=0;i<7;i++){
-					jtb1.getColumn(Names[i]).setCellRenderer(renderer);//单格渲染
-					TableColumn column =jtb1.getTableHeader().getColumnModel().getColumn(i);
-					column.setHeaderRenderer(renderer);//表头渲染
-				}
-				jtb1.setOpaque(false);
-				jtb1.getTableHeader().setOpaque(false);
-				jtb1.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
-				scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
-				scrollPane.setOpaque(false);
-				scrollPane.getViewport().setOpaque(false);
-				scrollPane.setColumnHeaderView(jtb1.getTableHeader());
-				scrollPane.getColumnHeader().setOpaque(false);
+			//2.绘制退出按钮
+			//得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+   /*  backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
 			}
+        });
+*/
+			JTextField jtf=new JTextField();
+			jtf.setText("请输入课程名称");
+			jtf.setBounds(263,134,620-263,186-141);
+			jtf.setFont(new Font("华文行楷",Font.BOLD,36));
+			tem.add(jtf);
+			tem.add(backgroundImageLabel);
+			jtf.setOpaque(false);
+			jtf.setBorder(new EmptyBorder(0,0,0,0));
+
+			JButton OK=new JButton("OK");
+			OK.setBounds(251,243,100,315-257);
+			tem.add(OK);
+			JButton Cancel=new JButton("No");
+			Cancel.setBounds(512,243,100,315-257);
+			tem.add(Cancel);
+			OK.setOpaque(false);
+			Cancel.setOpaque(false);
+
+			Cancel.addActionListener(event->
+			{
+				jFrame.setVisible(true);
+				tem.dispose();
+			});
+			OK.addActionListener(event->
+			{
+				Message clientReq = new Message();
+				clientReq.setModuleType(ModuleType.Course);
+				clientReq.setMessageType("REQ_REMOVE_LESSON");
+				Vector<String> reqContent = new Vector<String>();
+				reqContent.setSize(7);
+				reqContent.set(2,jtf.getText());
+				clientReq.setContent(reqContent);
+				Message rec=client.sendRequestToServer(clientReq);
+
+				if(rec.isSeccess()){
+					clientReq.setMessageType("REQ_SHOW_ALL_LESSON");
+					rec=client.sendRequestToServer(clientReq);
+
+					Vector<String>	allCourseInfor = rec.getContent();
+					int rowNumber = allCourseInfor.size()/7;
+					String[][] allCourseTable = new String[rowNumber][7];
+					int storingPlace = 0;
+					for(int i=0;i<rowNumber;i++) {
+						for(int j=0;j<7;j++)
+							allCourseTable[i][j] = allCourseInfor.get(storingPlace++);
+					}
+					jtb1 = new JTable();
+					jtb1.setModel(new DefaultTableModel(
+							allCourseTable,
+							new String[] {
+									"学年学期","课程编号","专业","课程","授课教师","状态","类型"
+							}
+					));
+					jtb1.getColumnModel().getColumn(0).setPreferredWidth(161);
+					jtb1.getColumnModel().getColumn(1).setPreferredWidth(161);
+					jtb1.getColumnModel().getColumn(2).setPreferredWidth(161);
+					jtb1.getColumnModel().getColumn(3).setPreferredWidth(161);
+					jtb1.getColumnModel().getColumn(4).setPreferredWidth(161);
+					jtb1.getColumnModel().getColumn(5).setPreferredWidth(161);
+					jtb1.getColumnModel().getColumn(6).setPreferredWidth(161);
+
+					jtb1.setPreferredSize(new Dimension(WIDTH-100,2000));
+					jtb1.setFont(new Font("微软雅黑",Font.BOLD,20));
+					jtb1.getTableHeader().setPreferredSize(new Dimension(1, 40));
+					jtb1.getTableHeader().setFont(new Font("宋体",Font.BOLD,25));
+					jtb1.setRowHeight(50);
+
+					scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+					scrollPane.setPreferredSize(new Dimension(WIDTH-200,500));
+					scrollPane.setViewportView(jtb1);
+					//透明化处理
+					jtb1.setForeground(Color.BLACK);
+					jtb1.setFont(new Font("Serif", Font.BOLD, 28));
+					jtb1.setRowHeight(40);    			//表格行高
+					jtb1.setPreferredScrollableViewportSize(new Dimension(850, 500));
+					jtb1.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+					DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+					renderer.setOpaque(false);    //设置透明
+					String []Names={"学年学期","课程编号","专业","课程","授课教师","状态","类型"};
+					for(int i=0;i<7;i++){
+						jtb1.getColumn(Names[i]).setCellRenderer(renderer);//单格渲染
+						TableColumn column =jtb1.getTableHeader().getColumnModel().getColumn(i);
+						column.setHeaderRenderer(renderer);//表头渲染
+					}
+					jtb1.setOpaque(false);
+					jtb1.getTableHeader().setOpaque(false);
+					jtb1.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+					scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+					scrollPane.setOpaque(false);
+					scrollPane.getViewport().setOpaque(false);
+					scrollPane.setColumnHeaderView(jtb1.getTableHeader());
+					scrollPane.getColumnHeader().setOpaque(false);
+				}
+				jFrame.setVisible(true);
+				tem.dispose();
+
+			});
+
+
 		}
 	}
 }

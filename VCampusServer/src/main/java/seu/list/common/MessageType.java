@@ -6,7 +6,6 @@ package seu.list.common;
  * @version 1.0
  */
 public final class MessageType {
-
     public static final String REQ_LOGIN = "REQ_LOGIN";
     public static final String REQ_LOGOUT = "REQ_LOGOUT";
     public static final String REQ_REGISTER = "REQ_REGISTER";
@@ -78,4 +77,7 @@ public final class MessageType {
     //shop
     public static final String ChatSend="CHAT_SEND";
     public static final String ChatShow="CHAT_SHOW";
+    public static final String CRE_ANONYMOUS = "CRE_ANONYMOUS";
+    public static final String DES_ANONYMOUS = "DES_ANONYMOUS";
+
 }

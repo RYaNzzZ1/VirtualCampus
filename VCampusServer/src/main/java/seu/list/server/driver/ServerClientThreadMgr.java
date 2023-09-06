@@ -14,8 +14,9 @@ import java.util.*;
  * @see Map
  */
 public class ServerClientThreadMgr {
-    private static Map<String, ServerSocketThread> clientThreadPool = new LinkedHashMap<String, ServerSocketThread>();
-    private static Map<String, String> allocation = new HashMap<String, String>();
+    private static Map<String, ServerSocketThread> clientThreadPool = new LinkedHashMap<String, ServerSocketThread>();//线程池
+    private static Map<String, String> allocation = new HashMap<String, String>();//用户ID与线程ID
+    private static Map<String,String> anonymity = new HashMap<String,String>();//用户ID与匿名
 
     /**
      * 绑定线程和对应的用户ID，通过用户ID查询对应线程
@@ -48,7 +49,23 @@ public class ServerClientThreadMgr {
             }
         }
     }
-
+    public synchronized static boolean contain(String ano){
+        return anonymity.containsValue(ano);
+    }
+    public synchronized static void bindano(String uid,String ano){
+        anonymity.put(uid,ano);
+    }
+    public synchronized static void unbindano(String id){
+        anonymity.remove(id);
+    }
+    public static void unbindanobyid(String id) {
+        for (String key : allocation.keySet()) {
+            if (allocation.get(key).equals(id)) {
+                unbindano(key);
+                break;
+            }
+        }
+    }
     public synchronized static ServerSocketThread getPreThread(String uid) {
         String preid = allocation.get(uid);
         ServerSocketThread pres = clientThreadPool.get(preid);
@@ -174,4 +191,6 @@ public class ServerClientThreadMgr {
         }
         return res;
     }
+
+
 }

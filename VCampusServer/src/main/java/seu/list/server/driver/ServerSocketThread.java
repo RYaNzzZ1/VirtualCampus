@@ -25,7 +25,6 @@ import java.net.SocketException;
  * @see Thread
  */
 public class ServerSocketThread extends Thread {
-
     private Socket clientSocket = null;
     private String id = null;
     private boolean isClosed = false;
@@ -87,6 +86,7 @@ public class ServerSocketThread extends Thread {
 
         } catch (SocketException se) {
             ServerClientThreadMgr.unbindbyid(this.id);//异常终止时解绑
+            ServerClientThreadMgr.unbindanobyid(this.id);
             System.out.println("Socket closed");
             System.out.println("客户端线程: " + this.id + "已关闭");
         } catch (IOException e) {
@@ -164,7 +164,9 @@ public class ServerSocketThread extends Thread {
         }
         return serverResponse;
     }
-
+    public Socket getClientSocket() {
+        return clientSocket;
+    }
     /**
      * 该方法将{@code DAO}类处理完毕后返回，需要发回客户端的消息统一发回
      *
@@ -216,9 +218,5 @@ public class ServerSocketThread extends Thread {
      */
     public String getIP() {
         return this.clientSocket.getInetAddress().getHostAddress();
-    }
-
-    public Socket getClientSocket() {
-        return clientSocket;
     }
 }

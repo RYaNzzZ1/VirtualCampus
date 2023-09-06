@@ -174,12 +174,18 @@ public class CourseServer {
 
 
     public boolean sigAddCourse(String courseID, String uID) {
-        String[] paras2 = new String[3];
+        String sql = "select * from tb_Class where cID= ?";
+        String[]paras =new String[1];
+        paras[0]=courseID;
+        List<Course> thiscourse = new SqlHelper().sqlCourseQuery(sql,paras);
 
+        String[] paras2 = new String[4];
         paras2[0] = uID + courseID;
         paras2[1] = uID;
         paras2[2] = courseID;
-        String sql2 = "insert into tb_Stc(scID,uID,cID) values(?,?,?)";
+        paras2[3] = thiscourse.get(0).getCourseName();
+        String sql2 = "insert into tb_Stc(scID,uID,cID,courseName) values(?,?,?,?)";
+
         return new SqlHelper().sqlUpdate(sql2, paras2);
     }
 
@@ -212,6 +218,10 @@ public class CourseServer {
         String[] paras = new String[1];
         paras[0] = courseName;
         System.out.println("课程名是：" + paras[0]);
+        //学生选课同步删除
+        String sql1 = "delete from tb_Stc where courseName = ?";
+        new SqlHelper().sqlUpdate(sql1,paras);
+
         return new SqlHelper().sqlUpdate(sql, paras);
     }
 }

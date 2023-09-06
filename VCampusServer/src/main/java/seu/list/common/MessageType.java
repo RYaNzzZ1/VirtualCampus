@@ -75,5 +75,7 @@ public final class MessageType {
     public static final String Buy = "BUY_GOODS";  //学生购买
     public static final String ModifyGoods = "MODIFY-GOODS"; //管理员改信息
 
-
+    //shop
+    public static final String ChatSend="CHAT_SEND";
+    public static final String Chatshow="CHAT_SHOW";
 }

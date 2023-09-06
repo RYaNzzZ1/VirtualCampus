@@ -12,5 +12,6 @@ public final class ModuleType {
     public static final String Shop = "SHOP"; // 商店
     public static final String Library = "LIBRARY"; // 图书馆
     public static final String Dormitory = "DORMITORY"; // 宿舍
+    public static final String Chat="CHAT";
 
 }

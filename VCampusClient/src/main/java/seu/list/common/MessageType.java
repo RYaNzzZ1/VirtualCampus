@@ -74,4 +74,10 @@ public final class MessageType {
     public static final String ModifyGoods = "MODIFY-GOODS"; //管理员改信息
     public static final String DormCommitApply = "DORM_COMMIT_APPLY";
     public static final String DormDivestApply = "DORM_DIVEST_APPLY";
+
+
+    //chat
+    public static final String ChatSend="CHAT_SEND";
+    public static final String Chatshow="CHAT_SHOW";
+
 }

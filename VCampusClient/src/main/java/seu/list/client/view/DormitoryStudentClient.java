@@ -6,7 +6,10 @@ package seu.list.client.view;
 
 import seu.list.client.driver.Client;
 import seu.list.client.driver.ClientMainFrame;
-import seu.list.common.*;
+import seu.list.common.Dormitory;
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -20,9 +23,9 @@ public class DormitoryStudentClient extends JFrame {
 
     private JPanel contentPane;
     static Socket socket;
-    private ArrayList<Dormitory> Dorm=new ArrayList<Dormitory>();
-    JLabel UserIDLabel,DormIDLabel,BunkIDLabel_1,ScoreLabel_2,WaterLabel_3, ElectricityLabel_4,ExchangeLabel_5,MaintainLabel_6;
-    public Dormitory dorm=new Dormitory();
+    private ArrayList<Dormitory> Dorm = new ArrayList<Dormitory>();
+    JLabel UserIDLabel, DormIDLabel, BunkIDLabel_1, ScoreLabel_2, WaterLabel_3, ElectricityLabel_4, ExchangeLabel_5, MaintainLabel_6;
+    public Dormitory dorm = new Dormitory();
     /**
      * Launch the application.
      */
@@ -43,8 +46,8 @@ public class DormitoryStudentClient extends JFrame {
     /**
      * Create the frame.
      */
-    public DormitoryStudentClient(String userID,Socket socket) {
-        this.socket=socket;
+    public DormitoryStudentClient(String userID, Socket socket) {
+        this.socket = socket;
         setFont(new Font("微软雅黑", Font.BOLD, 12));
         setTitle("宿舍-学生");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -83,126 +86,125 @@ public class DormitoryStudentClient extends JFrame {
         JLabel userIDLabel_1 = new JLabel("学号：");
         userIDLabel_1.setFont(new Font("华文行楷", Font.PLAIN, 28));
         userIDLabel_1.setForeground(Color.white);
-        userIDLabel_1.setBounds(150,170,140,30);
+        userIDLabel_1.setBounds(150, 170, 140, 30);
         add(userIDLabel_1);
 
         JLabel dormIDLabel_2 = new JLabel("宿舍：");
         dormIDLabel_2.setFont(new Font("华文行楷", Font.PLAIN, 28));
         dormIDLabel_2.setForeground(Color.white);
-        dormIDLabel_2.setBounds(150,230,140,30);
+        dormIDLabel_2.setBounds(150, 230, 140, 30);
         add(dormIDLabel_2);
 
         JLabel bunkIDLabel = new JLabel("床位：");
         bunkIDLabel.setFont(new Font("华文行楷", Font.PLAIN, 28));
         bunkIDLabel.setForeground(Color.white);
-        bunkIDLabel.setBounds(150,290,140,30);
+        bunkIDLabel.setBounds(150, 290, 140, 30);
         add(bunkIDLabel);
 
         JLabel scoreLabel = new JLabel("卫生评分：");
         scoreLabel.setFont(new Font("华文行楷", Font.PLAIN, 28));
         scoreLabel.setForeground(Color.white);
-        scoreLabel.setBounds(150,350,140,30);
+        scoreLabel.setBounds(150, 350, 140, 30);
         add(scoreLabel);
 
         JLabel waterLabel = new JLabel("水费：");
         waterLabel.setFont(new Font("华文行楷", Font.PLAIN, 28));
         waterLabel.setForeground(Color.white);
-        waterLabel.setBounds(440,170,140,30);
+        waterLabel.setBounds(440, 170, 140, 30);
         add(waterLabel);
 
         JLabel electricityLabel = new JLabel("电费：");
         electricityLabel.setFont(new Font("华文行楷", Font.PLAIN, 28));
         electricityLabel.setForeground(Color.white);
-        electricityLabel.setBounds(440,230,140,30);
+        electricityLabel.setBounds(440, 230, 140, 30);
         add(electricityLabel);
 
         JLabel exchangeLabel = new JLabel("调换申请：");
         exchangeLabel.setFont(new Font("华文行楷", Font.PLAIN, 28));
         exchangeLabel.setForeground(Color.white);
-        exchangeLabel.setBounds(440,290,140,30);
+        exchangeLabel.setBounds(440, 290, 140, 30);
         add(exchangeLabel);
 
         JLabel maintainLabel = new JLabel("维修申请：");
         maintainLabel.setFont(new Font("华文行楷", Font.PLAIN, 28));
         maintainLabel.setForeground(Color.white);
-        maintainLabel.setBounds(440,350,140,30);
+        maintainLabel.setBounds(440, 350, 140, 30);
         add(maintainLabel);
 
         UserIDLabel = new JLabel("");
         UserIDLabel.setFont(new Font("微软雅黑", Font.BOLD, 24));
         UserIDLabel.setForeground(Color.white);
-        UserIDLabel.setBounds(283,175,130,20);
+        UserIDLabel.setBounds(283, 175, 130, 20);
         add(UserIDLabel);
         UserIDLabel.setOpaque(false);
-        UserIDLabel.setBorder(new EmptyBorder(0,0,0,0));
+        UserIDLabel.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         DormIDLabel = new JLabel("");
         DormIDLabel.setFont(new Font("微软雅黑", Font.BOLD, 24));
         DormIDLabel.setForeground(Color.white);
-        DormIDLabel.setBounds(283,235,130,20);
+        DormIDLabel.setBounds(283, 235, 130, 20);
         add(DormIDLabel);
         DormIDLabel.setOpaque(false);
-        DormIDLabel.setBorder(new EmptyBorder(0,0,0,0));
+        DormIDLabel.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         BunkIDLabel_1 = new JLabel("");
         BunkIDLabel_1.setFont(new Font("微软雅黑", Font.BOLD, 24));
         BunkIDLabel_1.setForeground(Color.white);
-        BunkIDLabel_1.setBounds(283,294,130,20);
+        BunkIDLabel_1.setBounds(283, 294, 130, 20);
         add(BunkIDLabel_1);
         BunkIDLabel_1.setOpaque(false);
-        BunkIDLabel_1.setBorder(new EmptyBorder(0,0,0,0));
+        BunkIDLabel_1.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         ScoreLabel_2 = new JLabel("");
         ScoreLabel_2.setFont(new Font("微软雅黑", Font.BOLD, 24));
         ScoreLabel_2.setForeground(Color.white);
-        ScoreLabel_2.setBounds(283,356,130,20);
+        ScoreLabel_2.setBounds(283, 356, 130, 20);
         add(ScoreLabel_2);
         ScoreLabel_2.setOpaque(false);
-        ScoreLabel_2.setBorder(new EmptyBorder(0,0,0,0));
+        ScoreLabel_2.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         WaterLabel_3 = new JLabel("");
         WaterLabel_3.setFont(new Font("微软雅黑", Font.BOLD, 24));
         WaterLabel_3.setForeground(Color.white);
-        WaterLabel_3.setBounds(575,175,130,20);
+        WaterLabel_3.setBounds(575, 175, 130, 20);
         add(WaterLabel_3);
         WaterLabel_3.setOpaque(false);
-        WaterLabel_3.setBorder(new EmptyBorder(0,0,0,0));
+        WaterLabel_3.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         ElectricityLabel_4 = new JLabel("");
         ElectricityLabel_4.setFont(new Font("微软雅黑", Font.BOLD, 24));
         ElectricityLabel_4.setForeground(Color.white);
-        ElectricityLabel_4.setBounds(575,235,130,20);
+        ElectricityLabel_4.setBounds(575, 235, 130, 20);
         add(ElectricityLabel_4);
         ElectricityLabel_4.setOpaque(false);
-        ElectricityLabel_4.setBorder(new EmptyBorder(0,0,0,0));
+        ElectricityLabel_4.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         ExchangeLabel_5 = new JLabel("");
         ExchangeLabel_5.setFont(new Font("微软雅黑", Font.BOLD, 24));
         ExchangeLabel_5.setForeground(Color.white);
-        ExchangeLabel_5.setBounds(575,292,130,25);
+        ExchangeLabel_5.setBounds(575, 292, 130, 25);
         add(ExchangeLabel_5);
         ExchangeLabel_5.setOpaque(false);
-        ExchangeLabel_5.setBorder(new EmptyBorder(0,0,0,0));
+        ExchangeLabel_5.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         MaintainLabel_6 = new JLabel("");
         MaintainLabel_6.setFont(new Font("微软雅黑", Font.BOLD, 24));
         MaintainLabel_6.setForeground(Color.white);
-        MaintainLabel_6.setBounds(575,351,130,25);
+        MaintainLabel_6.setBounds(575, 351, 130, 25);
         add(MaintainLabel_6);
         MaintainLabel_6.setOpaque(false);
-        MaintainLabel_6.setBorder(new EmptyBorder(0,0,0,0));
+        MaintainLabel_6.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         add(backgroundImageLabel);
 
         //设置按钮
         JButton maintainButton = new JButton("维修登记");
         //maintainButton.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-        maintainButton.setBounds(142,447,160,53);
+        maintainButton.setBounds(142, 447, 160, 53);
         add(maintainButton);
         maintainButton.setOpaque(false);
 
-        maintainButton.addActionListener(new ActionListener()
-        {
+        maintainButton.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -215,7 +217,7 @@ public class DormitoryStudentClient extends JFrame {
 
         JButton exchangeButton = new JButton("宿舍调换申请");
         //exchangeButton.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-        exchangeButton.setBounds(342,447,217,53);
+        exchangeButton.setBounds(342, 447, 217, 53);
         add(exchangeButton);
         exchangeButton.setOpaque(false);
 
@@ -230,7 +232,7 @@ public class DormitoryStudentClient extends JFrame {
 
         JButton exitButton = new JButton("退出");
         //exitButton.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-        exitButton.setBounds(596,447,98,53);
+        exitButton.setBounds(596, 447, 98, 53);
         add(exitButton);
         exitButton.setOpaque(false);
 
@@ -252,8 +254,8 @@ public class DormitoryStudentClient extends JFrame {
 
         new Message();
         Message rec;
-        rec=client.sendRequestToServer(mes);
-        dorm =(Dormitory) rec.getData();
+        rec = client.sendRequestToServer(mes);
+        dorm = (Dormitory) rec.getData();
         System.out.println(dorm);
         UserIDLabel.setText(dorm.getuserID());
         DormIDLabel.setText(dorm.getDormitoryID());
@@ -268,52 +270,37 @@ public class DormitoryStudentClient extends JFrame {
         setVisible(true);
         validate();
     }
+
     /**
      * 显示宿舍调换申请界面
+     *
      * @param e
      */
     protected void ExchangeAct(ActionEvent e) {
         // TODO Auto-generated method stub
-        Dormexchange Exchange = new Dormexchange(this,socket);
+        Dormexchange Exchange = new Dormexchange(this, socket);
         Exchange.setVisible(true);
     }
+
     /**
      * 显示宿舍维修申请界面
+     *
      * @param e
      */
     protected void MaintainAct(ActionEvent e) {
         // TODO Auto-generated method stub
-        Dormmaintain Maintain = new Dormmaintain(this,socket);
+        Dormmaintain Maintain = new Dormmaintain(this, socket);
         Maintain.setVisible(true);
     }
+
     /**
      * 更新宿舍调换后界面
+     *
      * @param para
      */
     public void updateFrameE(ArrayList<String> para) {
         // TODO Auto-generated method stub
-        if(!para.get(0).equals(dorm.getuserID())||!para.get(1).equals(dorm.getDormitoryID())) {
-            JOptionPane.showMessageDialog(null, "非法修改！", "提示", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        dorm.setDormitoryMaintain(para.get(2));
-        System.out.println(dorm);
-        UserIDLabel.setText(dorm.getuserID());
-        DormIDLabel.setText(dorm.getDormitoryID());
-        BunkIDLabel_1.setText(String.valueOf(dorm.getStudentBunkID()));
-        ScoreLabel_2.setText(String.valueOf(dorm.getDormitoryScore()));
-        WaterLabel_3.setText(String.valueOf(dorm.getWater()));
-        ElectricityLabel_4.setText(String.valueOf(dorm.getElectricity()));
-        MaintainLabel_6.setText(dorm.getDormitoryMaintain());
-        ExchangeLabel_5.setText(dorm.getStudentExchange());
-    }
-    /**
-     * 更新维修申请后信息
-     * @param para
-     */
-    public void updateFrameM(ArrayList<String> para) {
-        // TODO Auto-generated method stub
-        if(!para.get(0).equals(dorm.getuserID())||!para.get(1).equals(dorm.getDormitoryID())) {
+        if (!para.get(0).equals(dorm.getuserID()) || !para.get(1).equals(dorm.getDormitoryID())) {
             JOptionPane.showMessageDialog(null, "非法修改！", "提示", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -326,6 +313,29 @@ public class DormitoryStudentClient extends JFrame {
         WaterLabel_3.setText(String.valueOf(dorm.getWater()));
         ElectricityLabel_4.setText(String.valueOf(dorm.getElectricity()));
         MaintainLabel_6.setText(dorm.getDormitoryMaintain());
+        ExchangeLabel_5.setText(dorm.getStudentExchange() + "-申请中");
+    }
+
+    /**
+     * 更新维修申请后信息
+     *
+     * @param para
+     */
+    public void updateFrameM(ArrayList<String> para) {
+        // TODO Auto-generated method stub
+        if (!para.get(0).equals(dorm.getuserID()) || !para.get(1).equals(dorm.getDormitoryID())) {
+            JOptionPane.showMessageDialog(null, "非法修改！", "提示", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        dorm.setDormitoryMaintain(para.get(2));
+        System.out.println(dorm);
+        UserIDLabel.setText(dorm.getuserID());
+        DormIDLabel.setText(dorm.getDormitoryID());
+        BunkIDLabel_1.setText(String.valueOf(dorm.getStudentBunkID()));
+        ScoreLabel_2.setText(String.valueOf(dorm.getDormitoryScore()));
+        WaterLabel_3.setText(String.valueOf(dorm.getWater()));
+        ElectricityLabel_4.setText(String.valueOf(dorm.getElectricity()));
+        MaintainLabel_6.setText(dorm.getDormitoryMaintain() + "-申请中");
         ExchangeLabel_5.setText(dorm.getStudentExchange());
     }
 }

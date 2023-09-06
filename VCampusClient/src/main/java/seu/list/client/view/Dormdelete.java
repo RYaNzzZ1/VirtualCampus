@@ -26,7 +26,6 @@ public class Dormdelete extends JDialog {
     private JButton cancelButton;
     private JPanel buttonPane;
     private JTextField DeuserIDField;
-    static Socket socket;
     DormitoryAdminClient C;
     public ArrayList<Dormitory> allDormitoryContents;
 

@@ -154,7 +154,6 @@ public class DormApply extends JDialog {
             add(jCheckBoxes[i]);
         }
 
-
         //展示
         //显示宿舍信息的表格
         scrollPane = new JScrollPane();
@@ -181,8 +180,6 @@ public class DormApply extends JDialog {
         });
         table.getColumnModel().getColumn(0).setPreferredWidth(40);
         table.getColumnModel().getColumn(1).setPreferredWidth(40);
-//        TableColumn secondColumn = table.getColumnModel().getColumn(1);
-//        secondColumn.setPreferredWidth(50);
 
         table.setBounds(0, 0, 526, 404);
         table.getTableHeader().setReorderingAllowed(false);

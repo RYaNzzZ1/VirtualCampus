@@ -2,6 +2,7 @@
 package seu.list.server.db;
 
 import seu.list.common.Course;
+import seu.list.common.Student;
 import seu.list.common.User;
 import seu.list.server.dao.DAOUtil;
 
@@ -169,5 +170,44 @@ public class SqlHelper {
             }
         }
         return objs;
+    }
+
+    public List<Student> sqlStudentCreditQuery(String sql, String[] paras) {
+        PreparedStatement ps = null;
+        Connection ct = null;
+        ResultSet rs = null;
+        List<Student> students = null;
+
+        try {
+            //1.????????
+            Class.forName(ACCESS_DRIVER);
+            //2.???????
+            ct = DriverManager.getConnection(url, user, passwd);
+
+            ps = ct.prepareStatement(sql);
+            //??ps???????
+            for (int i = 0; i < paras.length; i++) {
+                ps.setString(i + 1, paras[i]);
+            }
+            //??閿熸枻鎷�???
+            rs = ps.executeQuery();
+            students = DAOUtil.StudentCreditResultSetList(rs);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            //??????
+            try {
+                if (rs != null)
+                    rs.close();
+                if (ps != null)
+                    ps.close();
+                if (ct != null)
+                    ct.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return students;
     }
 }

@@ -2,6 +2,7 @@ package seu.list.server.dao;
 
 import seu.list.common.Message;
 import seu.list.common.MessageType;
+import seu.list.common.Student;
 import seu.list.common.User;
 import seu.list.server.driver.ServerClientThreadMgr;
 import seu.list.server.driver.ServerSocketThread;
@@ -240,7 +241,13 @@ public class UserServer {
         paras[2] = content.get(6);
         List<User> users = new SqlHelper().sqlUserQuery(sql, paras);
 
+        String sql1 = "select * from tb_Student where uID = ?";
+        String[]paras1=new String[1];
+        paras1[0]=paras[0];
+        List<Student> students = new SqlHelper().sqlStudentCreditQuery(sql1,paras1);
+
         if (users != null && users.size() > 0) {
+            users.get(0).setMoney(String.valueOf(students.get(0).getStudentcredit()));
             return users.get(0);
         } else
             return null;

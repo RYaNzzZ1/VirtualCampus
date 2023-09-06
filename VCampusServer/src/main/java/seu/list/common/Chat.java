@@ -1,5 +1,7 @@
 package seu.list.common;
 
+import java.util.Vector;
+
 public class Chat {
     private String uID;
     private String NickName;
@@ -87,4 +89,14 @@ public class Chat {
     public void setChatTime(String ChatTime) {
         this.ChatTime = ChatTime;
     }
+
+    public Vector<String> getContent() {
+        Vector<String> chatContents = new Vector<String>();
+        chatContents.add(uID);
+        chatContents.add(NickName);
+        chatContents.add(ChatText);
+        chatContents.add(ChatTime);
+        return chatContents;
+    }
 }
+

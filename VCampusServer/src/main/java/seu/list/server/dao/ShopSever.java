@@ -22,6 +22,7 @@ public class ShopSever extends Shop_DbAccess {
     double money = 0;
     private Message mesFromClient;
     private Message mesToClient = new Message();
+    private ArrayList<Goods> GoodsList = new ArrayList<Goods>();
 
     public ShopSever(Message mesFromClient) {
         //System.out.println(mesFromClient);
@@ -78,9 +79,6 @@ public class ShopSever extends Shop_DbAccess {
                 break;
         }
     }
-
-
-    private ArrayList<Goods> GoodsList = new ArrayList<Goods>();
 
     public ArrayList<Goods> getGoodsList() {
         return GoodsList;
@@ -300,7 +298,7 @@ public class ShopSever extends Shop_DbAccess {
      * 方法{@code double GetTurnOver())} 获得营业额
      */
     public double GetTurnOver() {
-        double turnOver =0.;
+        double turnOver = 0.;
         try {
             con = getConnection();
             s = con.createStatement();

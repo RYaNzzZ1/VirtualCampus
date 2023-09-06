@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- * 
  * @version jdk1.8.0
  */
 public class User implements java.io.Serializable {
@@ -28,23 +27,6 @@ public class User implements java.io.Serializable {
     public void print() {
         System.out.print(id + "\n" + name + "\n" + age + "\n" + sex + "\n" + major + "\n" + grade + "\n" + pwd + "\n" + role + "\n" + money + "\n" + "\n");
     }
-
-    /**
-     * @param content 用户信息
-     */
-    public void setContent(Vector<String> content) {
-        id = content.get(0);
-        name = content.get(1);
-        age = content.get(2);
-        sex = content.get(3);
-        major = content.get(4);
-        grade = content.get(5);
-        pwd = content.get(6);
-        role = content.get(7);
-        money = content.get(8);
-        online=content.get(9);
-    }
-
 
     /**
      * @return 学号
@@ -168,11 +150,13 @@ public class User implements java.io.Serializable {
     public void setMoney(String money) {
         this.money = money;
     }
+
     /**
      * @return 在线状态
      */
-    public boolean getState(){return online == "1";}
-
+    public boolean getState() {
+        return online == "1";
+    }
 
     /**
      * @return 用户信息
@@ -192,20 +176,36 @@ public class User implements java.io.Serializable {
         return userContents;
     }
 
-    public void changeState(int online){
-        String []paras=new String[1];
-        paras[0]=this.id;
-        if(online==1){
-            this.online="1";
-            String sql="update tb_User set uOnline='" + "1" + "'where uID= ?";
+    /**
+     * @param content 用户信息
+     */
+    public void setContent(Vector<String> content) {
+        id = content.get(0);
+        name = content.get(1);
+        age = content.get(2);
+        sex = content.get(3);
+        major = content.get(4);
+        grade = content.get(5);
+        pwd = content.get(6);
+        role = content.get(7);
+        money = content.get(8);
+        online = content.get(9);
+    }
+
+    public void changeState(int online) {
+        String[] paras = new String[1];
+        paras[0] = this.id;
+        if (online == 1) {
+            this.online = "1";
+            String sql = "update tb_User set uOnline='" + "1" + "'where uID= ?";
             new SqlHelper().sqlUpdate(sql, paras);
-        }
-        else {
-            this.online="0";
-            String sql="update tb_User set uOnline='" + "0" + "'where uID= ?";
+        } else {
+            this.online = "0";
+            String sql = "update tb_User set uOnline='" + "0" + "'where uID= ?";
             new SqlHelper().sqlUpdate(sql, paras);
         }
     }
+
     /**
      * @return 用户已选课程
      */
@@ -232,7 +232,7 @@ public class User implements java.io.Serializable {
                 ", pwd='" + getPwd() + "'" +
                 ", role='" + getRole() + "'" +
                 ", money='" + getMoney() + "'" +
-                ", online='" + getState() + "'"+
+                ", online='" + getState() + "'" +
                 "}";
     }
 }

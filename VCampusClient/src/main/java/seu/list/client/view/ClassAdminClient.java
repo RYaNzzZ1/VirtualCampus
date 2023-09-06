@@ -9,8 +9,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
-import java.awt.Dialog.ModalExclusionType;
 import java.awt.*;
+import java.awt.Dialog.ModalExclusionType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
@@ -30,15 +30,9 @@ public class ClassAdminClient extends JFrame {
     private JScrollPane scrollPane;
     private Vector<Student> StuTemp = null;
     private JLabel lblNewLabel_1;
-
-    private enum MODEL {
-        WATCHING, MODIFY, ADD, DELETE
-    }
-
-    ;
-
     private MODEL nowmodel;
 
+    ;
 
     @SuppressWarnings("unchecked")
     public ClassAdminClient() {
@@ -107,8 +101,6 @@ public class ClassAdminClient extends JFrame {
 */
 
 
-
-
         //下拉框
         final JComboBox<String> select = new JComboBox<String>();
         select.addItem("全部");
@@ -137,8 +129,8 @@ public class ClassAdminClient extends JFrame {
         table.getTableHeader().setPreferredSize(new Dimension(table.getTableHeader().getWidth(), 35));
         addRows();
         getClasses();
-        table.setBounds(0, 0, 1132-292,601-216);
-        scrollPane.setBounds(292,216,1132-292,601-216);
+        table.setBounds(0, 0, 1132 - 292, 601 - 216);
+        scrollPane.setBounds(292, 216, 1132 - 292, 601 - 216);
         add(scrollPane);
         add(backgroundImageLabel);
 
@@ -167,14 +159,14 @@ public class ClassAdminClient extends JFrame {
         scrollPane.getColumnHeader().setOpaque(false);
         add(backgroundImageLabel);
 
-        JButton motify=new JButton("修改");
-        motify.setBounds(126,439,243-126,282-229);
+        JButton motify = new JButton("修改");
+        motify.setBounds(126, 439, 243 - 126, 282 - 229);
         add(motify);
-        JButton add=new JButton("增加");
-        add.setBounds(126,229,243-126,282-229);
+        JButton add = new JButton("增加");
+        add.setBounds(126, 229, 243 - 126, 282 - 229);
         add(add);
-        JButton delete=new JButton("删除");
-        delete.setBounds(128,334,243-126,282-229);
+        JButton delete = new JButton("删除");
+        delete.setBounds(128, 334, 243 - 126, 282 - 229);
         add(delete);
 
 
@@ -191,7 +183,6 @@ public class ClassAdminClient extends JFrame {
                 }
             }
         });
-
 
 
         add.addActionListener(new ActionListener() {
@@ -211,7 +202,6 @@ public class ClassAdminClient extends JFrame {
         });
 
 
-
         delete.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 nowmodel = MODEL.DELETE;
@@ -220,14 +210,14 @@ public class ClassAdminClient extends JFrame {
             }
         });
 
-     motify.setOpaque(false);
-     add.setOpaque(false);
-     delete.setOpaque(false);
+        motify.setOpaque(false);
+        add.setOpaque(false);
+        delete.setOpaque(false);
 
         //退出按钮
         JButton exitbutton = new JButton("退出");
         exitbutton.setFont(new Font("宋体", Font.PLAIN, 18));
-        exitbutton.setBounds(125,545,243-126,282-229);
+        exitbutton.setBounds(125, 545, 243 - 126, 282 - 229);
         add(exitbutton);
         exitbutton.setOpaque(false);
 
@@ -508,5 +498,9 @@ public class ClassAdminClient extends JFrame {
         scrollPane.getViewport().setOpaque(false);
         scrollPane.setColumnHeaderView(table.getTableHeader());
         scrollPane.getColumnHeader().setOpaque(false);
+    }
+
+    private enum MODEL {
+        WATCHING, MODIFY, ADD, DELETE
     }
 }

@@ -1,7 +1,6 @@
 package seu.list.common;
 
 /**
- * 
  * @version jdk1.8.0
  */
 

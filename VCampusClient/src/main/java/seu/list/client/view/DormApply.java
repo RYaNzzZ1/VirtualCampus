@@ -21,24 +21,19 @@ import java.util.ArrayList;
 
 public class DormApply extends JDialog {
 
+    private static JTable table;
+    private static JScrollPane scrollPane;
     private final JPanel contentPanel = new JPanel();
+    public ArrayList<Dormitory> allDormitoryContents;
+    DormitoryAdminClient C;
     private JButton commitButton;
     private JButton divestButton;
     private JButton cancelButton;
-
-
     private JRadioButton exchangeButton;
     private JRadioButton maintainButton;
-
-    private static JTable table;
-    private static JScrollPane scrollPane;
-
     private JPanel buttonPane;
     private JTextField DeuserIDField;
     private JCheckBox[] jCheckBoxes;
-
-    DormitoryAdminClient C;
-    public ArrayList<Dormitory> allDormitoryContents;
     private int dormSize;
     private ArrayList<Dormitory> dormitoriesWithApply;
 

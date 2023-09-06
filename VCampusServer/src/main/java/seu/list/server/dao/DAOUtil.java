@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
  * @version jdk1.8.0
  */
 public class DAOUtil {
@@ -74,9 +73,9 @@ public class DAOUtil {
     }
 
     public static List<Student> StudentCreditResultSetList(ResultSet rs) throws SQLException {
-        List<Student>sts = new ArrayList<>();
-        while (rs.next()){
-            Student s=new Student();
+        List<Student> sts = new ArrayList<>();
+        while (rs.next()) {
+            Student s = new Student();
             s.setStudentcredit(rs.getInt(10));
             sts.add(s);
         }

@@ -9,7 +9,6 @@ import java.util.Vector;
  * 包含了存放的数据{@code Object data}, 以及各类用于消息处理的辅助信息 <br>
  * 该类可序列化
  *
- * 
  * @version 1.0
  * @see Serializable
  * @see MessageType
@@ -33,7 +32,6 @@ public class Message implements Serializable {
     /**
      * 将该条消息设置为下线消息
      *
-     * 
      * @version 1.0
      */
     public void offline() {
@@ -44,7 +42,6 @@ public class Message implements Serializable {
      * 读取{@code isOffline}字段, 判断是否下线
      *
      * @return 消息中的{@code isOffline}字段
-     * 
      * @version 1.0
      */
     public boolean isOffline() {
@@ -60,25 +57,23 @@ public class Message implements Serializable {
     }
 
     /**
-     * 将需要传输的数据存入{@code Message}类
-     *
-     * @param data 任意类型的数据
-     * 
-     * @version 1.0
-     */
-    public void setData(Object data) {
-        this.data = data;
-    }
-
-    /**
      * 读取消息中的数据字段
      *
      * @return 消息中的{@code data}字段
-     * 
      * @version 1.0
      */
     public Object getData() {
         return data;
+    }
+
+    /**
+     * 将需要传输的数据存入{@code Message}类
+     *
+     * @param data 任意类型的数据
+     * @version 1.0
+     */
+    public void setData(Object data) {
+        this.data = data;
     }
 
     public boolean isLastOperState() {
@@ -93,7 +88,6 @@ public class Message implements Serializable {
      * 读取消息中的模块类型字段
      *
      * @return 消息中的{@code moduleType}字段
-     * 
      * @version 1.0
      * @see ModuleType
      */
@@ -105,7 +99,6 @@ public class Message implements Serializable {
      * 设定消息的模块类型
      *
      * @param moduleType 该消息的模块类型
-     * 
      * @version 1.0
      * @see ModuleType
      */
@@ -117,7 +110,6 @@ public class Message implements Serializable {
      * 读取消息的操作类型
      *
      * @return 消息中的{@code messageType}字段
-     * 
      * @version 1.0
      * @see MessageType
      */
@@ -129,7 +121,6 @@ public class Message implements Serializable {
      * 设定消息的操作类型
      *
      * @param messageType 消息的操作类型
-     * 
      * @version 1.0
      * @see MessageType
      */

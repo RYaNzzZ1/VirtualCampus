@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- * 
  * @version jdk1.8.0
  */
 public class CourseServer {
@@ -131,9 +130,9 @@ public class CourseServer {
                 Iterator<Course> iteAllCourse = allCourse.iterator();
                 while (iteAllCourse.hasNext()) {
                     sigCourseContent = iteAllCourse.next().getContent();
-                    if(sigCourseContent!=null)
+                    if (sigCourseContent != null)
                         for (int i = 0; i <= 6; i++) {
-                           allCourseContent.add(sigCourseContent.get(i));
+                            allCourseContent.add(sigCourseContent.get(i));
                         }
 
                 }
@@ -175,9 +174,9 @@ public class CourseServer {
 
     public boolean sigAddCourse(String courseID, String uID) {
         String sql = "select * from tb_Class where cID= ?";
-        String[]paras =new String[1];
-        paras[0]=courseID;
-        List<Course> thiscourse = new SqlHelper().sqlCourseQuery(sql,paras);
+        String[] paras = new String[1];
+        paras[0] = courseID;
+        List<Course> thiscourse = new SqlHelper().sqlCourseQuery(sql, paras);
 
         String[] paras2 = new String[4];
         paras2[0] = uID + courseID;
@@ -220,7 +219,7 @@ public class CourseServer {
         System.out.println("课程名是：" + paras[0]);
         //学生选课同步删除
         String sql1 = "delete from tb_Stc where courseName = ?";
-        new SqlHelper().sqlUpdate(sql1,paras);
+        new SqlHelper().sqlUpdate(sql1, paras);
 
         return new SqlHelper().sqlUpdate(sql, paras);
     }

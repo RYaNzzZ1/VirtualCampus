@@ -1,5 +1,4 @@
 /**
- * 
  * @version jdk1.8.0
  */
 package seu.list.client.view;
@@ -20,22 +19,19 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.net.Socket;
 import java.util.ArrayList;
 
 public class DormitoryAdminClient extends JFrame {
+    public int k = 0;
+    public ArrayList<Dormitory> Dorm = new ArrayList<Dormitory>();
     DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
     String[] Names = {"学号", "宿舍", "床位", "卫生评分", "水费", "电费"};
     private JPanel contentPane;
     private JTextField searchField;
     private JTable table;
-
     private Socket socket;
     private JScrollPane scrollPane;
-    public int k = 0;
-    public ArrayList<Dormitory> Dorm = new ArrayList<Dormitory>();
 
     public DormitoryAdminClient(Socket socket) {
         this.socket = socket;
@@ -232,7 +228,7 @@ public class DormitoryAdminClient extends JFrame {
             model.addRow(arr);
             table.setModel(model);
         }
-          transparent();
+        transparent();
     }
 
     /**
@@ -388,10 +384,10 @@ public class DormitoryAdminClient extends JFrame {
             model.addRow(arr);
             table.setModel(model);
         }
-       transparent();
+        transparent();
     }
 
-    public void transparent(){
+    public void transparent() {
         //透明化处理
         table.setForeground(Color.BLACK);
         table.setFont(new Font("华文行楷", Font.PLAIN, 28));
@@ -399,9 +395,9 @@ public class DormitoryAdminClient extends JFrame {
         table.setRowHeight(40);                //表格行高
         table.setPreferredScrollableViewportSize(new Dimension(850, 500));
         table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-       // DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        // DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
         renderer.setOpaque(false);    //设置透明
-       // String[] Names = {"学号", "宿舍", "床位", "卫生评分", "水费", "电费", "调换申请", "维修申请"};
+        // String[] Names = {"学号", "宿舍", "床位", "卫生评分", "水费", "电费", "调换申请", "维修申请"};
         for (int i = 0; i < 6; i++) {
             //System.out.println(Names[i]);
             //System.out.println(table.getColumn(Names[i]));
@@ -418,8 +414,9 @@ public class DormitoryAdminClient extends JFrame {
         scrollPane.setColumnHeaderView(table.getTableHeader());
         scrollPane.getColumnHeader().setOpaque(false);
 
-       // add(scrollPane);
+        // add(scrollPane);
     }
+
     /**
      * 更新修改宿舍后列表
      *

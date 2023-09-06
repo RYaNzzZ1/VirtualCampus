@@ -10,7 +10,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -30,15 +33,9 @@ public class ClassAdminForDelete extends JFrame {
     private Vector<ClassManage> ClassTemp = null;
     private Vector<Integer> StudentIndex = null;
     private Vector<Integer> ClassIndex = null;
-
-    private enum MODEL {
-        CLASSDELETE, STUDENTDELTE, CLASSTEMP, STUDENTTEMP
-    }
-
-    ;
-
     private MODEL now = MODEL.STUDENTDELTE;
 
+    ;
 
     public ClassAdminForDelete(final ClassAdminClient cac, Vector<Student> Stu, final Vector<ClassManage> Clss) {
         CAC = cac;
@@ -1000,7 +997,6 @@ public class ClassAdminForDelete extends JFrame {
         scrollPane.getColumnHeader().setOpaque(false);
     }
 
-
     @SuppressWarnings("unchecked")
     private void finalupdate() {
         Message mes = new Message();
@@ -1030,11 +1026,15 @@ public class ClassAdminForDelete extends JFrame {
         }
     }
 
-
     void close() {
         finalupdate();
         CAC.setEnabled(true);
         CAC.updateFrame(StuAll, ClssAll);
         this.dispose();
+    }
+
+
+    private enum MODEL {
+        CLASSDELETE, STUDENTDELTE, CLASSTEMP, STUDENTTEMP
     }
 }

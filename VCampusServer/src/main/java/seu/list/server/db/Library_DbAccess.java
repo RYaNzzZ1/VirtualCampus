@@ -5,7 +5,6 @@ import java.sql.*;
 /**
  * 连接数据库
  *
- * 
  * @version jdk1.8.0
  */
 

@@ -1,5 +1,4 @@
 /**
- * 
  * @version jdk1.8.0
  */
 package seu.list.client.view;
@@ -21,31 +20,27 @@ import java.net.Socket;
 
 public class ClientAssistanceFrame extends JDialog {
 
-    private final JPanel contentPanel =new JPanel();
+    private final JPanel contentPanel = new JPanel();
+    public JTextField admintextField;
+    public JPasswordField passwordField;
+    public ClientRegisterFrame crf;
     private JPanel buttonPane;
     private JButton okButton;
     private JButton cancelButton;
     private JLabel maintainLabel;
-
-    public JTextField admintextField;
-    public JPasswordField passwordField;
-    public ClientRegisterFrame crf;
     //private boolean flag=false,finished=false;
     //public boolean getflag(){return flag;}
-
-
-
     private Socket socket;
 
 
     public ClientAssistanceFrame(ClientRegisterFrame crf, Socket socket) {
-        this.crf=crf;
-        this.socket=socket;
+        this.crf = crf;
+        this.socket = socket;
         setVisible(true);
         setTitle("辅助验证");
         setBounds(100, 100, 450, 300);
         //添加图标
-        Image image=new ImageIcon("VCampusClient/VCampusClient/src/main/resources/image/xiaobiao.jpg").getImage();
+        Image image = new ImageIcon("VCampusClient/VCampusClient/src/main/resources/image/xiaobiao.jpg").getImage();
         setIconImage(image);
 
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -148,7 +143,7 @@ public class ClientAssistanceFrame extends JDialog {
                                         .addComponent(passwordField, Alignment.LEADING)
                                         .addComponent(admintextField, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 158, Short.MAX_VALUE)
                                         .addComponent(maintainLabel, Alignment.LEADING))
-                                        .addContainerGap(111, Short.MAX_VALUE))
+                                .addContainerGap(111, Short.MAX_VALUE))
         );
         gl_contentPanel.setVerticalGroup(
                 gl_contentPanel.createParallelGroup(Alignment.LEADING)
@@ -175,6 +170,7 @@ public class ClientAssistanceFrame extends JDialog {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(2);
     }
+
     /**
      * 辅助验证
      * @param e
@@ -183,24 +179,23 @@ public class ClientAssistanceFrame extends JDialog {
         // TODO Auto-generated method stub
 
         Client ccs = new Client(this.socket);
-        User u=new User();
+        User u = new User();
         u.setId(admintextField.getText());
         u.setPwd(passwordField.getText());
-        Message mes=new Message();
+        Message mes = new Message();
         mes.setContent(u.getContent());
         mes.setModuleType(ModuleType.User);
         mes.setMessageType(MessageType.REQ_LOGIN);
-        Message res=ccs.sendRequestToServer(mes);
-        if(res.getUserType()==1) {
+        Message res = ccs.sendRequestToServer(mes);
+        if (res.getUserType() == 1) {
             JOptionPane.showMessageDialog(null, "辅助验证成功", "提示", JOptionPane.WARNING_MESSAGE);
-            crf.asstate=true;
+            crf.asstate = true;
             this.dispose();
             mes.setMessageType(MessageType.REQ_LOGOUT);
-            res=ccs.sendRequestToServer(mes);
-        }
-        else{
+            res = ccs.sendRequestToServer(mes);
+        } else {
             JOptionPane.showMessageDialog(null, "辅助验证失败，无法注册为管理员", "错误", JOptionPane.ERROR_MESSAGE);
-            crf.asstate=false;
+            crf.asstate = false;
         }
     }
 

@@ -14,6 +14,7 @@ package seu.list.common;
  *
  * Last modified by Ouyang
  */
+
 import java.util.ArrayList;
 
 public class Shop {

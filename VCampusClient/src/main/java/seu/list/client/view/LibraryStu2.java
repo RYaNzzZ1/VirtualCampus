@@ -19,6 +19,8 @@ import java.util.ArrayList;
 
 
 public class LibraryStu2 extends JFrame {
+    JScrollPane scrollPane2;
+    JTable table;
     //创建框架
     private JPanel contentPane;
     private JPanel lendPane, returnPane; //借书、还书界面
@@ -26,9 +28,6 @@ public class LibraryStu2 extends JFrame {
     private JButton qrReturnButton, qxReturnButton; //lendPane&returnPane
     private JLabel ReturnLabel;
     private LibraryStu t;
-
-    JScrollPane scrollPane2;
-    JTable table;
 
     public LibraryStu2(LibraryStu tem) {
         tem.dispose();
@@ -51,12 +50,12 @@ public class LibraryStu2 extends JFrame {
         // 创建带有背景图片的JLabel
         ImageIcon image = new ImageIcon("VCampusClient/Image/LibraryStu2new.png");
         JLabel backlabel = new JLabel(image);
-        backlabel.setBounds(0,0,848,594);
+        backlabel.setBounds(0, 0, 848, 594);
         //获取当前屏幕的尺寸（长、宽的值）
         Toolkit k = Toolkit.getDefaultToolkit();
         Dimension d = k.getScreenSize();
         //将当前窗口设置到屏幕正中央进行显示
-        setBounds(d.width / 2 - 848 / 2, d.height / 2 - 594 / 2, 848, 594+25);
+        setBounds(d.width / 2 - 848 / 2, d.height / 2 - 594 / 2, 848, 594 + 25);
         backlabel.setSize(848, 594);
         this.getLayeredPane().add(backlabel, new Integer(Integer.MIN_VALUE));
         backlabel.setOpaque(false); // 设置背景透明
@@ -159,7 +158,7 @@ public class LibraryStu2 extends JFrame {
         qrReturnButton.setVisible(true);
         qrReturnButton.setBounds(576, 492, 673 - 576, 543 - 492);
         qrReturnButton.setVisible(true);
-        add(qrReturnButton,-1);
+        add(qrReturnButton, -1);
         qrReturnButton.setOpaque(false);
 
         qxReturnButton = new JButton("取消");
@@ -174,7 +173,7 @@ public class LibraryStu2 extends JFrame {
         qxReturnButton.setVisible(true);
         qxReturnButton.setBounds(707, 492, 673 - 576, 543 - 492);
         qxReturnButton.setVisible(true);
-        add(qxReturnButton,-1);
+        add(qxReturnButton, -1);
         qxReturnButton.setOpaque(false);
 
 
@@ -182,32 +181,31 @@ public class LibraryStu2 extends JFrame {
         this.setLocationRelativeTo(null);
 
     }
+
     protected void ReturnAvt(ActionEvent e) {
         contentPane.setVisible(false);
         lendPane.setVisible(false);
         returnPane.setVisible(true);
 
-        String []data=new String[2];
-		data[0]=returnIDText.getText();
-		data[1]=t.uID;
-		Message mes =new Message();
-		Client client=new Client(ClientMainFrame.socket);
-		mes.setModuleType(ModuleType.Library);
-		mes.setMessageType(MessageType.LibraryBookReturn);
-		mes.setData(data);
-		Message serverResponse=new Message();
-		serverResponse=client.sendRequestToServer(mes);
+        String[] data = new String[2];
+        data[0] = returnIDText.getText();
+        data[1] = t.uID;
+        Message mes = new Message();
+        Client client = new Client(ClientMainFrame.socket);
+        mes.setModuleType(ModuleType.Library);
+        mes.setMessageType(MessageType.LibraryBookReturn);
+        mes.setData(data);
+        Message serverResponse = new Message();
+        serverResponse = client.sendRequestToServer(mes);
 
-        int res = (int)serverResponse.getData();
-        if(res==0) {
+        int res = (int) serverResponse.getData();
+        if (res == 0) {
             JOptionPane.showMessageDialog(null, "该书号不存在！", "警告", JOptionPane.WARNING_MESSAGE);
             return;
-        }
-        else if(res==-1){
+        } else if (res == -1) {
             JOptionPane.showMessageDialog(null, "非法操作:库存已达上限！", "错误", JOptionPane.ERROR_MESSAGE);
             return;
-        }
-        else if(res > 0) {
+        } else if (res > 0) {
             JOptionPane.showMessageDialog(null, "还书完成", "提示", JOptionPane.WARNING_MESSAGE);
             dispose();
         }
@@ -219,7 +217,7 @@ public class LibraryStu2 extends JFrame {
 
     //还书取消
     protected void qxReturnAvt(ActionEvent e) {
-        LibraryStu d=new LibraryStu(t.uID);
+        LibraryStu d = new LibraryStu(t.uID);
         dispose();
     }
 }

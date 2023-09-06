@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 public class Shop_AdminFrame {
     ArrayList<Goods> GoodsList;
+    JScrollPane scrollPane;
     private JFrame frame;
     private JTextField textField;
     private JTable table;
@@ -30,7 +31,6 @@ public class Shop_AdminFrame {
     private JButton btnNewButton_3;
     private JTextField Searchtext;
     private JButton btnNewButton_6;
-    JScrollPane scrollPane;
 
     public Shop_AdminFrame() {
         initialize();

@@ -15,7 +15,6 @@ import java.sql.SQLException;
  * 客户端程序入口，启动后立即建立{@code Socket}, 需要客户端全程联网 <br>
  * 与服务器连接成功后，显示用户登录界面
  *
- * 
  * @version 1.0
  */
 public class ClientMainFrame {

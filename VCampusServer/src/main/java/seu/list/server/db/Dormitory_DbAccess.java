@@ -36,15 +36,14 @@ public class Dormitory_DbAccess {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        }finally {
-            if(s!=null) {
+        } finally {
+            if (s != null) {
                 try {
                     s.close();
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
-                }finally {
-                    if(con!=null)
-                    {
+                } finally {
+                    if (con != null) {
                         try {
                             con.close();
                         } catch (SQLException e) {

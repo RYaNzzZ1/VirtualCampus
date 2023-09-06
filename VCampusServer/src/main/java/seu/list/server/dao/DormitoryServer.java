@@ -1,5 +1,4 @@
 /**
- * 
  * @version jdk1.8.0
  */
 package seu.list.server.dao;
@@ -16,11 +15,9 @@ public class DormitoryServer extends Dormitory_DbAccess {
     Connection con = null;
     Statement s = null;
     ResultSet rs = null;
-
+    ArrayList<Dormitory> dormitories = new ArrayList<Dormitory>();
     private Message mesFromClient; // 从客户端收到的数据
     private Message mesToClient;
-
-    ArrayList<Dormitory> dormitories = new ArrayList<Dormitory>();
 
     public DormitoryServer(Message mesFromClient) {
         super();

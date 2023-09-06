@@ -18,16 +18,16 @@ import java.util.ArrayList;
 public class LibraryStu1 extends JFrame {
     //创建框架
     private JPanel contentPane;
-    private JPanel lendPane,returnPane; //借书、还书界面
+    private JPanel lendPane, returnPane; //借书、还书界面
     private JTextField lendIDText;
-    private JButton qrLendButton,qxLendButton; //lendPane&returnPane
+    private JButton qrLendButton, qxLendButton; //lendPane&returnPane
     private LibraryStu t;
-    
+
     public LibraryStu1(LibraryStu tem) {
         tem.dispose();
         ArrayList<Book> booklist = new ArrayList<Book>();
 
-        t=tem;
+        t = tem;
 
         contentPane = new JPanel();
         lendPane = new JPanel();
@@ -70,11 +70,11 @@ public class LibraryStu1 extends JFrame {
         lendIDText = new JTextField();
         //lendIDText.setForeground(SystemColor.textText);
         lendIDText.setFont(new Font("华文行楷", Font.PLAIN, 32));
-        lendIDText.setBounds(269, 154, 632-269, 193-154);
+        lendIDText.setBounds(269, 154, 632 - 269, 193 - 154);
         lendIDText.setVisible(true);
-        add(lendIDText,0);
+        add(lendIDText, 0);
         lendIDText.setOpaque(false);
-        lendIDText.setBorder(new EmptyBorder(0,0,0,0));
+        lendIDText.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 
         add(backlabel);
@@ -88,9 +88,9 @@ public class LibraryStu1 extends JFrame {
         //qrLendButton.setForeground(new Color(0, 0, 128));
         qrLendButton.setFont(new Font("华文行楷", Font.BOLD, 25));
         //qrLendButton.setBackground(Color.LIGHT_GRAY);
-        qrLendButton.setBounds(256, 274, 359-256, 331-274);
+        qrLendButton.setBounds(256, 274, 359 - 256, 331 - 274);
         qrLendButton.setVisible(true);
-        add(qrLendButton,-1);
+        add(qrLendButton, -1);
         qrLendButton.setOpaque(false);
 
 
@@ -103,9 +103,9 @@ public class LibraryStu1 extends JFrame {
         //qxLendButton.setForeground(new Color(0, 0, 128));
         qxLendButton.setFont(new Font("华文行楷", Font.BOLD, 25));
         //qxLendButton.setBackground(Color.LIGHT_GRAY);
-        qxLendButton.setBounds(524, 273, 359-256, 331-274);
+        qxLendButton.setBounds(524, 273, 359 - 256, 331 - 274);
         qxLendButton.setVisible(true);
-        add(qxLendButton,-1);
+        add(qxLendButton, -1);
         qxLendButton.setOpaque(false);
 
 
@@ -121,27 +121,27 @@ public class LibraryStu1 extends JFrame {
         returnPane.setVisible(false);
         lendPane.setVisible(true);
 
-        String []data=new String[2];
-        data[0]=lendIDText.getText();
-        data[1]=t.uID;
-        Message mes =new Message();
-        Client client=new Client(ClientMainFrame.socket);
+        String[] data = new String[2];
+        data[0] = lendIDText.getText();
+        data[1] = t.uID;
+        Message mes = new Message();
+        Client client = new Client(ClientMainFrame.socket);
         mes.setModuleType(ModuleType.Library);
         mes.setMessageType(MessageType.LibraryBookLend);
         mes.setData(data);
-        Message serverResponse=new Message();
-        serverResponse=client.sendRequestToServer(mes);
+        Message serverResponse = new Message();
+        serverResponse = client.sendRequestToServer(mes);
 
-        int res = (int)serverResponse.getData();
+        int res = (int) serverResponse.getData();
 
-        if(res==0) {
+        if (res == 0) {
             JOptionPane.showMessageDialog(null, "该书号不存在！", "警告", JOptionPane.WARNING_MESSAGE);
             return;
-        }else if(res==-1) {
+        } else if (res == -1) {
             JOptionPane.showMessageDialog(null, "该书库存为0不可借", "警告", JOptionPane.WARNING_MESSAGE);
             return;
-        }else if(res > 0)
-            JOptionPane.showMessageDialog(null,"借书完成","提示",JOptionPane.WARNING_MESSAGE);
+        } else if (res > 0)
+            JOptionPane.showMessageDialog(null, "借书完成", "提示", JOptionPane.WARNING_MESSAGE);
 
         t.SetTableShow();
 
@@ -152,7 +152,7 @@ public class LibraryStu1 extends JFrame {
 
     //借书取消
     protected void qxLendAvt(ActionEvent e) {
-        LibraryStu d=new LibraryStu(t.uID);
+        LibraryStu d = new LibraryStu(t.uID);
         dispose();
     }
 

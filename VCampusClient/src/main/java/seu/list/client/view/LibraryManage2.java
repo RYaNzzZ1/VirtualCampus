@@ -16,10 +16,10 @@ import java.util.ArrayList;
 
 public class LibraryManage2 extends JFrame {
 
+    private final ButtonGroup buttonGroup = new ButtonGroup();
     private JPanel contentPane, modifyPane, panel, addPane, deletePane;
     private JTextField findText, oldIDText, modifiedText;
     private JLayeredPane layerPane;
-    private final ButtonGroup buttonGroup = new ButtonGroup();
     private JRadioButton nameRadioButton, idRadioButton, authorRadioButton, pressRadioButton, stockRadioButton;
 
     private JButton deleteButton, addButton;
@@ -31,12 +31,13 @@ public class LibraryManage2 extends JFrame {
     private JButton delqrButton, delqxButton;
     private JButton modqxButton;
     private LibraryManage t;
+
     public LibraryManage2(LibraryManage tem) {
         tem.dispose();
 
         ArrayList<Book> booklist = new ArrayList<Book>();
 
-        t =tem;
+        t = tem;
 
         setTitle("删除");
         setDefaultCloseOperation(2);
@@ -48,27 +49,26 @@ public class LibraryManage2 extends JFrame {
         setLayout(null); // 使用绝对定位
         // 创建带有背景图片的JLabel
         ImageIcon image = new ImageIcon("VCampusClient/image/LibraryManage2.png");
-        JLabel backlabel=new JLabel(image);
+        JLabel backlabel = new JLabel(image);
         //获取当前屏幕的尺寸（长、宽的值）
         Toolkit k = Toolkit.getDefaultToolkit();
         Dimension d = k.getScreenSize();
         //将当前窗口设置到屏幕正中央进行显示
         setBounds(d.width / 2 - 847 / 2, d.height / 2 - 441 / 2, 847, 441);
-        backlabel.setSize(847,441);
-        this.getLayeredPane().add(backlabel,new Integer(Integer.MIN_VALUE));
+        backlabel.setSize(847, 441);
+        this.getLayeredPane().add(backlabel, new Integer(Integer.MIN_VALUE));
         backlabel.setOpaque(false); // 设置背景透明
         setResizable(false); //阻止用户拖拽改变窗口的大小
         setVisible(true);
 
 
-
         delIDText = new JTextField();
-        delIDText.setBounds(266,156,631-266,199-156);
+        delIDText.setBounds(266, 156, 631 - 266, 199 - 156);
         delIDText.setFont(new Font("华文行楷", Font.PLAIN, 30));
         delIDText.setVisible(true);
         add(delIDText);
         delIDText.setOpaque(false);
-        delIDText.setBorder(new EmptyBorder(0,0,0,0));
+        delIDText.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         add(backlabel);
 
@@ -80,7 +80,7 @@ public class LibraryManage2 extends JFrame {
         });
         delqrButton.setForeground(Color.BLACK);
         delqrButton.setFont(new Font("华文行楷", Font.BOLD, 29));
-        delqrButton.setBounds(255,276,357-255,329-276);
+        delqrButton.setBounds(255, 276, 357 - 255, 329 - 276);
         delqrButton.setVisible(true);
         add(delqrButton);
         delqrButton.setOpaque(false);
@@ -94,7 +94,7 @@ public class LibraryManage2 extends JFrame {
         });
         delqxButton.setForeground(Color.BLACK);
         delqxButton.setFont(new Font("华文行楷", Font.BOLD, 29));
-        delqxButton.setBounds(523,276,357-255,329-276);
+        delqxButton.setBounds(523, 276, 357 - 255, 329 - 276);
         delqxButton.setVisible(true);
         add(delqxButton);
         delqxButton.setOpaque(false);
@@ -127,7 +127,7 @@ public class LibraryManage2 extends JFrame {
 
     // 删除书籍界面取消键的响应
     protected void DelqxAvt(ActionEvent e) {
-        LibraryManage d=new LibraryManage();
+        LibraryManage d = new LibraryManage();
         dispose();
     }
 

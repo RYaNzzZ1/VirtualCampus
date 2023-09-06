@@ -1,4 +1,3 @@
-
 package seu.list.common;
 
 import java.io.Serializable;
@@ -6,7 +5,6 @@ import java.io.Serializable;
 /**
  * 类{@code Goods}为商品类
  *
- * 
  * @version 1.0
  */
 public class Goods implements Serializable {

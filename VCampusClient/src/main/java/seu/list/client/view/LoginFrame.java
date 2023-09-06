@@ -1,4 +1,3 @@
-
 package seu.list.client.view;
 
 import javax.swing.*;
@@ -10,47 +9,48 @@ import java.awt.event.MouseEvent;
 //import vc.driver.IUserSrv;
 //import vc.driver.impl.IUserSrvImpl;
 
-public class LoginFrame extends  JFrame implements  ActionListener{
-    JPanel root =new JPanel();
-    JButton login =new JButton("login");
-    JLabel name=new JLabel("Username");
-    JLabel password=new JLabel("Password");
-    JLabel signup=new JLabel("Create account");
-    JLabel forget=new JLabel("Forgot password?");
-    JTextField account=new JTextField();
-    JPasswordField pass=new JPasswordField();
-    JCheckBox remember =new JCheckBox("remember password");
-    public LoginFrame(){
+public class LoginFrame extends JFrame implements ActionListener {
+    JPanel root = new JPanel();
+    JButton login = new JButton("login");
+    JLabel name = new JLabel("Username");
+    JLabel password = new JLabel("Password");
+    JLabel signup = new JLabel("Create account");
+    JLabel forget = new JLabel("Forgot password?");
+    JTextField account = new JTextField();
+    JPasswordField pass = new JPasswordField();
+    JCheckBox remember = new JCheckBox("remember password");
+
+    public LoginFrame() {
 
         this.setContentPane(root);
         root.setLayout(null);
 
-        ImageIcon img =new ImageIcon("client/src/image/back.png");
-        JLabel back=new JLabel(img);
-        back.setBounds(0,-25,300,400);
+        ImageIcon img = new ImageIcon("client/src/image/back.png");
+        JLabel back = new JLabel(img);
+        back.setBounds(0, -25, 300, 400);
         this.getLayeredPane().add(back, Integer.valueOf(Integer.MIN_VALUE));
-        JPanel imPanel = (JPanel)getContentPane();
+        JPanel imPanel = (JPanel) getContentPane();
         imPanel.setOpaque(false);
 
-        login.setBounds(359,240,330,40);
+        login.setBounds(359, 240, 330, 40);
         login.setBackground(Color.blue);
         login.setForeground(Color.white);
         root.add(login);
 
-        name.setBounds(343,35,100,20);
-        name.setFont(new Font("寰蒋闆呴粦",Font.PLAIN,14));
+        name.setBounds(343, 35, 100, 20);
+        name.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
         name.setHorizontalAlignment(SwingConstants.CENTER);
         name.setForeground(Color.blue);
         root.add(name);
 
-        password.setBounds(343,115,100,20);
-        password.setFont(new Font("寰蒋闆呴粦",Font.PLAIN,14));
+        password.setBounds(343, 115, 100, 20);
+        password.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
         password.setHorizontalAlignment(SwingConstants.CENTER);
         password.setForeground(Color.blue);
         root.add(password);
 
-        signup.setBounds(75,280,120,20);
-        signup.setFont(new Font("寰蒋闆呴粦",Font.PLAIN,14));
+        signup.setBounds(75, 280, 120, 20);
+        signup.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
         signup.setHorizontalAlignment(SwingConstants.CENTER);
         signup.setForeground(Color.red);
         root.add(signup);
@@ -68,10 +68,11 @@ public class LoginFrame extends  JFrame implements  ActionListener{
 
             public void mouseClicked(MouseEvent e) {
 
-            }});
+            }
+        });
 
-        forget.setBounds(80,300,130,20);
-        forget.setFont(new Font("寰蒋闆呴粦",Font.PLAIN,14));
+        forget.setBounds(80, 300, 130, 20);
+        forget.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
         forget.setHorizontalAlignment(SwingConstants.CENTER);
         forget.setForeground(Color.red);
         root.add(forget);
@@ -90,17 +91,18 @@ public class LoginFrame extends  JFrame implements  ActionListener{
             public void mouseClicked(MouseEvent e) {
 
 
-            }});
+            }
+        });
 
 
-        account.setBounds(360,65,330,40);
+        account.setBounds(360, 65, 330, 40);
         root.add(account);
 
-        pass.setBounds(360,140,330,40);
+        pass.setBounds(360, 140, 330, 40);
         root.add(pass);
 
-        remember.setBounds(356,190,170,40);
-        remember.setFont(new Font("寰蒋闆呴粦",Font.PLAIN,14));
+        remember.setBounds(356, 190, 170, 40);
+        remember.setFont(new Font("寰蒋闆呴粦", Font.PLAIN, 14));
         remember.setForeground(Color.blue);
         root.add(remember);
 

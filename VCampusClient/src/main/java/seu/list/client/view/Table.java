@@ -4,24 +4,27 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class Table {
-    JTable Table=null;
+    JTable Table = null;
     JScrollPane jScrollPane;
-    DefaultTableModel model= null;
-    public Table(Object columns[]){
+    DefaultTableModel model = null;
+
+    public Table(Object columns[]) {
         Table(columns);
     }
-    void Table(Object columns[]){
-        Table=getTable(columns);
-        jScrollPane=new JScrollPane(Table);//给表格添加滚动条
+
+    void Table(Object columns[]) {
+        Table = getTable(columns);
+        jScrollPane = new JScrollPane(Table);//给表格添加滚动条
         jScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);//设置滚动条
 
 
     }
-    JTable getTable(Object columns[]){
-        if(Table==null){
-            Table=new JTable();
-            model=new DefaultTableModel(){
-                public boolean isCellEditable(int row,int column){
+
+    JTable getTable(Object columns[]) {
+        if (Table == null) {
+            Table = new JTable();
+            model = new DefaultTableModel() {
+                public boolean isCellEditable(int row, int column) {
                     return false;
                 }
             };
@@ -34,13 +37,16 @@ public class Table {
         }
         return Table;
     }
-    public JTable gettables(){
+
+    public JTable gettables() {
         return Table;
     }
-    public JScrollPane getjScrollPane(){
+
+    public JScrollPane getjScrollPane() {
         return jScrollPane;
     }
-    public DefaultTableModel getModel(){
+
+    public DefaultTableModel getModel() {
         return model;
     }
 }

@@ -1,12 +1,14 @@
 /**
- * 
  * @version jdk1.8.0
  */
 package seu.list.client.view;
 
 import seu.list.client.driver.Client;
 import seu.list.client.driver.ClientMainFrame;
-import seu.list.common.*;
+import seu.list.common.Dormitory;
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -18,16 +20,16 @@ import java.util.ArrayList;
 
 public class Dormexchange extends JDialog {
 
+    static Socket socket;
     private final JPanel contentPanel = new JPanel();
+    public DormitoryStudentClient C;
+    public Dormitory dorm;
     private JButton okButton;
     private JButton cancelButton;
     private JPanel buttonPane;
     private JTextField nametextField;
     private JTextField dormIDtextField;
     private JTextField exchangetextField_1;
-    static Socket socket;
-    public DormitoryStudentClient C;
-    public Dormitory dorm;
 
     /**
      * Launch the application.
@@ -43,10 +45,11 @@ public class Dormexchange extends JDialog {
 		}
 	}
 */
+
     /**
      * Create the dialog.
      */
-    public Dormexchange(DormitoryStudentClient c,Socket socket) {
+    public Dormexchange(DormitoryStudentClient c, Socket socket) {
         C = c;
         setVisible(true);
         setTitle("宿舍调换");
@@ -80,26 +83,26 @@ public class Dormexchange extends JDialog {
         nametextField = new JTextField();
         nametextField.setFont(new Font("微软雅黑", Font.PLAIN, 24));
         nametextField.setColumns(20);
-        nametextField.setBounds(202,163,377,45);
+        nametextField.setBounds(202, 163, 377, 45);
         add(nametextField);
         nametextField.setOpaque(false);
-        nametextField.setBorder(new EmptyBorder(0,0,0,0));
+        nametextField.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         dormIDtextField = new JTextField();
         dormIDtextField.setFont(new Font("微软雅黑", Font.PLAIN, 24));
         dormIDtextField.setColumns(20);
-        dormIDtextField.setBounds(202,260,377,45);
+        dormIDtextField.setBounds(202, 260, 377, 45);
         add(dormIDtextField);
         dormIDtextField.setOpaque(false);
-        dormIDtextField.setBorder(new EmptyBorder(0,0,0,0));
+        dormIDtextField.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         exchangetextField_1 = new JTextField();
         exchangetextField_1.setFont(new Font("微软雅黑", Font.PLAIN, 24));
         exchangetextField_1.setColumns(20);
-        exchangetextField_1.setBounds(202,355,377,45);
+        exchangetextField_1.setBounds(202, 355, 377, 45);
         add(exchangetextField_1);
         exchangetextField_1.setOpaque(false);
-        exchangetextField_1.setBorder(new EmptyBorder(0,0,0,0));
+        exchangetextField_1.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         add(backgroundImageLabel);
 
@@ -111,7 +114,7 @@ public class Dormexchange extends JDialog {
                 okButton = new JButton("确定");
                 okButton.setActionCommand("OK");
                 getRootPane().setDefaultButton(okButton);
-                okButton.setBounds(145,463,103,56);
+                okButton.setBounds(145, 463, 103, 56);
                 add(okButton);
                 okButton.setOpaque(false);
 
@@ -128,7 +131,7 @@ public class Dormexchange extends JDialog {
             {
                 cancelButton = new JButton("取消");
                 cancelButton.setActionCommand("Cancel");
-                cancelButton.setBounds(434,463,103,56);
+                cancelButton.setBounds(434, 463, 103, 56);
                 add(cancelButton);
                 cancelButton.setOpaque(false);
                 cancelButton.addActionListener(new ActionListener() {
@@ -142,6 +145,7 @@ public class Dormexchange extends JDialog {
             }
         }
     }
+
     /**
      * 宿舍调换申请
      *

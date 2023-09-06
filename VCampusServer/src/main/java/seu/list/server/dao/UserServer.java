@@ -4,9 +4,9 @@ import seu.list.common.Message;
 import seu.list.common.MessageType;
 import seu.list.common.Student;
 import seu.list.common.User;
+import seu.list.server.db.SqlHelper;
 import seu.list.server.driver.ServerClientThreadMgr;
 import seu.list.server.driver.ServerSocketThread;
-import seu.list.server.db.SqlHelper;
 
 import java.util.List;
 import java.util.Vector;
@@ -16,6 +16,11 @@ public class UserServer {
     private Message mesFromClient;
     private Message mesToClient = new Message();
     private String id;
+
+    public UserServer(Message mesFromClient, String id) {
+        this.mesFromClient = mesFromClient;
+        this.id = id;
+    }
 
     public Message getMesFromClient() {
         return mesFromClient;
@@ -38,11 +43,6 @@ public class UserServer {
     }
 
     public void setId(String id) {
-        this.id = id;
-    }
-
-    public UserServer(Message mesFromClient, String id) {
-        this.mesFromClient = mesFromClient;
         this.id = id;
     }
 
@@ -232,7 +232,6 @@ public class UserServer {
     }
 
 
-
     public User getUserByPwd(Vector<String> content) {
         String sql = "select * from tb_User where (uID= ? or StudentID=?) and uPwd=?";
         String[] paras = new String[3];
@@ -241,7 +240,7 @@ public class UserServer {
         paras[2] = content.get(6);
         List<User> users = new SqlHelper().sqlUserQuery(sql, paras);
 
-        if(users.get(0).getRole()=="0") {
+        if (users.get(0).getRole() == "0") {
             String sql1 = "select * from tb_Student where uID = ?";
             String[] paras1 = new String[1];
             paras1[0] = paras[0];

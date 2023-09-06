@@ -17,10 +17,10 @@ import java.util.ArrayList;
 
 public class LibraryManage1 extends JFrame {
 
+    private final ButtonGroup buttonGroup = new ButtonGroup();
     private JPanel contentPane, modifyPane, panel, addPane, deletePane;
     private JTextField findText, oldIDText, modifiedText;
     private JLayeredPane layerPane;
-    private final ButtonGroup buttonGroup = new ButtonGroup();
     private JRadioButton nameRadioButton, idRadioButton, authorRadioButton, pressRadioButton, stockRadioButton;
 
     private JButton deleteButton, addButton;
@@ -64,45 +64,45 @@ public class LibraryManage1 extends JFrame {
 
 
         addNameText = new JTextField();
-        addNameText.setBounds(258,106,621-256,146-106);
+        addNameText.setBounds(258, 106, 621 - 256, 146 - 106);
         addNameText.setFont(new Font("华文行楷", Font.PLAIN, 30));
         addNameText.setVisible(true);
         add(addNameText);
         addNameText.setOpaque(false);
-        addNameText.setBorder(new EmptyBorder(0,0,0,0));
+        addNameText.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         addIDText = new JTextField();
-        addIDText.setBounds(258,178,621-256,146-106);
+        addIDText.setBounds(258, 178, 621 - 256, 146 - 106);
         addIDText.setFont(new Font("华文行楷", Font.PLAIN, 30));
         addIDText.setVisible(true);
         add(addIDText);
         addIDText.setOpaque(false);
-        addIDText.setBorder(new EmptyBorder(0,0,0,0));
+        addIDText.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         addAuthorText = new JTextField();
-        addAuthorText.setBounds(258,253,621-256,146-106);
+        addAuthorText.setBounds(258, 253, 621 - 256, 146 - 106);
         addAuthorText.setFont(new Font("华文行楷", Font.PLAIN, 30));
         addAuthorText.setVisible(true);
         add(addAuthorText);
         addAuthorText.setOpaque(false);
-        addAuthorText.setBorder(new EmptyBorder(0,0,0,0));
+        addAuthorText.setBorder(new EmptyBorder(0, 0, 0, 0));
         addAuthorText.setFont(new Font("华文行楷", Font.PLAIN, 30));
 
         addPressText = new JTextField();
-        addPressText.setBounds(258,332,621-256,146-106);
+        addPressText.setBounds(258, 332, 621 - 256, 146 - 106);
         addPressText.setFont(new Font("华文行楷", Font.PLAIN, 30));
         addPressText.setVisible(true);
         add(addPressText);
         addPressText.setOpaque(false);
-        addPressText.setBorder(new EmptyBorder(0,0,0,0));
+        addPressText.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         addStockText = new JTextField();
-        addStockText.setBounds(258,412,621-256,146-106);
+        addStockText.setBounds(258, 412, 621 - 256, 146 - 106);
         addStockText.setFont(new Font("华文行楷", Font.PLAIN, 30));
         addStockText.setVisible(true);
         add(addStockText);
         addStockText.setOpaque(false);
-        addStockText.setBorder(new EmptyBorder(0,0,0,0));
+        addStockText.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         add(backlabel);
 
@@ -114,11 +114,10 @@ public class LibraryManage1 extends JFrame {
         });
         //addqrButton.setForeground(Color.BLACK);
         addqrButton.setFont(new Font("华文行楷", Font.BOLD, 29));
-        addqrButton.setBounds(236,501,337-236,554-501);
+        addqrButton.setBounds(236, 501, 337 - 236, 554 - 501);
         addqrButton.setVisible(true);
         add(addqrButton);
         addqrButton.setOpaque(false);
-
 
 
         addqxButton = new JButton("取消");
@@ -129,52 +128,50 @@ public class LibraryManage1 extends JFrame {
         });
         //addqxButton.setForeground(Color.BLACK);
         addqxButton.setFont(new Font("华文行楷", Font.BOLD, 29));
-        addqxButton.setBounds(502,500,337-236,554-501);
+        addqxButton.setBounds(502, 500, 337 - 236, 554 - 501);
         addqxButton.setVisible(true);
         add(addqxButton);
         addqxButton.setOpaque(false);
-
-
 
 
     }
 
     //增加书籍界面取消键的响应
     protected void AddqxAvt(ActionEvent e) {
-        LibraryManage d=new LibraryManage();
+        LibraryManage d = new LibraryManage();
         dispose();
     }
 
     //增加书籍界面确认键的响应
     protected void AddbookAvt(ActionEvent e) {
-        if((!this.isNumeric(addStockText.getText()))||(Integer.valueOf(addStockText.getText())<0)) {
+        if ((!this.isNumeric(addStockText.getText())) || (Integer.valueOf(addStockText.getText()) < 0)) {
             JOptionPane.showMessageDialog(null, "库存请输入正整数！", "警告", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        String[]arr=new String[5];
-        arr[0]=addNameText.getText();
-        arr[1]=addIDText.getText();
-        arr[2]=addAuthorText.getText();
-        arr[3]=addPressText.getText();
-        arr[4]=addStockText.getText();
+        String[] arr = new String[5];
+        arr[0] = addNameText.getText();
+        arr[1] = addIDText.getText();
+        arr[2] = addAuthorText.getText();
+        arr[3] = addPressText.getText();
+        arr[4] = addStockText.getText();
 
-        Message mes =new Message();
-        Client client=new Client(ClientMainFrame.socket);
+        Message mes = new Message();
+        Client client = new Client(ClientMainFrame.socket);
         mes.setModuleType(ModuleType.Library);
         mes.setMessageType(MessageType.LibraryBookAdd);
         mes.setData(arr);
-        Message serverResponse=new Message();
-        serverResponse=client.sendRequestToServer(mes);
+        Message serverResponse = new Message();
+        serverResponse = client.sendRequestToServer(mes);
 
-        int res=0;
-        res=(int) serverResponse.getData();
-        if(res==0) {
+        int res = 0;
+        res = (int) serverResponse.getData();
+        if (res == 0) {
             JOptionPane.showMessageDialog(null, "此书号已存在！", "警告", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        JOptionPane.showMessageDialog(null,"完成");
+        JOptionPane.showMessageDialog(null, "完成");
 
         t.SetTableShow();
         dispose();

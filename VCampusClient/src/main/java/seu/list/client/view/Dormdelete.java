@@ -1,5 +1,4 @@
 /**
- * 
  * @version jdk1.8.0
  */
 package seu.list.client.view;
@@ -22,12 +21,12 @@ import java.util.ArrayList;
 public class Dormdelete extends JDialog {
 
     private final JPanel contentPanel = new JPanel();
+    public ArrayList<Dormitory> allDormitoryContents;
+    DormitoryAdminClient C;
     private JButton okButton;
     private JButton cancelButton;
     private JPanel buttonPane;
     private JTextField DeuserIDField;
-    DormitoryAdminClient C;
-    public ArrayList<Dormitory> allDormitoryContents;
 
     /**
      * Create the dialog.

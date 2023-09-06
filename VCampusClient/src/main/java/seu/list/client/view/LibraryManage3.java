@@ -16,10 +16,10 @@ import java.util.ArrayList;
 
 public class LibraryManage3 extends JFrame {
 
+    private final ButtonGroup buttonGroup = new ButtonGroup();
     private JPanel contentPane, modifyPane, panel, addPane, deletePane;
     private JTextField findText, oldIDText, modifiedText;
     private JLayeredPane layerPane;
-    private final ButtonGroup buttonGroup = new ButtonGroup();
     private JRadioButton nameRadioButton, idRadioButton, authorRadioButton, pressRadioButton, stockRadioButton;
     private JButton deleteButton, addButton;
     private JLabel addNameLabel, addIDLabel, addAuthorLabel, addPressLabel, addStockLabel;
@@ -30,12 +30,13 @@ public class LibraryManage3 extends JFrame {
     private JButton delqrButton, delqxButton;
     private JButton modqxButton;
     private LibraryManage t;
+
     public LibraryManage3(LibraryManage tem) {
         tem.dispose();
 
         ArrayList<Book> booklist = new ArrayList<Book>();
 
-        t =tem;
+        t = tem;
 
         setTitle("增加");
         setDefaultCloseOperation(2);
@@ -47,14 +48,14 @@ public class LibraryManage3 extends JFrame {
         setLayout(null); // 使用绝对定位
         // 创建带有背景图片的JLabel
         ImageIcon image = new ImageIcon("VCampusClient/image/LibraryManage3.png");
-        JLabel backlabel=new JLabel(image);
+        JLabel backlabel = new JLabel(image);
         //获取当前屏幕的尺寸（长、宽的值）
         Toolkit k = Toolkit.getDefaultToolkit();
         Dimension d = k.getScreenSize();
         //将当前窗口设置到屏幕正中央进行显示
         setBounds(d.width / 2 - 847 / 2, d.height / 2 - 633 / 2, 847, 633);
-        backlabel.setSize(847,633);
-        this.getLayeredPane().add(backlabel,new Integer(Integer.MIN_VALUE));
+        backlabel.setSize(847, 633);
+        this.getLayeredPane().add(backlabel, new Integer(Integer.MIN_VALUE));
         backlabel.setOpaque(false); // 设置背景透明
         setResizable(false); //阻止用户拖拽改变窗口的大小
         setVisible(true);
@@ -88,7 +89,7 @@ public class LibraryManage3 extends JFrame {
         stockRadioButton.setFont(new Font("华文行楷", Font.BOLD, 30));
         stockRadioButton.setOpaque(false);
 
-        JPanel panel=new JPanel();
+        JPanel panel = new JPanel();
         panel.add(nameRadioButton);
         panel.add(idRadioButton);
         panel.add(authorRadioButton);
@@ -97,7 +98,7 @@ public class LibraryManage3 extends JFrame {
 
 
         panel.setVisible(true);
-        panel.setBounds(100,159,766-116,236-159);
+        panel.setBounds(100, 159, 766 - 116, 236 - 159);
         add(panel);
         panel.setOpaque(false);
 
@@ -112,21 +113,21 @@ public class LibraryManage3 extends JFrame {
         panel.setOpaque(false);*/
 
         oldIDText = new JTextField();
-        oldIDText.setBounds(303,260,668-303,301-260);
+        oldIDText.setBounds(303, 260, 668 - 303, 301 - 260);
         oldIDText.setFont(new Font("华文行楷", Font.PLAIN, 30));
         oldIDText.setVisible(true);
         add(oldIDText);
         oldIDText.setOpaque(false);
-        oldIDText.setBorder(new EmptyBorder(0,0,0,0));
+        oldIDText.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 
         modifiedText = new JTextField();
-        modifiedText.setBounds(303,331,668-303,301-260);
+        modifiedText.setBounds(303, 331, 668 - 303, 301 - 260);
         modifiedText.setFont(new Font("华文行楷", Font.PLAIN, 30));
         modifiedText.setVisible(true);
         add(modifiedText);
         modifiedText.setOpaque(false);
-        modifiedText.setBorder(new EmptyBorder(0,0,0,0));
+        modifiedText.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 
         add(backlabel);
@@ -138,7 +139,7 @@ public class LibraryManage3 extends JFrame {
             }
         });
         modqrButton.setFont(new Font("华文行楷", Font.BOLD, 25));
-        modqrButton.setBounds(222,433,323-222,485-433);
+        modqrButton.setBounds(222, 433, 323 - 222, 485 - 433);
         modqrButton.setVisible(true);
         add(modqrButton);
         modqrButton.setOpaque(false);
@@ -150,7 +151,7 @@ public class LibraryManage3 extends JFrame {
             }
         });
         modqxButton.setFont(new Font("华文行楷", Font.BOLD, 25));
-        modqxButton.setBounds(489,433,323-222,485-433);
+        modqxButton.setBounds(489, 433, 323 - 222, 485 - 433);
         modqxButton.setVisible(true);
         add(modqxButton);
         modqxButton.setOpaque(false);
@@ -160,7 +161,7 @@ public class LibraryManage3 extends JFrame {
 
     //修改书籍信息页面取消键的响应
     protected void modqxAvt(ActionEvent e) {
-        LibraryManage d=new LibraryManage();
+        LibraryManage d = new LibraryManage();
         dispose();
     }
 

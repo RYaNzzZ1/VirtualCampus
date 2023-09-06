@@ -1,26 +1,28 @@
 /**
- * 
  * @version jdk1.8.0
  */
 package seu.list.client.view;
 
 import seu.list.client.driver.Client;
 import seu.list.client.driver.ClientMainFrame;
-import seu.list.common.*;
+import seu.list.common.Dormitory;
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.net.Socket;
 import java.util.ArrayList;
 
 public class Dormadd extends JDialog {
 
+    static Socket socket;
     private final JPanel contentPanel = new JPanel();
+    public ArrayList<Dormitory> allDormitoryContents;
     private JPanel buttonPane;
     private JButton okButton;
     private JButton cancelButton;
@@ -33,19 +35,18 @@ public class Dormadd extends JDialog {
     private JTextField AelectricityField;
     private JTextField AexchangeField;
     private JTextField AmaintainField;
-    static Socket socket;
-    private Message mes =new Message();
+    private Message mes = new Message();
     private Client client;
     private Dormitory temp;
-    public ArrayList<Dormitory> allDormitoryContents;
-    private DormitoryAdminClient c=null;
+    private DormitoryAdminClient c = null;
+
     /**
      * Create the dialog.
      */
-    public Dormadd(final DormitoryAdminClient C,Socket socket) {
-        c=C;
+    public Dormadd(final DormitoryAdminClient C, Socket socket) {
+        c = C;
 
-        Dormadd.socket =socket;
+        Dormadd.socket = socket;
         setFont(new Font("微软雅黑", Font.BOLD, 12));
         setTitle("添加宿舍");
         setLayout(null);
@@ -78,50 +79,50 @@ public class Dormadd extends JDialog {
         AuserIDField = new JTextField();
         AuserIDField.setFont(new Font("华文行楷", Font.PLAIN, 32));
         AuserIDField.setColumns(10);
-        AuserIDField.setBounds(170,150,247,45);
+        AuserIDField.setBounds(170, 150, 247, 45);
         add(AuserIDField);
         AuserIDField.setOpaque(false);
-        AuserIDField.setBorder(new EmptyBorder(0,0,0,0));
+        AuserIDField.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         AdormIDField = new JTextField();
         AdormIDField.setFont(new Font("华文行楷", Font.PLAIN, 32));
         AdormIDField.setColumns(10);
-        AdormIDField.setBounds(515,153,247,45);
+        AdormIDField.setBounds(515, 153, 247, 45);
         add(AdormIDField);
         AdormIDField.setOpaque(false);
-        AdormIDField.setBorder(new EmptyBorder(0,0,0,0));
+        AdormIDField.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         AbunkIDField = new JTextField();
         AbunkIDField.setFont(new Font("华文行楷", Font.PLAIN, 32));
         AbunkIDField.setColumns(10);
-        AbunkIDField.setBounds(168, 244,247,45);
+        AbunkIDField.setBounds(168, 244, 247, 45);
         add(AbunkIDField);
         AbunkIDField.setOpaque(false);
-        AbunkIDField.setBorder(new EmptyBorder(0,0,0,0));
+        AbunkIDField.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         AscoreField = new JTextField();
         AscoreField.setFont(new Font("华文行楷", Font.PLAIN, 32));
         AscoreField.setColumns(10);
-        AscoreField.setBounds(515,243,247,45);
+        AscoreField.setBounds(515, 243, 247, 45);
         add(AscoreField);
         AscoreField.setOpaque(false);
-        AscoreField.setBorder(new EmptyBorder(0,0,0,0));
+        AscoreField.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         AwaterField = new JTextField();
         AwaterField.setFont(new Font("华文行楷", Font.PLAIN, 32));
         AwaterField.setColumns(10);
-        AwaterField.setBounds(167,338,247,45);
+        AwaterField.setBounds(167, 338, 247, 45);
         add(AwaterField);
         AwaterField.setOpaque(false);
-        AwaterField.setBorder(new EmptyBorder(0,0,0,0));
+        AwaterField.setBorder(new EmptyBorder(0, 0, 0, 0));
 
         AelectricityField = new JTextField();
         AelectricityField.setFont(new Font("华文行楷", Font.PLAIN, 32));
         AelectricityField.setColumns(10);
-        AelectricityField.setBounds(516,338,247,45);
+        AelectricityField.setBounds(516, 338, 247, 45);
         add(AelectricityField);
         AelectricityField.setOpaque(false);
-        AelectricityField.setBorder(new EmptyBorder(0,0,0,0));
+        AelectricityField.setBorder(new EmptyBorder(0, 0, 0, 0));
 
 
         //添加背景图片
@@ -135,11 +136,10 @@ public class Dormadd extends JDialog {
                 okButton = new JButton("确定");
                 okButton.setActionCommand("OK");
                 getRootPane().setDefaultButton(okButton);
-                okButton.setBounds(234,427,105,55);
+                okButton.setBounds(234, 427, 105, 55);
                 add(okButton);
                 okButton.setOpaque(false);
-                okButton.addActionListener(new ActionListener()
-                {
+                okButton.addActionListener(new ActionListener() {
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -153,7 +153,7 @@ public class Dormadd extends JDialog {
             {
                 cancelButton = new JButton("取消");
                 cancelButton.setActionCommand("Cancel");
-                cancelButton.setBounds(580,427,105,55);
+                cancelButton.setBounds(580, 427, 105, 55);
                 add(cancelButton);
                 cancelButton.setOpaque(false);
                 cancelButton.addActionListener(new ActionListener() {
@@ -184,7 +184,7 @@ public class Dormadd extends JDialog {
 //        temp.setDormitoryMaintain(AmaintainField.getText());
 //        temp.setStudentExchange(AexchangeField.getText());
 
-        Message mes =new Message();
+        Message mes = new Message();
         mes.setUserType(1);
         mes.setModuleType(ModuleType.Dormitory);
         mes.setMessageType(MessageType.DormAdd);

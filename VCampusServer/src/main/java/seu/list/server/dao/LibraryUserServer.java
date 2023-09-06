@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * 
  * @version jdk1.8.0
  */
 
@@ -110,6 +109,7 @@ public class LibraryUserServer extends Library_DbAccess {
         System.out.println("create completion\t");
         return bookList;
     }
+
     /**
      * 从数据库读取书籍借阅记录
      *
@@ -132,7 +132,7 @@ public class LibraryUserServer extends Library_DbAccess {
                 tempBook.setStock(rs.getInt("Num"));//保存记录编号
                 tempBook.setState((rs.getInt("State") == 0) ? false : true);
                 tempBook.setScid(uid);
-                if(tempBook.getState()==false)
+                if (tempBook.getState() == false)
                     borrowbookList.add(tempBook);
             }
 
@@ -144,6 +144,7 @@ public class LibraryUserServer extends Library_DbAccess {
         System.out.println("create records completion\t");
         return borrowbookList;
     }
+
     /**
      * 通过书名或书号查找书籍
      *
@@ -178,10 +179,10 @@ public class LibraryUserServer extends Library_DbAccess {
      * return {@code -}1:库存为0不可借<br>
      * return 正整数：操作正常
      */
-    public int LendBook(String []data) { //用书号查找（唯一）
+    public int LendBook(String[] data) { //用书号查找（唯一）
         //return 0:书号不存在  return -1:库存为0不可借
-        String bookid=data[0];
-        String uid=data[1];
+        String bookid = data[0];
+        String uid = data[1];
         int res = 0;
         try {
             con = getConnection();
@@ -206,15 +207,15 @@ public class LibraryUserServer extends Library_DbAccess {
                 result = s.executeUpdate("update tb_BookList set Stock='" + stock + "' where ID='" + bookid + "'");
                 result = s.executeUpdate("update tb_BookList set State='" + state + "' where ID='" + bookid + "'");
                 //添加借阅记录
-                String sql="insert into tb_BookBorringRecord(Name,ID,Author,Press,scID,State) values(?,?,?,?,?,?)";
-                String []paras=new String[6];
-                paras[0]=rsr.getString("Name");
-                paras[1]=rsr.getString("ID");
-                paras[2]=rsr.getString("Author");
-                paras[3]=rsr.getString("Press");
-                paras[4]=uid;
-                paras[5]="0";//借阅
-                new SqlHelper().sqlUpdate(sql,paras);
+                String sql = "insert into tb_BookBorringRecord(Name,ID,Author,Press,scID,State) values(?,?,?,?,?,?)";
+                String[] paras = new String[6];
+                paras[0] = rsr.getString("Name");
+                paras[1] = rsr.getString("ID");
+                paras[2] = rsr.getString("Author");
+                paras[3] = rsr.getString("Press");
+                paras[4] = uid;
+                paras[5] = "0";//借阅
+                new SqlHelper().sqlUpdate(sql, paras);
             } else {
                 return -1;
             }
@@ -241,8 +242,8 @@ public class LibraryUserServer extends Library_DbAccess {
      */
     public int ReturnBook(String[] data) {
         //return 0:书号不存在
-        String bookid=data[0];
-        String uid=data[1];
+        String bookid = data[0];
+        String uid = data[1];
         int res = 0;
         try {
             con = getConnection();
@@ -265,17 +266,17 @@ public class LibraryUserServer extends Library_DbAccess {
             borrowbooklist = createBorrowList(uid);
             for (int i = 0; i < borrowbooklist.size(); i++) {
                 Book tbook = borrowbooklist.get(i);
-                if (Objects.equals(tbook.getId(), bookid) && tbook.getState()==false) {
-                    int Num=tbook.getStock();//获取第一条记录的编号
+                if (Objects.equals(tbook.getId(), bookid) && tbook.getState() == false) {
+                    int Num = tbook.getStock();//获取第一条记录的编号
                     //s.executeUpdate("update tb_BookBorringRecord set State = 1 where ID='"+bookid+"'and scID='"+uid+"'");
                     con = getConnection();
                     s = con.createStatement();// 创建SQL语句对象
-                    s.executeUpdate("update tb_BookBorringRecord set State = 1 where Num='"+Num+"'");
-                    borrow=true;
+                    s.executeUpdate("update tb_BookBorringRecord set State = 1 where Num='" + Num + "'");
+                    borrow = true;
                     break;
                 }
             }
-            if(borrow) {
+            if (borrow) {
                 Stock = Stock + 1;
                 /*if(Stock>Max){
                 res=-1;
@@ -292,7 +293,7 @@ public class LibraryUserServer extends Library_DbAccess {
                     System.out.println("Return completion\t");
                 }
                 //}
-            }else{
+            } else {
                 return -1;
             }
         } catch (Exception e) {
@@ -400,15 +401,15 @@ public class LibraryUserServer extends Library_DbAccess {
             //检查书号是否存在
             ResultSet res = s.executeQuery("select *  from tb_BookList where ID='" + bookid + "'");
             if (res.next()) {
-                int oldstock=res.getInt("Stock");
+                int oldstock = res.getInt("Stock");
                 result = s.executeUpdate("update tb_BookList set " + attr + "='" + modattr + "' where ID='" + bookid + "'");
                 if (attr.equals("Stock")) {
-                    int oldmax= res.getInt("Max");
-                    int newmax=oldmax+Integer.valueOf(modattr)-oldstock;
-                    String newMax= String.valueOf(newmax);
+                    int oldmax = res.getInt("Max");
+                    int newmax = oldmax + Integer.valueOf(modattr) - oldstock;
+                    String newMax = String.valueOf(newmax);
                     int ms = Integer.parseInt(modattr);
                     //同时提高上限
-                    result = s.executeUpdate("update tb_BookList set Max='"+newMax+"' where ID='" + bookid + "'");
+                    result = s.executeUpdate("update tb_BookList set Max='" + newMax + "' where ID='" + bookid + "'");
                     if (ms == 0)
                         result = s.executeUpdate("update tb_BookList set State=0 where ID='" + bookid + "'");
                     else

@@ -96,7 +96,7 @@ public class ClassAdminClient extends JFrame {
 
         //2.绘制退出按钮
         //得到鼠标的坐标（用于推算对话框应该摆放的坐标）
-     /*backgroundImageLabel.addMouseListener(new MouseAdapter() {
+    /* backgroundImageLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
 				int x = e.getX();
@@ -106,61 +106,7 @@ public class ClassAdminClient extends JFrame {
         });
 */
 
-        //菜单蓝
-        JMenuBar menuBar = new JMenuBar();
-        setJMenuBar(menuBar);
 
-
-        JMenu mnNewMenu = new JMenu("菜单");
-        mnNewMenu.setFont(new Font("微軟正黑體", Font.PLAIN, 17));
-        menuBar.add(mnNewMenu);
-
-        JMenuItem mntmNewMenuItem = new JMenuItem("修改");
-        mntmNewMenuItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (nowmodel == MODEL.ADD) {
-                    JOptionPane.showMessageDialog(null, "请先进行保存", "提示", JOptionPane.WARNING_MESSAGE);
-                } else if (nowmodel == MODEL.DELETE) {
-                    JOptionPane.showMessageDialog(null, "请先完成删除操作", "提示", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    nowmodel = MODEL.MODIFY;
-                    setModifyFrame();
-                    nowmodel = MODEL.WATCHING;
-                }
-            }
-        });
-        mntmNewMenuItem.setFont(new Font("宋体", Font.PLAIN, 18));
-        mnNewMenu.add(mntmNewMenuItem);
-
-        JMenuItem mntmNewMenuItem_1 = new JMenuItem("增加");
-        mntmNewMenuItem_1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (nowmodel == MODEL.ADD) {
-                    JOptionPane.showMessageDialog(null, "请先进行保存", "提示", JOptionPane.WARNING_MESSAGE);
-                } else if (nowmodel == MODEL.DELETE) {
-                    JOptionPane.showMessageDialog(null, "请先完成删除操作", "提示", JOptionPane.WARNING_MESSAGE);
-                } else if (nowmodel == MODEL.MODIFY) {
-                    JOptionPane.showMessageDialog(null, "请先完成修改操作", "提示", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    nowmodel = MODEL.ADD;
-                    setAddFrame();
-                    nowmodel = MODEL.WATCHING;
-                }
-            }
-        });
-        mntmNewMenuItem_1.setFont(new Font("宋体", Font.PLAIN, 18));
-        mnNewMenu.add(mntmNewMenuItem_1);
-
-        JMenuItem mntmNewMenuItem_2 = new JMenuItem("删除");
-        mntmNewMenuItem_2.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                nowmodel = MODEL.DELETE;
-                setDeleteFrame();
-                nowmodel = MODEL.WATCHING;
-            }
-        });
-        mntmNewMenuItem_2.setFont(new Font("宋体", Font.PLAIN, 18));
-        mnNewMenu.add(mntmNewMenuItem_2);
 
 
         //下拉框
@@ -191,8 +137,8 @@ public class ClassAdminClient extends JFrame {
         table.getTableHeader().setPreferredSize(new Dimension(table.getTableHeader().getWidth(), 35));
         addRows();
         getClasses();
-        table.setBounds(0, 0, 1130 - 151, 567 - 215);
-        scrollPane.setBounds(151, 215, 1130 - 151, 567 - 215);
+        table.setBounds(0, 0, 1132-292,601-216);
+        scrollPane.setBounds(292,216,1132-292,601-216);
         add(scrollPane);
         add(backgroundImageLabel);
 
@@ -221,16 +167,73 @@ public class ClassAdminClient extends JFrame {
         scrollPane.getColumnHeader().setOpaque(false);
         add(backgroundImageLabel);
 
+        JButton motify=new JButton("修改");
+        motify.setBounds(126,439,243-126,282-229);
+        add(motify);
+        JButton add=new JButton("增加");
+        add.setBounds(126,229,243-126,282-229);
+        add(add);
+        JButton delete=new JButton("删除");
+        delete.setBounds(128,334,243-126,282-229);
+        add(delete);
+
+
+        motify.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (nowmodel == MODEL.ADD) {
+                    JOptionPane.showMessageDialog(null, "请先进行保存", "提示", JOptionPane.WARNING_MESSAGE);
+                } else if (nowmodel == MODEL.DELETE) {
+                    JOptionPane.showMessageDialog(null, "请先完成删除操作", "提示", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    nowmodel = MODEL.MODIFY;
+                    setModifyFrame();
+                    nowmodel = MODEL.WATCHING;
+                }
+            }
+        });
+
+
+
+        add.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (nowmodel == MODEL.ADD) {
+                    JOptionPane.showMessageDialog(null, "请先进行保存", "提示", JOptionPane.WARNING_MESSAGE);
+                } else if (nowmodel == MODEL.DELETE) {
+                    JOptionPane.showMessageDialog(null, "请先完成删除操作", "提示", JOptionPane.WARNING_MESSAGE);
+                } else if (nowmodel == MODEL.MODIFY) {
+                    JOptionPane.showMessageDialog(null, "请先完成修改操作", "提示", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    nowmodel = MODEL.ADD;
+                    setAddFrame();
+                    nowmodel = MODEL.WATCHING;
+                }
+            }
+        });
+
+
+
+        delete.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                nowmodel = MODEL.DELETE;
+                setDeleteFrame();
+                nowmodel = MODEL.WATCHING;
+            }
+        });
+
+     motify.setOpaque(false);
+     add.setOpaque(false);
+     delete.setOpaque(false);
+
         //退出按钮
         JButton exitbutton = new JButton("退出");
         exitbutton.setFont(new Font("宋体", Font.PLAIN, 18));
-        exitbutton.setBounds(577, 585, 1121 - 1008, 204 - 154);
+        exitbutton.setBounds(125,545,243-126,282-229);
         add(exitbutton);
         exitbutton.setOpaque(false);
 
 
         //确认按钮
-        JButton serachbutton = new JButton("确认");
+        JButton serachbutton = new JButton("搜索");
         serachbutton.setFont(new Font("宋体", Font.PLAIN, 18));
         serachbutton.setBounds(1008, 152, 1121 - 1008, 201 - 152);
         add(serachbutton);

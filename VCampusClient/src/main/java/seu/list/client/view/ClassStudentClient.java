@@ -15,12 +15,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 
 public class ClassStudentClient extends JFrame {
-
-
 	private JPanel contentPane;
 	private JTextField name;
 	private JTextField studentid;
@@ -200,17 +199,7 @@ public class ClassStudentClient extends JFrame {
 		status.setFont(new Font("宋体", Font.PLAIN, 16));
 		status.addItem("群众");
 		status.addItem("共青团员");
-		status.addItem("中共预备党员");
 		status.addItem("中共党员");
-		status.addItem("民革党员");
-		status.addItem("民盟盟员");
-		status.addItem("民建会员");
-		status.addItem("民进会员");
-		status.addItem("农工党党员");
-		status.addItem("致公党党员");
-		status.addItem("九三学社社员");
-		status.addItem("台盟盟员");
-		status.addItem("无党派人士");
 		status.setBounds(169,504,783-545,128-91);
 		status.setOpaque(false);
 		//下面的代码用于显示默认的政治面貌
@@ -228,59 +217,9 @@ public class ClassStudentClient extends JFrame {
 						status.setSelectedIndex(1);
 					}
 					break;
-					case "中共预备党员":
-					{
-						status.setSelectedIndex(2);
-					}
-					break;
 					case "中共党员":
 					{
-						status.setSelectedIndex(3);
-					}
-					break;
-					case "民革党员":
-					{
-						status.setSelectedIndex(4);
-					}
-					break;
-					case "民盟盟员":
-					{
-						status.setSelectedIndex(5);
-					}
-					break;
-					case "民建会员":
-					{
-						status.setSelectedIndex(6);
-					}
-					break;
-					case "民进会员":
-					{
-						status.setSelectedIndex(7);
-					}
-					break;
-					case "农工党党员":
-					{
-						status.setSelectedIndex(8);
-					}
-					break;
-					case "致公党党员":
-					{
-						status.setSelectedIndex(9);
-					}
-					break;
-					case "九三学社社员":
-					{
-						status.setSelectedIndex(10);
-					}
-					break;
-					case "台盟盟员":
-					{
-						status.setSelectedIndex(11);
-					}
-					break;
-					case "无党派人士":
-					{
-						status.setSelectedIndex(12);
+						status.setSelectedIndex(2);
 					}
 					break;
 					default:
@@ -308,119 +247,177 @@ public class ClassStudentClient extends JFrame {
 		//修改按钮监听事件
 		modifybutton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(modifybutton.getText().compareTo("修改") == 0) {
+				//增加一个弹窗来表示
+				JFrame tem=new JFrame();
+				tem.setLayout(null);
+				tem.setVisible(true);
+				setVisible(false);
+				//绘制背景图片
+				JLabel backgroundImageLabel = new JLabel(new ImageIcon("VCampusClient/Image/MotifyStudent.JPG"));
+				Toolkit k = Toolkit.getDefaultToolkit();
+				Dimension d = k.getScreenSize();
+				tem.setBounds(d.width/2-861/2, d.height/2-631/2, 861,631+25);
+				backgroundImageLabel.setBounds(0, 0, 861,631);
+				tem.setResizable(false);
+				tem.setLayout(null);
+				tem.setVisible(true);
 
-					System.out.println(statusmy);
-					System.out.println(statusmy.equals("共青团员"));
-
-
-					modifybutton.setText("保存");
-					backgroundImageLabel.setIcon(new ImageIcon("VCampusClient/Image/ClassStudentClient1.jpg"));
-					name.setEditable(true);
-
-					studentid.setEditable(false);
-					major.setEditable(false);
-					classid.setEditable(false);
-					teacherid.setEditable(false);
-					origion.setEditable(true);
-					phone.setEditable(true);
-					status.setEnabled(true);
-					gender.setEnabled(true);
+				//2.绘制退出按钮
+				//得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+   /*  backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+			}
+        });*/
+					JTextField name1=new JTextField(thisStu.getStudentName());
+					JTextField origion1=new JTextField(thisStu.getStudentorigion());
+					JTextField phone1=new JTextField(thisStu.getStudentphone());
+					JComboBox gender1=new JComboBox();
+					gender1.addItem("男");
+					gender1.addItem("女");
+				if(thisStu.getStudentgender() == false) {
+					gender1.setSelectedIndex(1);
 				}
-				else {
-					if(name.getText().trim().equals("")||
-							origion.getText().trim().equals("")||
-							phone.getText().trim().equals("")) {
+
+
+
+					JComboBox status1=new JComboBox();
+				status1.addItem("群众");
+				status1.addItem("共青团员");
+				status1.addItem("中共党员");
+				if(thisStu.getStudentstatus() != null) {
+					statusmy = thisStu.getStudentstatus().replaceAll("\\p{C}", "");
+					if(statusmy.length() != 0) {
+						switch(statusmy) {
+							case "群众":
+							{
+								status1.setSelectedIndex(0);
+							}
+							break;
+							case "共青团员":
+							{
+								status1.setSelectedIndex(1);
+							}
+							break;
+							case "中共党员":
+							{
+								status1.setSelectedIndex(2);
+							}
+							break;
+							default:
+								break;
+						}
+					}
+				}
+
+				Font f=new Font("华文行楷", Font.PLAIN, 24);
+					name1.setBounds(278,135,612-278,184-135);
+					origion1.setBounds(278,290,612-278,184-135);
+					phone1.setBounds(278,444,612-278,184-135);
+					status1.setBounds(278,369,250,184-135);
+					gender1.setBounds(278,212,250,184-135);
+					name1.setFont(f);
+					origion1.setFont(f);
+					phone1.setFont(f);
+					status1.setFont(f);
+					gender1.setFont(f);
+					tem.add(origion1);
+					tem.add(gender1);
+					tem.add(status1);
+					tem.add(name1);
+					tem.add(phone1);
+					origion1.setOpaque(false);
+					origion1.setBorder(new EmptyBorder(0,0,0,0));
+				name1.setOpaque(false);
+				name1.setBorder(new EmptyBorder(0,0,0,0));
+				phone1.setOpaque(false);
+				phone1.setBorder(new EmptyBorder(0,0,0,0));
+
+				tem.add(backgroundImageLabel);
+				JButton OK=new JButton("OK");
+				OK.setBounds(250,532,110,583-532);
+				tem.add(OK);
+				OK.setOpaque(false);
+
+				OK.addActionListener(event->
+				{
+					if(name1.getText().trim().equals("")||
+							origion1.getText().trim().equals("")||
+							phone1.getText().trim().equals("")) {
 						JOptionPane.showMessageDialog(null, "请完善学生信息！", "提示", JOptionPane.WARNING_MESSAGE);
 					}
 					else {
-						Student temp = new Student();
-						temp.setClassid(classid.getText());
-						temp.setMajor(major.getText());
-						if(gender.getSelectedIndex() == 0) {
-							temp.setStudentgender(true);//boy
-						}else{
-							temp.setStudentgender(false);//girl
-						}
-						temp.setStudentid(studentid.getText());
-						temp.setStudentName(name.getText());
-						temp.setStudentorigion(origion.getText());
-						temp.setStudentphone(phone.getText());//remember to check
-						temp.setTeacherid(teacherid.getText());
-						switch (gender.getSelectedIndex()) {
-							case 0:
-								temp.setStudentgender(true);
-								break;
-							case 1:
-								temp.setStudentgender(false);
-								break;
-							default:
-								break;
-						}
-						switch(status.getSelectedIndex()) {
-							case 0:
-								temp.setStudentstatus("群众");
-								break;
-							case 1:
-								temp.setStudentstatus("共青团员");
-								break;
-							case 2:
-								temp.setStudentstatus("中共预备党员");
-								break;
-							case 3:
-								temp.setStudentstatus("中共党员");
-								break;
-							case 4:
-								temp.setStudentstatus("民革党员");
-								break;
-							case 5:
-								temp.setStudentstatus("民盟盟员");
-								break;
-							case 6:
-								temp.setStudentstatus("民建会员");
-								break;
-							case 7:
-								temp.setStudentstatus("民进会员");
-								break;
-							case 8:
-								temp.setStudentstatus("农工党党员");
-								break;
-							case 9:
-								temp.setStudentstatus("致公党党员");
-								break;
-							case 10:
-								temp.setStudentstatus("九三学社社员");
-								break;
-							case 11:
-								temp.setStudentstatus("台盟盟员");
-								break;
-							case 12:
-								temp.setStudentstatus("无党派人士");
-								break;
-							default:
-								break;
 
-						}
-
-						if(temp.getStudentphone().length()!=11) {
+						if(phone1.getText().length()!=11) {
 							JOptionPane.showMessageDialog(null, "请正确填写电话号码（11位）！", "提示", JOptionPane.WARNING_MESSAGE);
 						}else {
+							//保存当前的所有信息
+							Student temp = new Student();
+							temp.setClassid(classid.getText());
+							temp.setMajor(major.getText());
+							if(gender1.getSelectedIndex() == 0) {
+								temp.setStudentgender(true);//boy
+							}else{
+								temp.setStudentgender(false);//girl
+							}
+							temp.setStudentid(studentid.getText());
+							temp.setStudentName(name1.getText());
+							temp.setStudentorigion(origion1.getText());
+							temp.setStudentphone(phone1.getText());//remember to check
+							temp.setTeacherid(teacherid.getText());
+							switch (gender1.getSelectedIndex()) {
+								case 0:
+									temp.setStudentgender(true);
+									gender.setSelectedIndex(0);
+									break;
+								case 1:
+									gender.setSelectedIndex(1);
+									temp.setStudentgender(false);
+									break;
+								default:
+									break;
+							}
+							switch(status1.getSelectedIndex()) {
+								case 0:
+									temp.setStudentstatus("群众");
+									status.setSelectedIndex(0);
+									break;
+								case 1:
+									status.setSelectedIndex(1);
+									temp.setStudentstatus("共青团员");
+									break;
+								case 2:
+									status.setSelectedIndex(2);
+									temp.setStudentstatus("中共党员");
+									break;
+								default:
+									break;
+
+							}
+							name.setText(name1.getText());
+							phone.setText(phone1.getText());
+							origion.setText(origion1.getText());
 							save(temp);
-							modifybutton.setText("修改");
-							backgroundImageLabel.setIcon(new ImageIcon("VCampusClient/Image/ClassStudentClient.png"));
-							name.setEditable(false);
-							studentid.setEditable(false);
-							major.setEditable(false);
-							classid.setEditable(false);
-							teacherid.setEditable(false);
-							origion.setEditable(false);
-							phone.setEditable(false);
-							status.setEnabled(false);
-							gender.setEnabled(false);
+							setVisible(true);
+							tem.dispose();
 						}
 					}
+
+				});
+				JButton c=new JButton("取消");
+				c.setBounds(451,531,110,583-532);
+				tem.add(c);
+				c.setOpaque(false);
+				c.addActionListener(event->
+				{
+					setVisible(true);
+					tem.dispose();
+				});
 				}
-			}
+
 		});
 
 		//充值按钮监听事件
@@ -466,8 +463,6 @@ public class ClassStudentClient extends JFrame {
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(2);
 	}
-
-
 	//保存修改之后的信息
 	void save(Student temp) {
 		Message mes = new Message();

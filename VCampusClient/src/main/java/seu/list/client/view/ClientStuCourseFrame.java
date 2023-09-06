@@ -272,8 +272,6 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			tem.setResizable(false);
 			tem.setLayout(null);
 			tem.setVisible(true);
-
-
 			//2.绘制退出按钮
 			//得到鼠标的坐标（用于推算对话框应该摆放的坐标）
      /*backgroundImageLabel.addMouseListener(new MouseAdapter() {
@@ -428,7 +426,7 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 		} else if(e.getActionCommand() == "cancel") {
 			jframe.setVisible(false);
 			JFrame tem=new JFrame();
-			tem.setTitle("选课");
+			tem.setTitle("退课");
 			tem.setLayout(null);
 
 			//绘制背景图片
@@ -440,7 +438,6 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener{
 			tem.setResizable(false);
 			tem.setLayout(null);
 			tem.setVisible(true);
-
 
 			//2.绘制退出按钮
 			//得到鼠标的坐标（用于推算对话框应该摆放的坐标）

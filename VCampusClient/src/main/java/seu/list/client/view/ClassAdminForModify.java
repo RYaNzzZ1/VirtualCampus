@@ -85,7 +85,7 @@ public class ClassAdminForModify extends JFrame {
 		searchdata.setBorder(new EmptyBorder(0,0,0,0));
 
 		table = new JTable();
-		table.setFont(new Font("Adobe 仿宋 Std R", Font.PLAIN, 12));
+		table.setFont(new Font("楷体", Font.PLAIN, 12));
 		scrollPane.setViewportView(table);
 		table.setBounds(0,0,811-182,443-126);
 		scrollPane.setBounds(182,126,811-182,443-126);
@@ -109,7 +109,7 @@ public class ClassAdminForModify extends JFrame {
 			searchbtn.addItem("姓名");
 			//透明化处理
 			table.setForeground(Color.BLACK);
-			table.setFont(new Font("华文行楷", Font.BOLD, 20));
+			table.setFont(new Font("楷体", Font.BOLD, 20));
 			table.setRowHeight(73);			//表格行高
 			table.setPreferredScrollableViewportSize(new Dimension(850, 500));
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -139,7 +139,7 @@ public class ClassAdminForModify extends JFrame {
 			searchbtn.addItem("老师");
 			//透明化处理
 			table.setForeground(Color.BLACK);
-			table.setFont(new Font("华文行楷", Font.BOLD, 20));
+			table.setFont(new Font("楷体", Font.BOLD, 20));
 			table.setRowHeight(73);			//表格行高
 			table.setPreferredScrollableViewportSize(new Dimension(850, 500));
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -185,7 +185,7 @@ public class ClassAdminForModify extends JFrame {
 						System.out.println("Model Change");
 						//透明化处理
 						table.setForeground(Color.BLACK);
-						table.setFont(new Font("华文行楷", Font.BOLD, 20));
+						table.setFont(new Font("楷体", Font.BOLD, 20));
 						table.setRowHeight(73);			//表格行高
 						table.setPreferredScrollableViewportSize(new Dimension(850, 500));
 						table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -226,7 +226,7 @@ public class ClassAdminForModify extends JFrame {
 						System.out.println("Model Change");
 						//透明化处理
 						table.setForeground(Color.BLACK);
-						table.setFont(new Font("华文行楷", Font.BOLD, 20));
+						table.setFont(new Font("楷体", Font.BOLD, 20));
 						table.setRowHeight(73);			//表格行高
 						table.setPreferredScrollableViewportSize(new Dimension(850, 500));
 						table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -1138,7 +1138,7 @@ public class ClassAdminForModify extends JFrame {
 					}
 					//透明化处理
 					table.setForeground(Color.BLACK);
-					table.setFont(new Font("华文行楷", Font.BOLD, 20));
+					table.setFont(new Font("楷体", Font.BOLD, 20));
 					table.setRowHeight(73);			//表格行高
 					table.setPreferredScrollableViewportSize(new Dimension(850, 500));
 					table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -1278,7 +1278,7 @@ public class ClassAdminForModify extends JFrame {
 			now = MODEL.STUDENTMODIFY;
 			//透明化处理
 			table.setForeground(Color.BLACK);
-			table.setFont(new Font("华文行楷", Font.BOLD, 20));
+			table.setFont(new Font("楷体", Font.BOLD, 20));
 			table.setRowHeight(73);			//表格行高
 			table.setPreferredScrollableViewportSize(new Dimension(850, 500));
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -1309,7 +1309,7 @@ public class ClassAdminForModify extends JFrame {
 			now = MODEL.ClASSMODIFY;
 			//透明化处理
 			table.setForeground(Color.BLACK);
-			table.setFont(new Font("华文行楷", Font.BOLD, 20));
+			table.setFont(new Font("楷体", Font.BOLD, 20));
 			table.setRowHeight(73);			//表格行高
 			table.setPreferredScrollableViewportSize(new Dimension(850, 500));
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -1354,7 +1354,7 @@ public class ClassAdminForModify extends JFrame {
 		}
 		//透明化处理
 		table.setForeground(Color.BLACK);
-		table.setFont(new Font("华文行楷", Font.BOLD, 20));
+		table.setFont(new Font("楷体", Font.BOLD, 20));
 		table.setRowHeight(73);			//表格行高
 		table.setPreferredScrollableViewportSize(new Dimension(850, 500));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -1395,7 +1395,7 @@ public class ClassAdminForModify extends JFrame {
 		}
 		//透明化处理
 		table.setForeground(Color.BLACK);
-		table.setFont(new Font("华文行楷", Font.BOLD, 20));
+		table.setFont(new Font("楷体", Font.BOLD, 20));
 		table.setRowHeight(73);			//表格行高
 		table.setPreferredScrollableViewportSize(new Dimension(850, 500));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
@@ -1435,7 +1435,7 @@ public class ClassAdminForModify extends JFrame {
 		}
 		//透明化处理
 		table.setForeground(Color.BLACK);
-		table.setFont(new Font("华文行楷", Font.BOLD, 20));
+		table.setFont(new Font("楷体", Font.BOLD, 20));
 		table.setRowHeight(73);			//表格行高
 		table.setPreferredScrollableViewportSize(new Dimension(850, 500));
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);

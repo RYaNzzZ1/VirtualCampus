@@ -9,7 +9,7 @@ import java.util.*;
  * 类{@code ServerClientThreadMgr}用于管理服务器上的客户端线程池 <br>
  * 静态数据成员: {@code clientThreadPool}, 类型: {@code Map}, 客户端线程池 <br>
  * 支持对线程池的增删改查
- * @author 吴慕陶
+ * 
  * @version 1.0
  * @see Map
  */
@@ -57,7 +57,7 @@ public class ServerClientThreadMgr {
 	 * @param id 需要添加的客户端线程ID
 	 * @param clientThreadSrv 需要添加的客户端线程
 	 * @return 如果id对应的线程存在，则覆盖并返回原线程，如果不存在，则返回{@code null}
-	 * @author 吴慕陶
+	 * 
 	 * @version 1.0
 	 * @see Map#put(Object, Object)
 	 */
@@ -69,7 +69,7 @@ public class ServerClientThreadMgr {
 	 * 根据输入的客户端线程ID删除对应的客户端线程
 	 * @param id 需要删除的客户端线程ID
 	 * @return 被删除的客户端线程，若该ID对应的线程不存在，则返回{@code null}
-	 * @author 吴慕陶
+	 * 
 	 * @version 1.0
 	 * @see Map#remove(Object)
 	 */
@@ -86,7 +86,7 @@ public class ServerClientThreadMgr {
 	/**
 	 * 获取整个客户端线程池
 	 * @return 客户端线程池
-	 * @author 吴慕陶
+	 * 
 	 * @version 1.0
 	 */
 	public synchronized static Map<String, ServerSocketThread> getPool(){
@@ -95,7 +95,7 @@ public class ServerClientThreadMgr {
 
 	/**
 	 * 清空整个客户端线程池，会关闭所有客户端线程
-	 * @author 吴慕陶
+	 * 
 	 * @version 1.0
 	 */
 	public synchronized static void clear() {
@@ -112,7 +112,7 @@ public class ServerClientThreadMgr {
 	/**
 	 * 对所有客户端发送消息
 	 * @param mes 对所有客户端发送的消息
-	 * @author 吴慕陶
+	 * 
 	 * @version 1.0
 	 */
 	public synchronized static void sendMesToAll(Message mes) {
@@ -126,7 +126,7 @@ public class ServerClientThreadMgr {
 
 	/**
 	 * 打印目前连接到服务器上的所有客户端的信息
-	 * @author 吴慕陶
+	 * 
 	 * @version 1.0
 	 */
 	public synchronized static void printAllClient() {
@@ -146,7 +146,7 @@ public class ServerClientThreadMgr {
 
 	/**
 	 * 返回目前连接到服务器上的所有客户端的信息
-	 * @author 柳多荣
+	 * 
 	 * @version 1.0
 	 * @return 目前连接到服务器上客户端的ID+ip地址，不存在则返回{@code null}
 	 */

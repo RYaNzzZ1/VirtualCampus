@@ -1,5 +1,5 @@
 /**
- * @author 周楚翘
+ * 
  * @version jdk1.8.0
  */
 package seu.list.client.view;

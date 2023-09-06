@@ -2,7 +2,7 @@ package seu.list.common;
 
 /**
  * 类{@code ModuleType}包含了所有的功能模块类型，供客户端线程分配对应的{@code DAO}类
- * @author 吴慕陶
+ * 
  * @version 1.0
  */
 public final class ModuleType {

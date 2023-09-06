@@ -66,10 +66,6 @@ public class DormApply extends JDialog {
         setResizable(false); //阻止用户拖拽改变窗口的大小
 
 
-        //applyShow();
-
-        add(backgroundImageLabel);
-
         exchangeButton = new JRadioButton("审核调换申请");    //创建JRadioButton对象
         exchangeButton.setFont(new Font("华文行楷", Font.BOLD, 24));
         exchangeButton.setBounds(50, 355, 180, 40);
@@ -84,6 +80,8 @@ public class DormApply extends JDialog {
         //添加JRadioButton到ButtonGroup中
         group.add(exchangeButton);
         group.add(maintainButton);
+
+        add(backgroundImageLabel);
 
         contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         {
@@ -150,9 +148,10 @@ public class DormApply extends JDialog {
             System.out.println("bbbbb");
             jCheckBoxes[i] = new JCheckBox();
             System.out.println("aaaaaa");
-            jCheckBoxes[i].setBounds(253, 140 + 15 * i, 20, 20);
+            jCheckBoxes[i].setBounds(253, 140 + 40 * i, 20, 20);
             add(jCheckBoxes[i]);
         }
+
 
         //展示
         //显示宿舍信息的表格
@@ -178,12 +177,13 @@ public class DormApply extends JDialog {
                 return columnEditables[column];
             }
         });
-        table.getColumnModel().getColumn(0).setPreferredWidth(40);
-        table.getColumnModel().getColumn(1).setPreferredWidth(40);
 
         table.setBounds(0, 0, 526, 404);
         table.getTableHeader().setReorderingAllowed(false);
-
+        table.getColumnModel().getColumn(0).setPreferredWidth(100);
+        table.getColumnModel().getColumn(1).setPreferredWidth(100);
+        table.getColumnModel().getColumn(2).setPreferredWidth(183);
+        table.getColumnModel().getColumn(3).setPreferredWidth(183);
         scrollPane.setViewportView(table);
 
 
@@ -191,7 +191,6 @@ public class DormApply extends JDialog {
         Object[] dormlist = {"学号", "宿舍号", "调换申请", "维修申请"};
         DefaultTableModel model;
         model = new DefaultTableModel(dorminformation, dormlist);
-
 
         System.out.println("bbbbb");
 
@@ -206,9 +205,10 @@ public class DormApply extends JDialog {
             table.setModel(model);
         }
 
+
         //透明化处理
         table.setForeground(Color.BLACK);
-        table.setFont(new Font("微软雅黑", Font.PLAIN, 22));
+        table.setFont(new Font("华文行楷", Font.PLAIN, 22));
         //table.getTableHeader().setFont(new Font("微软雅黑", Font.PLAIN, 5));
         table.setRowHeight(40);                //表格行高
         table.setPreferredScrollableViewportSize(new Dimension(850, 500));
@@ -223,6 +223,10 @@ public class DormApply extends JDialog {
             TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
             column.setHeaderRenderer(renderer);//表头渲染
         }
+        table.getColumnModel().getColumn(0).setPreferredWidth(80);
+        table.getColumnModel().getColumn(1).setPreferredWidth(80);
+        table.getColumnModel().getColumn(2).setPreferredWidth(183);
+        table.getColumnModel().getColumn(3).setPreferredWidth(183);
         table.setOpaque(false);
         table.getTableHeader().setOpaque(false);
         table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));

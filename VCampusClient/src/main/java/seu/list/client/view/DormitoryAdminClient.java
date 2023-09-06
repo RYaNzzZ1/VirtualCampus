@@ -1,5 +1,5 @@
 /**
- * @author 周楚翘
+ * 
  * @version jdk1.8.0
  */
 package seu.list.client.view;
@@ -20,11 +20,14 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.Socket;
 import java.util.ArrayList;
 
 public class DormitoryAdminClient extends JFrame {
-
+    DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+    String[] Names = {"学号", "宿舍", "床位", "卫生评分", "水费", "电费"};
     private JPanel contentPane;
     private JTextField searchField;
     private JTable table;
@@ -38,7 +41,7 @@ public class DormitoryAdminClient extends JFrame {
         this.socket = socket;
         setFont(new Font("微软雅黑", Font.BOLD, 12));
         setTitle("宿舍-管理员");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLayout(null);
 
         //添加图标
@@ -58,6 +61,16 @@ public class DormitoryAdminClient extends JFrame {
 
         setResizable(false); //阻止用户拖拽改变窗口的大小
 
+        //2.绘制退出按钮
+        //得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+//        backgroundImageLabel.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                int x = e.getX();
+//                int y = e.getY();
+//                System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+//            }
+//        });
 
         //显示宿舍信息的表格
         scrollPane = new JScrollPane();
@@ -71,16 +84,15 @@ public class DormitoryAdminClient extends JFrame {
         table.setBorder(new LineBorder(new Color(0, 0, 0)));
         table.setRowHeight(25);
 
-        //table.setFont(new Font("华文行楷", Font.BOLD, 15));
         table.setModel(new DefaultTableModel(
                 new Object[][]{
                 },
                 new String[]{
-                        "学号", "宿舍", "床位", "卫生评分", "水费", "电费", "调换申请", "维修申请"
+                        "学号", "宿舍", "床位", "卫生评分", "水费", "电费"
                 }
         ) {
             boolean[] columnEditables = new boolean[]{
-                    false, false, false, false, false, false, false, false
+                    false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int row, int column) {
@@ -97,42 +109,16 @@ public class DormitoryAdminClient extends JFrame {
 
 
         Object[][] dorminformation = {};
-        Object[] dormlist = {"学号", "宿舍", "床位", "卫生评分", "水费", "电费", "调换申请", "维修申请"};
+        Object[] dormlist = {"学号", "宿舍", "床位", "卫生评分", "水费", "电费"};
         DefaultTableModel model;
         model = new DefaultTableModel(dorminformation, dormlist);
 
-
-        //透明化处理
-        table.setForeground(Color.BLACK);
-        table.setFont(new Font("微软雅黑", Font.PLAIN, 22));
-        //table.getTableHeader().setFont(new Font("微软雅黑", Font.PLAIN, 5));
-        table.setRowHeight(40);                //表格行高
-        table.setPreferredScrollableViewportSize(new Dimension(850, 500));
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-        DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-        renderer.setOpaque(false);    //设置透明
-        String[] Names = {"学号", "宿舍", "床位", "卫生评分", "水费", "电费", "调换申请", "维修申请"};
-        for (int i = 0; i < 8; i++) {
-            //System.out.println(Names[i]);
-            //System.out.println(table.getColumn(Names[i]));
-            table.getColumn(Names[i]).setCellRenderer(renderer);//单格渲染
-            TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
-            column.setHeaderRenderer(renderer);//表头渲染
-        }
-        table.setOpaque(false);
-        table.getTableHeader().setOpaque(false);
-        table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
-        scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
-        scrollPane.setOpaque(false);
-        scrollPane.getViewport().setOpaque(false);
-        scrollPane.setColumnHeaderView(table.getTableHeader());
-        scrollPane.getColumnHeader().setOpaque(false);
-
+        transparent();
         add(scrollPane);
 
         //设置搜索文本框
         searchField = new JTextField();
-        searchField.setFont(new Font("微软雅黑", Font.PLAIN, 28));
+        searchField.setFont(new Font("华文行楷", Font.PLAIN, 28));
         searchField.setText("请输入学号");
         searchField.setColumns(20);
         searchField.setBounds(690, 150, 286, 50);
@@ -213,7 +199,7 @@ public class DormitoryAdminClient extends JFrame {
         //设置完成按钮
         JButton exitNewButton_1 = new JButton("完成");
         exitNewButton_1.setFont(new Font("微软雅黑", Font.PLAIN, 14));
-        exitNewButton_1.setBounds(104, 515, 120, 50);
+        exitNewButton_1.setBounds(991, 596, 120, 50);
         add(exitNewButton_1);
         exitNewButton_1.setOpaque(false);
 
@@ -233,46 +219,20 @@ public class DormitoryAdminClient extends JFrame {
         ArrayList<Dormitory> allDormitoryContents = (ArrayList<Dormitory>) rec.getData();
         Dorm = allDormitoryContents;
 
-        Object[] sigRow = new String[8];
+        Object[] sigRow = new String[6];
         for (int i = 0; i < allDormitoryContents.size(); i++) {
-            String[] arr = new String[8];
+            String[] arr = new String[6];
             arr[0] = allDormitoryContents.get(i).getuserID();
             arr[1] = allDormitoryContents.get(i).getDormitoryID();
             arr[2] = String.valueOf(allDormitoryContents.get(i).getStudentBunkID());
             arr[3] = String.valueOf(allDormitoryContents.get(i).getDormitoryScore());
             arr[4] = String.valueOf(allDormitoryContents.get(i).getWater());
             arr[5] = String.valueOf(allDormitoryContents.get(i).getElectricity());
-            arr[6] = allDormitoryContents.get(i).getStudentExchange();
-            arr[7] = allDormitoryContents.get(i).getDormitoryMaintain();
 
             model.addRow(arr);
             table.setModel(model);
         }
-
-        //透明化处理
-        table.setForeground(Color.BLACK);
-        table.setFont(new Font("微软雅黑", Font.PLAIN, 22));
-        table.setRowHeight(40);                //表格行高
-        table.setPreferredScrollableViewportSize(new Dimension(850, 500));
-        table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
-        renderer = new DefaultTableCellRenderer();
-        renderer.setOpaque(false);    //设置透明
-
-        for (int i = 0; i < 8; i++) {
-            //System.out.println(Names[i]);
-            //System.out.println(table.getColumn(Names[i]));
-            table.getColumn(Names[i]).setCellRenderer(renderer);//单格渲染
-            TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
-            column.setHeaderRenderer(renderer);//表头渲染
-        }
-        table.setOpaque(false);
-        table.getTableHeader().setOpaque(false);
-        table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
-        scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
-        scrollPane.setOpaque(false);
-        scrollPane.getViewport().setOpaque(false);
-        scrollPane.setColumnHeaderView(table.getTableHeader());
-        scrollPane.getColumnHeader().setOpaque(false);
+          transparent();
     }
 
     /**
@@ -322,7 +282,7 @@ public class DormitoryAdminClient extends JFrame {
     protected void SearchAct(ActionEvent e) {
         // TODO Auto-generated method stub
         Object[][] dorminformation = {};
-        Object[] dormlist = {"学号", "宿舍", "床位", "卫生评分", "水费", "电费", "调换申请", "维修申请"};
+        Object[] dormlist = {"学号", "宿舍", "床位", "卫生评分", "水费", "电费"};
         DefaultTableModel model;
         model = new DefaultTableModel(dorminformation, dormlist);
 
@@ -343,21 +303,20 @@ public class DormitoryAdminClient extends JFrame {
         Dorm = allDormitoryContents;
         System.out.println(allDormitoryContents);
         System.out.println(allDormitoryContents.size());
-        Object sigRow[] = new String[8];
+        Object sigRow[] = new String[6];
         for (int i = 0; i < allDormitoryContents.size(); i++) {
-            String[] arr = new String[8];
+            String[] arr = new String[6];
             arr[0] = allDormitoryContents.get(i).getuserID();
             arr[1] = allDormitoryContents.get(i).getDormitoryID();
             arr[2] = String.valueOf(allDormitoryContents.get(i).getStudentBunkID());
             arr[3] = String.valueOf(allDormitoryContents.get(i).getDormitoryScore());
             arr[4] = String.valueOf(allDormitoryContents.get(i).getWater());
             arr[5] = String.valueOf(allDormitoryContents.get(i).getElectricity());
-            arr[6] = allDormitoryContents.get(i).getStudentExchange();
-            arr[7] = allDormitoryContents.get(i).getDormitoryMaintain();
 
             model.addRow(arr);
             table.setModel(model);
         }
+        transparent();
     }
 
     /**
@@ -368,7 +327,7 @@ public class DormitoryAdminClient extends JFrame {
     public void updateFrame(Dormitory temp) {
         // TODO Auto-generated method stub
         Object[][] dorminformation = {};
-        Object[] dormlist = {"学号", "宿舍", "床位", "卫生评分", "水费", "电费", "调换申请", "维修申请"};
+        Object[] dormlist = {"学号", "宿舍", "床位", "卫生评分", "水费", "电费"};
         DefaultTableModel model;
         for (int i = 0; i < Dorm.size(); i++)
             if (Dorm.get(i).getuserID().equals(temp.getuserID())) {
@@ -378,21 +337,20 @@ public class DormitoryAdminClient extends JFrame {
         Dorm.add(temp);
         model = new DefaultTableModel(dorminformation, dormlist);
         System.out.println(Dorm);
-        Object[] sigRow = new String[8];
+        Object[] sigRow = new String[6];
         for (int i = 0; i < Dorm.size(); i++) {
-            String[] arr = new String[8];
+            String[] arr = new String[6];
             arr[0] = Dorm.get(i).getuserID();
             arr[1] = Dorm.get(i).getDormitoryID();
             arr[2] = String.valueOf(Dorm.get(i).getStudentBunkID());
             arr[3] = String.valueOf(Dorm.get(i).getDormitoryScore());
             arr[4] = String.valueOf(Dorm.get(i).getWater());
             arr[5] = String.valueOf(Dorm.get(i).getElectricity());
-            arr[6] = Dorm.get(i).getStudentExchange();
-            arr[7] = Dorm.get(i).getDormitoryMaintain();
 
             model.addRow(arr);
             table.setModel(model);
         }
+        transparent();
     }
 
     /**
@@ -413,27 +371,55 @@ public class DormitoryAdminClient extends JFrame {
             return;
         }
         Object[][] dorminformation = {};
-        Object[] dormlist = {"学号", "宿舍", "床位", "卫生评分", "水费", "电费", "调换申请", "维修申请"};
+        Object[] dormlist = {"学号", "宿舍", "床位", "卫生评分", "水费", "电费"};
         DefaultTableModel model;
         model = new DefaultTableModel(dorminformation, dormlist);
         System.out.println(Dorm);
-        Object sigRow[] = new String[8];
+        Object sigRow[] = new String[6];
         for (int i = 0; i < Dorm.size(); i++) {
-            String[] arr = new String[8];
+            String[] arr = new String[6];
             arr[0] = Dorm.get(i).getuserID();
             arr[1] = Dorm.get(i).getDormitoryID();
             arr[2] = String.valueOf(Dorm.get(i).getStudentBunkID());
             arr[3] = String.valueOf(Dorm.get(i).getDormitoryScore());
             arr[4] = String.valueOf(Dorm.get(i).getWater());
             arr[5] = String.valueOf(Dorm.get(i).getElectricity());
-            arr[6] = Dorm.get(i).getStudentExchange();
-            arr[7] = Dorm.get(i).getDormitoryMaintain();
 
             model.addRow(arr);
             table.setModel(model);
         }
+       transparent();
     }
 
+    public void transparent(){
+        //透明化处理
+        table.setForeground(Color.BLACK);
+        table.setFont(new Font("华文行楷", Font.PLAIN, 28));
+        //table.getTableHeader().setFont(new Font("微软雅黑", Font.PLAIN, 5));
+        table.setRowHeight(40);                //表格行高
+        table.setPreferredScrollableViewportSize(new Dimension(850, 500));
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+       // DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+        renderer.setOpaque(false);    //设置透明
+       // String[] Names = {"学号", "宿舍", "床位", "卫生评分", "水费", "电费", "调换申请", "维修申请"};
+        for (int i = 0; i < 6; i++) {
+            //System.out.println(Names[i]);
+            //System.out.println(table.getColumn(Names[i]));
+            table.getColumn(Names[i]).setCellRenderer(renderer);//单格渲染
+            TableColumn column = table.getTableHeader().getColumnModel().getColumn(i);
+            column.setHeaderRenderer(renderer);//表头渲染
+        }
+        table.setOpaque(false);
+        table.getTableHeader().setOpaque(false);
+        table.getTableHeader().setBorder(BorderFactory.createBevelBorder(0));
+        scrollPane.getVerticalScrollBar().setOpaque(false);//滚动条设置透明
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setColumnHeaderView(table.getTableHeader());
+        scrollPane.getColumnHeader().setOpaque(false);
+
+       // add(scrollPane);
+    }
     /**
      * 更新修改宿舍后列表
      *
@@ -460,12 +446,12 @@ public class DormitoryAdminClient extends JFrame {
                 if ("电费".equals(usertype)) {
                     Dorm.get(i).setElectricity(Integer.parseInt(temp));
                 }
-                if ("宿舍维修".equals(usertype)) {
-                    Dorm.get(i).setDormitoryMaintain(temp);
-                }
-                if ("宿舍调换".equals(usertype)) {
-                    Dorm.get(i).setStudentExchange(temp);
-                }
+//                if ("宿舍维修".equals(usertype)) {
+//                    Dorm.get(i).setDormitoryMaintain(temp);
+//                }
+//                if ("宿舍调换".equals(usertype)) {
+//                    Dorm.get(i).setStudentExchange(temp);
+//                }
             }
         if (!flag) {
             JOptionPane.showMessageDialog(null, "非法修改！", "提示", JOptionPane.WARNING_MESSAGE);
@@ -473,24 +459,23 @@ public class DormitoryAdminClient extends JFrame {
         }
         System.out.println(Dorm);
         Object[][] dorminformation = {};
-        Object[] dormlist = {"学号", "宿舍", "床位", "卫生评分", "水费", "电费", "调换申请", "维修申请"};
+        Object[] dormlist = {"学号", "宿舍", "床位", "卫生评分", "水费", "电费"};
         DefaultTableModel model;
         model = new DefaultTableModel(dorminformation, dormlist);
         System.out.println(Dorm);
-        Object sigRow[] = new String[8];
+        Object sigRow[] = new String[6];
         for (int i = 0; i < Dorm.size(); i++) {
-            String[] arr = new String[8];
+            String[] arr = new String[6];
             arr[0] = Dorm.get(i).getuserID();
             arr[1] = Dorm.get(i).getDormitoryID();
             arr[2] = String.valueOf(Dorm.get(i).getStudentBunkID());
             arr[3] = String.valueOf(Dorm.get(i).getDormitoryScore());
             arr[4] = String.valueOf(Dorm.get(i).getWater());
             arr[5] = String.valueOf(Dorm.get(i).getElectricity());
-            arr[6] = Dorm.get(i).getStudentExchange();
-            arr[7] = Dorm.get(i).getDormitoryMaintain();
 
             model.addRow(arr);
             table.setModel(model);
         }
+        transparent();
     }
 }

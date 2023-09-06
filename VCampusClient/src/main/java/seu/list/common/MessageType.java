@@ -3,7 +3,7 @@ package seu.list.common;
 /**
  * 类{@code MessageType}包含了所有的消息操作类型，供{@code DAO}类解析进行具体操作
  *
- * @author 柳多荣 吴慕陶 郭念宗 王映方 周楚翘 欧阳瑜 廖侃
+ *
  * @version 1.0
  */
 public final class MessageType {

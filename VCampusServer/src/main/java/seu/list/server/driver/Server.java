@@ -16,7 +16,7 @@ import java.net.SocketException;
  * 2. 服务器Socket: {@code serverSocket}, 类型: {@code Server} <br>
  * 3. 线程关闭标志: {@code isClosed}, 类型: {@code boolean} 
  * 
- * @author 吴慕陶
+ * 
  * @version 1.0
  * @see Thread
  */
@@ -27,7 +27,7 @@ public class Server extends Thread{
 	
 	/**
 	 * 类{@code Server}构造器, 用传入的端口建立{@code ServerSocket}
-	 * @author 吴慕陶
+	 * 
 	 * @version 1.0
 	 * @param port 服务器端口
 	 */
@@ -46,7 +46,7 @@ public class Server extends Thread{
 	 * 接入后为客户端分配id和线程，并加入服务器线程池 <br>
 	 * {@code while}退出即代表服务器即将关闭，会关闭{@code ServerSocket}并清空线程池
 	 * 
-	 * @author 吴慕陶
+	 * 
 	 * @version 1.0
 	 * @see ServerSocket#accept()
 	 */
@@ -80,7 +80,7 @@ public class Server extends Thread{
     /**
      * 服务器主线程的{@code close}方法，可被服务端主程序调用 <br>
      * 调用后将标志{@code isClosed}置为{@code true}, 使{@code run}方法中的{@code while}循环退出 <br>
-     * @author 吴慕陶
+     * 
      * @version 1.0 
      */
     public void close() {
@@ -96,7 +96,7 @@ public class Server extends Thread{
     /**
      * 获取当前服务端主线程的{@code ServerSocket}
      * @return serverSocket 服务端线程的{@code ServerSocket}
-     * @author 吴慕陶
+     * 
      * @version 1.0
      */
     public ServerSocket getServerSocket() {

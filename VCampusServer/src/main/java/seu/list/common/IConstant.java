@@ -2,7 +2,7 @@ package seu.list.common;
 
 /**
  * 包含服务器的端口和IP地址
- * @author 吴慕陶
+ * 
  * @version 1.0
  */
 public class IConstant {

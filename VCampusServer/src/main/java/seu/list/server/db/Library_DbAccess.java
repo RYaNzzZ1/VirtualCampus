@@ -5,7 +5,7 @@ import java.sql.*;
 /**
  * 连接数据库
  *
- * @author 王映方
+ * 
  * @version jdk1.8.0
  */
 

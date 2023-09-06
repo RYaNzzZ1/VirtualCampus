@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Vector;
 
 /**
- * @author 郭念宗
+ * 
  * @version jdk1.8.0
  */
 public class Course implements Serializable {

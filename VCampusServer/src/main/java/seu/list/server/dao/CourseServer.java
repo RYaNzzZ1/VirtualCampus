@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- * @author 郭念宗
+ * 
  * @version jdk1.8.0
  */
 public class CourseServer {

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author 郭念宗
+ * 
  * @version jdk1.8.0
  */
 public class DAOUtil {

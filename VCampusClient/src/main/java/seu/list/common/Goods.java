@@ -6,7 +6,7 @@ import java.io.Serializable;
 /**
  * 类{@code Goods}为商品类
  *
- * @author 欧阳瑜
+ * 
  * @version 1.0
  */
 public class Goods implements Serializable {

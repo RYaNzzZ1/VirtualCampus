@@ -1,5 +1,5 @@
 /**
- * @author 周楚翘
+ * 
  * @version jdk1.8.0
  */
 package seu.list.client.view;
@@ -87,7 +87,7 @@ public class Dormmodify extends JDialog {
 //		});
 
 		userIDField = new JTextField();
-		userIDField.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		userIDField.setFont(new Font("华文行楷", Font.PLAIN, 24));
 		userIDField.setColumns(20);
 		userIDField.setBounds(303,143,366,43);
 		add(userIDField);
@@ -95,7 +95,7 @@ public class Dormmodify extends JDialog {
 		userIDField.setBorder(new EmptyBorder(0,0,0,0));
 
 		modifyt.setModel(new DefaultComboBoxModel(new String[] {"宿舍", "卫生评分", "水费", "电费", "宿舍维修", "宿舍调换"}));
-		modifyt.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		modifyt.setFont(new Font("华文行楷", Font.PLAIN, 24));
 		modifyt.setBounds(303,225,366,43);
 		add(modifyt);
 		modifyt.setOpaque(false);
@@ -119,7 +119,7 @@ public class Dormmodify extends JDialog {
 //		lblNewLabel_3.setFont(new Font("微软雅黑", Font.PLAIN, 14));
 
 		modifyField_1 = new JTextField();
-		modifyField_1.setFont(new Font("微软雅黑", Font.PLAIN, 24));
+		modifyField_1.setFont(new Font("华文行楷", Font.PLAIN, 24));
 		modifyField_1.setColumns(20);
 		modifyField_1.setBounds(303,315,366,43);
 		add(modifyField_1);

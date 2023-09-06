@@ -1,7 +1,7 @@
 package seu.list.common;
 
 /**
- * @author 王映方
+ * 
  * @version jdk1.8.0
  */
 

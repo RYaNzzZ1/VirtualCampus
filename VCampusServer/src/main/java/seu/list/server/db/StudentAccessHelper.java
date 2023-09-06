@@ -2,7 +2,7 @@
  * Below is class description
  *
  * @version 1.0 8/12
- * @author Liu
+ * 
  * <p>
  * this is a connection class
  */

@@ -20,7 +20,7 @@ import java.net.SocketException;
  * 1. {@code clientSocket}, 类型: {@code Socket}, 客户端的{@code Socket} <br>
  * 2. {@code id}, 类型: {@code String}, 客户端线程ID <br>
  * 3. {@code isClosed}, 类型: {@code boolean}, 标志，用于退出{@code while}循环
- * @author 吴慕陶 柳多荣
+ * 
  * @version 1.0
  * @see Thread
  */
@@ -33,7 +33,7 @@ public class ServerSocketThread extends Thread {
 	 * 类{@code ServerSocketThread}的构造器，接收服务器主线程传入的参数，初始化{@code Socket}和线程ID
 	 * @param socket 该客户端线程对应的客户端{@code Socket}
 	 * @param id 该客户端线程的ID，由服务器主线程分配
-	 * @author 吴慕陶
+	 * 
 	 * @version 1.0
 	 */
 	public ServerSocketThread(Socket socket, String id) {
@@ -47,7 +47,7 @@ public class ServerSocketThread extends Thread {
 	 * 接收到客户端的请求后，将消息送入{@code processMes(Message)}方法进行处理 <br>
 	 * 处理完毕后将需要发回客户端的数据统一由{@code sendMesToClient(Message)}方法发送回客户端 <br>
 	 * 该线程运行结束将被从线程池中移除销毁
-	 * @author 吴慕陶 柳多荣
+	 * 
 	 * @version 1.0
 	 * @see Message
 	 * @see MessageType
@@ -105,7 +105,7 @@ public class ServerSocketThread extends Thread {
 	 * {@code DAO}类处理完毕会返回{@code MesToClient}, 该消息为服务器对客户端请求的响应
 	 * @param message 从客户端收到的消息
 	 * @return 处理完毕后送回客户端的消息
-	 * @author 吴慕陶
+	 * 
 	 * @version 1.0
 	 * @see Message
 	 * @see MessageType
@@ -167,7 +167,7 @@ public class ServerSocketThread extends Thread {
 	/**
 	 * 该方法将{@code DAO}类处理完毕后返回，需要发回客户端的消息统一发回
 	 * @param mes 发送回客户端的消息
-	 * @author 吴慕陶
+	 * 
 	 * @version 1.0
 	 */
 	public void sendMesToClient(Message mes) {
@@ -185,7 +185,7 @@ public class ServerSocketThread extends Thread {
 
 	/**
 	 * 该方法调用后将关闭客户端线程，会使客户端与服务器断开连接
-	 * @author 吴慕陶
+	 * 
 	 * @version 1.0
 	 */
 	public void close() {
@@ -201,7 +201,7 @@ public class ServerSocketThread extends Thread {
 	/**
 	 * 获取该客户端线程ID
 	 * @return 客户端线程ID
-	 * @author 吴慕陶
+	 * 
 	 * @version 1.0
 	 */
 	public String getCliThdID() {

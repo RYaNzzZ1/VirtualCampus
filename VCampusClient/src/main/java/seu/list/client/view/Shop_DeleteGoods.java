@@ -15,7 +15,7 @@ import java.awt.event.ActionListener;
 /**
  * 类{@code Goods_Addframe}为删除商品界面界面
  * 点击“删除”按钮后会进入到当前界面
- * @author 欧阳瑜
+ * 
  * @version 1.0
  */
 public class Shop_DeleteGoods {

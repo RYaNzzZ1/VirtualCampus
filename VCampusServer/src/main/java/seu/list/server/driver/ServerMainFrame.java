@@ -17,7 +17,7 @@ import java.util.Vector;
  * 5. {@code print all} 输出连接到服务器的所有客户端信息 <br>
  * 6. {@code exit} 退出服务端程序(同时会关闭正在运行的服务器线程)
  *
- * @author 吴慕陶
+ * 
  * @version 1.0
  */
 public class ServerMainFrame {
@@ -36,7 +36,7 @@ public class ServerMainFrame {
      * 主体为{@code while}循环，在命令行输出使用提示，等待用户输入指令
      *
      * @param args 系统命令行参数
-     * @author 吴慕陶
+     * 
      * @version 1.0
      */
     public static void main(String[] args) {
@@ -52,7 +52,7 @@ public class ServerMainFrame {
      * 重启服务器方法
      *
      * @return 如果成功重启返回1，若服务器没有运行导致无法重启返回0
-     * @author 柳多荣
+     * 
      * @version 1.0
      */
     public static int reboot() {
@@ -71,7 +71,7 @@ public class ServerMainFrame {
      * 开始运行服务器的方法
      *
      * @return 如果成功重启返回1，若服务器已经运行导致无法重启返回0
-     * @author 柳多荣
+     * 
      * @version 1.0
      */
 
@@ -92,7 +92,7 @@ public class ServerMainFrame {
      * 获取与服务器连接的客户端信息
      *
      * @return 如果成功重启返回1，若服务器没有运行导致无法重启返回0
-     * @author 柳多荣
+     * 
      * @version 1.0
      */
     public static Vector<String> getall() {
@@ -104,7 +104,7 @@ public class ServerMainFrame {
     /**
      * 退出服务端程序的方法
      *
-     * @author 柳多荣
+     * 
      * @version 1.0
      */
     public static void exitbtn() {
@@ -121,7 +121,7 @@ public class ServerMainFrame {
      * 关闭服务器方法
      *
      * @return 如果成功重启返回1，若服务器导致没有执行关闭服务器的操作则返回0
-     * @author 柳多荣
+     * 
      * @version 1.0
      */
     public static int closebtn() {
@@ -138,7 +138,7 @@ public class ServerMainFrame {
     /**
      * 打印服务端使用帮助
      *
-     * @author 吴慕陶
+     * 
      * @version 1.0
      */
 

@@ -39,7 +39,7 @@ public class ServerClientThreadMgr {
 
     public synchronized static void unbindbyid(String id) {
         for (String key : allocation.keySet()) {
-            if (allocation.get(key) == id) {
+            if (allocation.get(key).equals(id)) {
                 unbind(key);
                 User user = new User();
                 user.setId(key);
@@ -169,9 +169,8 @@ public class ServerClientThreadMgr {
         while (entries.hasNext()) {
             Map.Entry<String, ServerSocketThread> entry = entries.next();
             ServerSocketThread thd = entry.getValue();
-//			System.out.println("客户端线程ID: " + thd.getCliThdID() + ", ip地址: " + thd.getIP());
-            res.add(thd.getCliThdID().toString());
-            res.add(thd.getIP().toString());
+            res.add(thd.getCliThdID());
+            res.add(thd.getIP());
         }
         return res;
     }

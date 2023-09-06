@@ -80,7 +80,7 @@ public class UserServer {
                 User user = this.getUser(u);
                 if (user == null) {
                     user = this.addUser(u);
-                    mesToClient.setUserType(Integer.valueOf(u.getRole()));
+                    mesToClient.setUserType(Integer.parseInt(u.getRole()));
                 } else {
                     System.out.println("User" + u.getId() + "注册失败，已有此人");
                     mesToClient.setMessageType("FAILED");
@@ -194,7 +194,7 @@ public class UserServer {
         paras[6] = user.getPwd();
         paras[7] = user.getRole();
         paras[8] = user.getMoney();
-        if (paras[7] == "0")//学生
+        if (paras[7].equals("0"))//学生
             paras[9] = user.getId();
         else
             paras[9] = "";
@@ -203,7 +203,7 @@ public class UserServer {
     }
 
     public boolean delUser(String userID) {
-        if (this.searchUser(userID).getRole() == "1") {
+        if (this.searchUser(userID).getRole().equals("1")) {
             return false;
         } else {
             String sql = "delete from tb_User where uID = ?";
@@ -240,7 +240,7 @@ public class UserServer {
         paras[2] = content.get(6);
         List<User> users = new SqlHelper().sqlUserQuery(sql, paras);
 
-        if (users.get(0).getRole() == "0") {
+        if (users.get(0).getRole().equals("0")) {
             String sql1 = "select * from tb_Student where uID = ?";
             String[] paras1 = new String[1];
             paras1[0] = paras[0];

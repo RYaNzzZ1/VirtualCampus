@@ -1,5 +1,6 @@
 package seu.list.server.dao;
 
+import seu.list.common.Chat;
 import seu.list.common.Course;
 import seu.list.common.Student;
 import seu.list.common.User;
@@ -49,7 +50,27 @@ public class DAOUtil {
         }
         return objs;
     }
+    /**
+     * @param rs 从数据库获取的聊天结果
+     * @return 聊天记录列表
+     */
+    public static List<Chat> ChatResultSet2List(ResultSet rs) throws SQLException {
+        List<Chat> chats = new ArrayList<Chat>();
+        while (rs.next()) {    //String uID, String NickName, String ChatText, String ChatTime
 
+            Chat c = new Chat();
+            c.setUID(rs.getString(1));
+            c.setNickName(rs.getString(2));
+            c.setChatText(rs.getString(3));
+            c.setChatTime(rs.getString(4)) ;
+
+            for (int i = 1; i <= 4; i++) System.out.print(rs.getString(i) + "\t");
+            //System.out.print(rs.getString(6)+"\t");
+            System.out.println(c);
+            chats.add(c);
+        }
+        return chats;
+    }
     /**
      * @param rs 从数据库获取的用户信息结果
      * @return 用户信息列表

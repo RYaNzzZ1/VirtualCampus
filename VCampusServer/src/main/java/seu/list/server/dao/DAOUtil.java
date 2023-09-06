@@ -1,6 +1,7 @@
 package seu.list.server.dao;
 
 import seu.list.common.Course;
+import seu.list.common.Student;
 import seu.list.common.User;
 
 import java.sql.ResultSet;
@@ -70,5 +71,15 @@ public class DAOUtil {
             users.add(u);
         }
         return users;
+    }
+
+    public static List<Student> StudentCreditResultSetList(ResultSet rs) throws SQLException {
+        List<Student>sts = new ArrayList<>();
+        while (rs.next()){
+            Student s=new Student();
+            s.setStudentcredit(rs.getInt(10));
+            sts.add(s);
+        }
+        return sts;
     }
 }

@@ -2,22 +2,15 @@ package seu.list.server.dao;
 
 import com.sun.security.ntlm.NTLMException;
 import seu.list.client.driver.Client;
-import seu.list.common.Chat;
-import seu.list.common.Message;
-import seu.list.common.MessageType;
-import seu.list.common.ModuleType;
+import seu.list.common.*;
 import seu.list.server.db.Chat_DbAccess;
+import seu.list.server.db.SqlHelper;
 import seu.list.server.driver.ServerClientThreadMgr;
 import seu.list.server.driver.ServerSocketThread;
 
 
-
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Map;
+import java.sql.*;
+import java.util.*;
 
 public class ChatServer extends Chat_DbAccess {
     Connection con = null;
@@ -39,11 +32,34 @@ public class ChatServer extends Chat_DbAccess {
             case MessageType.ChatShow:
                 break;
             case MessageType.ChatSend:
-                Chat chat = (Chat)this.mesFromClient.getData();
+                Chat chat = (Chat) this.mesFromClient.getData();
                 this.mesToClient.setData(chatBroadcast(chat));
-
+            case MessageType.ChatHistory: {
+                System.out.println("serving CHAT_HISTORY");
+                System.out.println("grabbing.....");
+                Vector<String> sigChatContent = new Vector<String>();
+                Vector<String> allChatContent = new Vector<String>();
+                List<Chat> allChat = new LinkedList<Chat>();
+                allChat = this.getAllChat();
+                Iterator<Chat> iteAllChat = allChat.iterator();
+                while (iteAllChat.hasNext()) {
+                    sigChatContent = iteAllChat.next().getContent();
+                    for (int i = 0; i <= 3; i++) {
+                        allChatContent.add(sigChatContent.get(i));
+                    }
+                }
+                System.out.println(allChatContent);
+                this.mesToClient.setContent(allChatContent);
+                System.out.println("CHAT_HISTORY finished");
+                break;
+            }
         }
     }
+
+
+
+
+
 
     private Message[] chatBroadcast(Chat chat) throws SQLException {
         Map<String, ServerSocketThread> threadPool = ServerClientThreadMgr.getPool();
@@ -69,4 +85,11 @@ public class ChatServer extends Chat_DbAccess {
         uID.remove(excludeID);
         return uID;
     }
+
+    public List<Chat> getAllChat()
+    {
+        String sql = "select * from tb_Chat";
+        return new SqlHelper().sqlChatQuery(sql, new String[]{});
+    }
+
 }

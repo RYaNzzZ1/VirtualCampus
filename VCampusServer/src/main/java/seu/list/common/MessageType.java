@@ -78,5 +78,7 @@ public final class MessageType {
     //chat
     public static final String ChatSend="CHAT_SEND";
     public static final String ChatShow="CHAT_SHOW";
+    public static final String CRE_ANONYMOUS = "CRE_ANONYMOUS";
+    public static final String DES_ANONYMOUS = "DES_ANONYMOUS";
     public static final String ChatHistory="CHAT_HISTORY";
 }

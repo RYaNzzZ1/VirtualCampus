@@ -21,6 +21,7 @@ import java.net.SocketException;
 public class Server extends Thread {
     private Integer thdNum = 10000;
     private ServerSocket serverSocket;
+    private  Socket socket;
     private boolean isClosed = false;
 
     /**
@@ -54,7 +55,7 @@ public class Server extends Thread {
             System.out.println("服务器线程已启动，等待客户端连接..");
 
             while (!isClosed && !this.serverSocket.isClosed()) {
-                Socket socket = this.serverSocket.accept(); // 在此阻塞，等待客户端接入
+                socket = this.serverSocket.accept(); // 在此阻塞，等待客户端接入
                 System.out.println("Thread: " + this.thdNum.toString() + ", 已经建立");
 
                 ServerSocketThread thd = new ServerSocketThread(socket, this.thdNum.toString());
@@ -95,7 +96,4 @@ public class Server extends Thread {
      * @return serverSocket 服务端线程的{@code ServerSocket}
      * @version 1.0
      */
-    public ServerSocket getServerSocket() {
-        return this.serverSocket;
-    }
 }

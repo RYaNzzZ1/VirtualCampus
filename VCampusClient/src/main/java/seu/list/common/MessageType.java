@@ -78,6 +78,6 @@ public final class MessageType {
 
     //chat
     public static final String ChatSend="CHAT_SEND";
-    public static final String Chatshow="CHAT_SHOW";
+    public static final String ChatShow="CHAT_SHOW";
 
 }

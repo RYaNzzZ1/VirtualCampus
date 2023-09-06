@@ -25,6 +25,7 @@ import java.net.SocketException;
  * @see Thread
  */
 public class ServerSocketThread extends Thread {
+
     private Socket clientSocket = null;
     private String id = null;
     private boolean isClosed = false;
@@ -215,5 +216,9 @@ public class ServerSocketThread extends Thread {
      */
     public String getIP() {
         return this.clientSocket.getInetAddress().getHostAddress();
+    }
+
+    public Socket getClientSocket() {
+        return clientSocket;
     }
 }

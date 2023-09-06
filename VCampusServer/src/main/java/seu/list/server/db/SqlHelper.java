@@ -1,6 +1,7 @@
 //package VCampusServer.src.main.java.seu.list.server.db;
 package seu.list.server.db;
 
+import seu.list.common.Chat;
 import seu.list.common.Course;
 import seu.list.common.Student;
 import seu.list.common.User;
@@ -136,7 +137,39 @@ public class SqlHelper {
         }
         return courses;
     }
+    public List<Chat> sqlChatQuery(String sql, String[] paras) {
+        // TODO Auto-generated method stub
+        PreparedStatement ps = null;
+        Connection ct = null;
+        ResultSet rs = null;
+        List<Chat> chats = null;
+        try {
+            Class.forName(ACCESS_DRIVER);
+            ct = DriverManager.getConnection(url, user, passwd);
+            ps = ct.prepareStatement(sql);
+            for (int i = 0; i < paras.length; i++) {
+                ps.setString(i + 1, paras[i]);
+            }
+            rs = ps.executeQuery();
+            chats = DAOUtil.ChatResultSet2List(rs);
+            System.out.println(chats);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null)
+                    rs.close();
+                if (ps != null)
+                    ps.close();
+                if (ct != null)
+                    ct.close();
 
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return chats;
+    }
 
     public List<String> sqlRelationQuery(String sql, String[] paras) {
 

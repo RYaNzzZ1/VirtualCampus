@@ -79,9 +79,10 @@ public class MainMenu extends JFrame implements ActionListener {
 
 			while(studenttemp < StuAll.size()) {
 				String tempid = StuAll.get(studenttemp).getStudentid();
+				String tempsid = StuAll.get(studenttemp).getId();
 				uID.replaceAll("\\p{C}", "");
 				tempid.replaceAll("\\p{C}", "");
-				if(tempid.equals(uID)) {
+				if(tempid.equals(uID)||tempsid.equals(uID)) {
 					thisStu = StuAll.get(studenttemp);
 					break;
 				}

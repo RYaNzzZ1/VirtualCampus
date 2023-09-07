@@ -38,22 +38,12 @@ public class ChatServer extends Chat_DbAccess {
         String uid = mesFromClient.getUserId();
         switch (this.mesFromClient.getMessageType()) {
             case MessageType.CRE_ANONYMOUS:
-                Random random = new Random();
-                // 随机生成一个姓名，长度为 2 到 6 个字母
-                int nameLength = random.nextInt(5) + 2;
                 String ano;
-                StringBuilder name;
                 //匿名不重复
                 do {
-                    name = new StringBuilder();
-                    for (int j = 0; j < nameLength; j++) {
-                        char letter = ALPHABET.charAt(random.nextInt(ALPHABET.length()));
-                        name.append(letter);
-                    }
-                    ano = name.toString();
-                } while (ServerClientThreadMgr.contain(ano));
-
-                ServerClientThreadMgr.bindano(uid, ano);
+                    ano = NickName.generateName();
+                }while(ServerClientThreadMgr.contain(ano));
+                ServerClientThreadMgr.bindano(uid,ano);
                 mesToClient.setData(ano);
                 break;
             case MessageType.DES_ANONYMOUS: {

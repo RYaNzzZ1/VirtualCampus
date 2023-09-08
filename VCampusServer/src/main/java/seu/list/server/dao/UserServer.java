@@ -239,7 +239,8 @@ public class UserServer {
         paras[1] = content.get(0);
         paras[2] = content.get(6);
         List<User> users = new SqlHelper().sqlUserQuery(sql, paras);
-
+        if(users.isEmpty())
+            return null;
         if (users.get(0).getRole().equals("0")) {
             String sql1 = "select * from tb_Student where uID = ?";
             String[] paras1 = new String[1];
@@ -247,10 +248,10 @@ public class UserServer {
             List<Student> students = new SqlHelper().sqlStudentCreditQuery(sql1, paras1);
             users.get(0).setMoney(String.valueOf(students.get(0).getStudentcredit()));
         }
-        if (users != null && users.size() > 0) {
+        if (users != null && !users.isEmpty()) {
             return users.get(0);
-        } else
-            return null;
+        }
+        return null;
     }
     //public String getStudentId(String uid){}
 }

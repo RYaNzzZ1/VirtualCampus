@@ -2,12 +2,6 @@ package seu.list.server.db;
 
 import java.sql.*;
 
-/**
- * 连接数据库
- *
- * @version jdk1.8.0
- */
-
 public class Library_DbAccess {
     Connection conn = null;
     Statement stmt = null;

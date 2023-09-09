@@ -135,11 +135,4 @@ public class ClassStudentForInvest extends JFrame {
         CSC.setEnabled(true);
         this.dispose();
     }
-
-    void close2() {
-        CSC.setEnabled(true);
-        this.dispose();
-
-    }
-
 }

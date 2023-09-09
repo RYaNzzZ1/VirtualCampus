@@ -1,11 +1,3 @@
-/**
- * Below is class description
- *
- * @version 1.0 8/12
- *
- * <p>
- * this is a connection class
- */
 package seu.list.server.db;
 
 import seu.list.common.ClassManage;

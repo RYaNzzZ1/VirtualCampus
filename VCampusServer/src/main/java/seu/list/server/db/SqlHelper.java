@@ -1,4 +1,3 @@
-//package VCampusServer.src.main.java.seu.list.server.db;
 package seu.list.server.db;
 
 import seu.list.common.Chat;

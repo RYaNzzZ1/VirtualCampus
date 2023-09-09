@@ -237,6 +237,7 @@ public class DormitoryStudentClient extends JFrame {
 
     /**
      * 显示宿舍调换申请界面
+     *
      * @param e
      */
     protected void ExchangeAct(ActionEvent e) {
@@ -247,6 +248,7 @@ public class DormitoryStudentClient extends JFrame {
 
     /**
      * 显示宿舍维修申请界面
+     *
      * @param e
      */
     protected void MaintainAct(ActionEvent e) {
@@ -257,6 +259,7 @@ public class DormitoryStudentClient extends JFrame {
 
     /**
      * 更新宿舍调换后界面
+     *
      * @param para
      */
     public void updateFrameE(ArrayList<String> para) {
@@ -265,7 +268,7 @@ public class DormitoryStudentClient extends JFrame {
             JOptionPane.showMessageDialog(null, "非法修改！", "提示", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        dorm.setDormitoryMaintain(para.get(2));
+        dorm.setStudentExchange(para.get(2) + "-申请中");
         System.out.println(dorm);
         UserIDLabel.setText(dorm.getuserID());
         DormIDLabel.setText(dorm.getDormitoryID());
@@ -279,6 +282,7 @@ public class DormitoryStudentClient extends JFrame {
 
     /**
      * 更新维修申请后信息
+     *
      * @param para
      */
     public void updateFrameM(ArrayList<String> para) {
@@ -287,7 +291,7 @@ public class DormitoryStudentClient extends JFrame {
             JOptionPane.showMessageDialog(null, "非法修改！", "提示", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        dorm.setStudentExchange(para.get(2));
+        dorm.setDormitoryMaintain(para.get(2) + "-申请中");
         System.out.println(dorm);
         UserIDLabel.setText(dorm.getuserID());
         DormIDLabel.setText(dorm.getDormitoryID());

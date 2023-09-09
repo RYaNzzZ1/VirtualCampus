@@ -24,11 +24,6 @@
             <artifactId>ucanaccess</artifactId>
             <version>5.0.1</version>
         </dependency>
-        <dependency>
-            <groupId>seu.list</groupId>
-            <artifactId>VCampusClient</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
     <build>

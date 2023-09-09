@@ -1,19 +1,19 @@
 package seu.list.server.dao;
 
 
-import seu.list.client.driver.Client;
-import seu.list.common.*;
+import seu.list.common.Chat;
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.NickName;
 import seu.list.server.db.Chat_DbAccess;
 import seu.list.server.db.SqlHelper;
 import seu.list.server.driver.ServerClientThreadMgr;
-import seu.list.server.driver.ServerSocketThread;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class ChatServer extends Chat_DbAccess {
     Connection con = null;
@@ -56,7 +56,6 @@ public class ChatServer extends Chat_DbAccess {
             case MessageType.ChatSend:
                 Chat chat = (Chat) this.mesFromClient.getData();
                 this.sendChat(chat);
-                this.mesToClient.setData(this.chatBroadcast(chat));
                 break;
             case MessageType.ChatHistory:
                 ArrayList<Chat> historyChat = this.getAllChat();
@@ -73,21 +72,6 @@ public class ChatServer extends Chat_DbAccess {
         paras[2] = chat.getChatTime();
         paras[3] = chat.getUID();
         new SqlHelper().sqlUpdate(sql, paras);
-    }
-
-    private Message[] chatBroadcast(Chat chat) throws SQLException {
-        Map<String, ServerSocketThread> threadPool = ServerClientThreadMgr.getPool();
-        ArrayList<String> onlineID = getChatOnline(chat.getUID());
-        Message[] messageResponse = new Message[onlineID.size()];
-        for (int i = 0; i < onlineID.size(); i++) {
-            Message messageBroadcast = new Message();
-            messageBroadcast.setModuleType(ModuleType.Chat);
-            messageBroadcast.setMessageType(MessageType.ChatShow);
-            messageBroadcast.setData(chat);
-            Client client = new Client(threadPool.get(onlineID.get(i)).getClientSocket());
-            messageResponse[i] = client.sendRequestToServer(messageBroadcast);
-        }
-        return messageResponse;
     }
 
     private ArrayList<String> getChatOnline(String excludeID) throws SQLException {

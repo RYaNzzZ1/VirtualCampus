@@ -1,11 +1,7 @@
 package seu.list.common;
-//package seu.list.common;
 
 import java.util.Vector;
 
-/**
- * @version jdk1.8.0
- */
 public class User implements java.io.Serializable {
     private static final long serialVersionUID = 2342342342342342342L;//Ϊ����ServerThread�ܹ�д����
     private String id;//0

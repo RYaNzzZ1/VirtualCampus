@@ -11,11 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
-/**
- * @version jdk1.8.0
- */
 public class CourseServer {
-    // Modified by WU 8.16
+
     private Message mesFromClient;
     private Message mesToClient = new Message();
 
@@ -149,7 +146,6 @@ public class CourseServer {
         System.out.println("mesToClient的内容是" + this.mesToClient.getContent());
         return this.mesToClient;
     }
-    // Modified by WU 8.16
 
 
     public Course searchCourseByID(String courseID) {

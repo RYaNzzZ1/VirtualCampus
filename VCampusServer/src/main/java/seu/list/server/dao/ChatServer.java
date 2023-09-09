@@ -12,7 +12,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class ChatServer extends Chat_DbAccess {
     Connection con = null;
@@ -58,22 +59,6 @@ public class ChatServer extends Chat_DbAccess {
                 this.mesToClient.setData(this.chatBroadcast(chat));
                 break;
             case MessageType.ChatHistory:
-//                System.out.println("serving CHAT_HISTORY");
-//                System.out.println("grabbing.....");
-//                Vector<String> sigChatContent = new Vector<String>();
-//                Vector<String> allChatContent = new Vector<String>();
-//                List<Chat> allChat = new LinkedList<Chat>();
-//                allChat = this.getAllChat();
-//                Iterator<Chat> iteAllChat = allChat.iterator();
-//                while (iteAllChat.hasNext()) {
-//                    sigChatContent = iteAllChat.next().getContent();
-//                    for (int i = 0; i <= 3; i++) {
-//                        allChatContent.add(sigChatContent.get(i));
-//                    }
-//                }
-//                System.out.println(allChatContent);
-//                this.mesToClient.setContent(allChatContent);
-//                System.out.println("CHAT_HISTORY finished");
                 ArrayList<Chat> historyChat = this.getAllChat();
                 this.mesToClient.setData(historyChat);
                 break;

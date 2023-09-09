@@ -10,9 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @version jdk1.8.0
- */
 public class DAOUtil {
     /**
      * @param rs 从数据库获取的课程结果

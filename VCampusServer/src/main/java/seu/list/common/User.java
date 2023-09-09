@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-/**
- * @version jdk1.8.0
- */
 public class User implements java.io.Serializable {
     private static final long serialVersionUID = 2342342342342342342L;//为了让ServerThread能够写回它
     private String id;//0

@@ -108,29 +108,26 @@ public class Shop_StudentFrame {
         //表格显示商品信息
 
 
-        tableModel.addTableModelListener(new TableModelListener() {
-                                             @Override
-                                             public void tableChanged(TableModelEvent e) {
-                                                 int firstRow = e.getFirstRow();
-                                                 int lastRow = e.getLastRow();
-                                                 int column = e.getColumn();
-                                                 int type = e.getType();
-                                                 if (type == TableModelEvent.UPDATE) {
-                                                     sum = 0.0;
-                                                     if (column == 4) {
-                                                         for (int row = 0; row < table.getRowCount(); row++) {
-                                                             Object tempnumber = tableModel.getValueAt(row, 4);
-                                                             Object tempprice = tableModel.getValueAt(row, 2);
-                                                             double tem = Double.parseDouble((String) tempprice);
-                                                             int tem1 = Integer.parseInt((String) tempnumber);
-                                                             sum += tem * tem1;
+        tableModel.addTableModelListener(e -> {
+                    int firstRow = e.getFirstRow();
+                    int lastRow = e.getLastRow();
+                    int column = e.getColumn();
+                    int type = e.getType();
+                    if (type == TableModelEvent.UPDATE) {
+                        sum = 0.0;
+                        if (column == 4) {
+                            for (int row = 0; row < table.getRowCount(); row++) {
+                                Object tempnumber = tableModel.getValueAt(row, 4);
+                                Object tempprice = tableModel.getValueAt(row, 2);
+                                double tem = Double.parseDouble((String) tempprice);
+                                int tem1 = Integer.parseInt((String) tempnumber);
+                                sum += tem * tem1;
 
-                                                         }
-                                                         textField.setText(sum + "");
-                                                     } else return;
-                                                 }
-                                             }
-                                         }//表格增加监听，修改信息时需确认
+                            }
+                            textField.setText(sum + "");
+                        } else return;
+                    }
+                }//表格增加监听，修改信息时需确认
         );
 
         //透明化处理
@@ -198,11 +195,6 @@ public class Shop_StudentFrame {
 
         btnNewButton_2.setBounds(285, 156, 338 - 285, 199 - 157);
         frame.add(btnNewButton_2);
-
-
-        //重写关闭事件和窗口居中
-        //frame.setDefaultCloseOperation(2);
-        //frame.setLocationRelativeTo(null);
     }
 
     /**

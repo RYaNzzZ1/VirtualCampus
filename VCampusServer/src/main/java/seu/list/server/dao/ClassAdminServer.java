@@ -13,7 +13,6 @@ import java.util.Vector;
 public class ClassAdminServer extends StudentAccessHelper {
     Connection con = null;
 
-    // Modified by WU 8.16
     private Message mesFromClient; // 从客户端收到的数据
     private Message mesToClient;
 
@@ -21,7 +20,6 @@ public class ClassAdminServer extends StudentAccessHelper {
         this.mesFromClient = mesFromClient;
     }
 
-    @SuppressWarnings("unchecked")
     public void execute() {
         // 根据类型去执行不同的DAO层操作，不同模块的DAO类需要修改这个函数
         // 如果操作需要的参数，请在mesFromClient内取出
@@ -133,5 +131,5 @@ public class ClassAdminServer extends StudentAccessHelper {
     public Message getMesToClient() { // 无需修改，网络层需要调用这个函数
         return this.mesToClient;
     }
-    // Modified by WU 8.16
+
 }

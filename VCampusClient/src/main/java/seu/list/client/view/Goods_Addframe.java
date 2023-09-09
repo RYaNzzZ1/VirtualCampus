@@ -13,21 +13,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 public class Goods_Addframe {
 
     private JFrame frame;
     private JTextField IDtextField;
     private JTextField NametextField;
-
-    private JLabel lblNewLabel_4;
     private Shop_AdminFrame shop;
     private JTextField PicetextField;
     private JTextField NumbertextField;
-
-    /**
-     * Launch the application.
-     */
 
     public Goods_Addframe(Shop_AdminFrame a) {
         this.shop = a;
@@ -46,18 +39,6 @@ public class Goods_Addframe {
         frame.setResizable(false);
         frame.setLayout(null);
         frame.add(backgroundImageLabel);
-
-        //2.绘制退出按钮
-        //得到鼠标的坐标（用于推算对话框应该摆放的坐标）
-    /* backgroundImageLabel.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-				int x = e.getX();
-				int y = e.getY();
-				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
-			}
-        });
-*/
 
         //ID输入框
         IDtextField = new JTextField();

@@ -17,17 +17,10 @@ import java.util.ArrayList;
 public class LibraryManage3 extends JFrame {
 
     private final ButtonGroup buttonGroup = new ButtonGroup();
-    private JPanel contentPane, modifyPane, panel, addPane, deletePane;
-    private JTextField findText, oldIDText, modifiedText;
-    private JLayeredPane layerPane;
+
+    private JTextField oldIDText, modifiedText;
+
     private JRadioButton nameRadioButton, idRadioButton, authorRadioButton, pressRadioButton, stockRadioButton;
-    private JButton deleteButton, addButton;
-    private JLabel addNameLabel, addIDLabel, addAuthorLabel, addPressLabel, addStockLabel;
-    private JTextField addNameText, addIDText, addAuthorText, addPressText, addStockText;
-    private JButton addqrButton, addqxButton;
-    private JLabel delIDLabel;
-    private JTextField delIDText;
-    private JButton delqrButton, delqxButton;
     private JButton modqxButton;
     private LibraryManage t;
 

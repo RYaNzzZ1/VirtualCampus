@@ -24,7 +24,6 @@ public class DormApply extends JDialog {
     private static JTable table;
     private static JScrollPane scrollPane;
     private final JPanel contentPanel = new JPanel();
-    public ArrayList<Dormitory> allDormitoryContents;
     DormitoryAdminClient C;
     private JButton commitButton;
     private JButton divestButton;
@@ -32,7 +31,6 @@ public class DormApply extends JDialog {
     private JRadioButton exchangeButton;
     private JRadioButton maintainButton;
     private JPanel buttonPane;
-    private JTextField DeuserIDField;
     private JCheckBox[] jCheckBoxes;
     private int dormSize;
     private ArrayList<Dormitory> dormitoriesWithApply;

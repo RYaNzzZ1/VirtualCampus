@@ -1,6 +1,4 @@
-/**
- * @version jdk1.8.0
- */
+
 package seu.list.client.view;
 
 import seu.list.client.driver.Client;

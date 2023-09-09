@@ -1,6 +1,3 @@
-/**
- * @version jdk1.8.0
- */
 package seu.list.client.view;
 
 import seu.list.client.driver.Client;
@@ -32,21 +29,6 @@ public class Dormexchange extends JDialog {
     private JTextField exchangetextField_1;
 
     /**
-     * Launch the application.
-     */
-	/*
-	public static void main(String[] args) {
-		try {
-			Dormexchange dialog = new Dormexchange(socket);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-*/
-
-    /**
      * Create the dialog.
      */
     public Dormexchange(DormitoryStudentClient c, Socket socket) {
@@ -67,17 +49,6 @@ public class Dormexchange extends JDialog {
         setVisible(true);
 
         setResizable(false); //阻止用户拖拽改变窗口的大小
-
-        //2.绘制退出按钮
-        //得到鼠标的坐标（用于推算对话框应该摆放的坐标）
-//		backgroundImageLabel.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				int x = e.getX();
-//				int y = e.getY();
-//				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
-//			}
-//		});
 
         //设置输入框
         nametextField = new JTextField();
@@ -171,5 +142,4 @@ public class Dormexchange extends JDialog {
         C.updateFrameE(para);
         this.dispose();
     }
-
 }

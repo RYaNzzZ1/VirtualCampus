@@ -2,30 +2,27 @@ package seu.list.client.view;
 
 import seu.list.client.driver.Client;
 import seu.list.client.driver.ClientMainFrame;
-import seu.list.common.*;
+import seu.list.common.Chat;
+import seu.list.common.Message;
+import seu.list.common.MessageType;
+import seu.list.common.ModuleType;
 
 import javax.swing.*;
-import javax.swing.text.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
 import java.awt.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 
 public class HistoryRecord extends JFrame {
     JFrame frame;
     JTextPane textPane;
     JScrollPane scrollPane,s;
-    JTextArea input;
-    JLabel nickname;
     JButton back,send;
     private Chatroom t;
 
-    public static void main(String[] args) {
-
-        HistoryRecord d=new HistoryRecord(); //用于测试的主函数
-    }
     HistoryRecord()
     {
         //基础配置

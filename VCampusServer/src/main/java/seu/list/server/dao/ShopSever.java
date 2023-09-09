@@ -11,10 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-/**
- * 类{@code ShopSever}是商店和数据库进行连接的数据访问对象（data access object，DAO）
- */
-
 public class ShopSever extends Shop_DbAccess {
     Connection con = null;
     Statement s = null;

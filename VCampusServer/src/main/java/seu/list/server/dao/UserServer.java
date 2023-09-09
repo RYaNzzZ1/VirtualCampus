@@ -11,7 +11,6 @@ import seu.list.server.driver.ServerSocketThread;
 import java.util.List;
 import java.util.Vector;
 
-
 public class UserServer {
     private Message mesFromClient;
     private Message mesToClient = new Message();

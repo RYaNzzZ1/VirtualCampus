@@ -1,9 +1,5 @@
 package seu.list.common;
 
-/**
- * @version jdk1.8.0
- */
-
 public class Book implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 

@@ -1,6 +1,3 @@
-/**
- * @version jdk1.8.0
- */
 package seu.list.server.dao;
 
 import seu.list.common.Dormitory;

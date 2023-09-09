@@ -1,13 +1,8 @@
 package seu.list.common;
-//package seu.list.common;
-
 
 import java.io.Serializable;
 import java.util.Vector;
 
-/**
- * @version jdk1.8.0
- */
 public class Course implements Serializable {
     private static final long serialVersionUID = 6424750174292826127L;
     private String Semester;

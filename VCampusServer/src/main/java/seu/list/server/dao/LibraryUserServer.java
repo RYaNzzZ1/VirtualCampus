@@ -12,10 +12,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Objects;
 
-/**
- * @version jdk1.8.0
- */
-
 public class LibraryUserServer extends Library_DbAccess {
     Connection con = null;
     Statement s = null;

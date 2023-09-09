@@ -21,6 +21,7 @@ import java.util.ArrayList;
 public class Dormmodify extends JDialog {
 
     static DormitoryAdminClient C;
+    static Socket socket;
     private final JPanel contentPanel = new JPanel();
     public ArrayList<Dormitory> allDormitoryContents;
     //static Socket socket;
@@ -100,7 +101,7 @@ public class Dormmodify extends JDialog {
         modifyt.setOpaque(false);
         modifyt.setBorder(new EmptyBorder(0, 0, 0, 0));
         modifyt.setRenderer(new DefaultListCellRenderer() {
-             private static final long serialVersionUID = 6424750174292826127L;
+            private static final long serialVersionUID = 1L;
 
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected,
                                                           boolean cellHasFocus) {

@@ -25,6 +25,22 @@ public class DormitoryStudentClient extends JFrame {
     JLabel UserIDLabel, DormIDLabel, BunkIDLabel_1, ScoreLabel_2, WaterLabel_3, ElectricityLabel_4, ExchangeLabel_5, MaintainLabel_6;
     private JPanel contentPane;
     private ArrayList<Dormitory> Dorm = new ArrayList<Dormitory>();
+    /**
+     * Launch the application.
+     */
+	/*
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					DormitoryStudentClient frame = new DormitoryStudentClient(socket);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}*/
 
     /**
      * Create the frame.
@@ -37,6 +53,8 @@ public class DormitoryStudentClient extends JFrame {
         setLayout(null);
 
 //		//添加图标
+//		Image image=new ImageIcon("VCampusClient/src/main/resources/image/xiaobiao.jpg").getImage();
+//		setIconImage(image);
 
         // 创建带有背景图片的JLabel
         JLabel backgroundImageLabel = new JLabel(new ImageIcon("VCampusClient/Image/DormitoryStudentClient.PNG"));
@@ -51,6 +69,17 @@ public class DormitoryStudentClient extends JFrame {
 
 
         setResizable(false); //阻止用户拖拽改变窗口的大小
+
+        //2.绘制退出按钮
+        //得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+//     backgroundImageLabel.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                int x = e.getX();
+//                int y = e.getY();
+//                System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+//            }
+//        });
 
         //设置信息文本
         JLabel userIDLabel_1 = new JLabel("学号：");

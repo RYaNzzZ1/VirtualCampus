@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Vector;
 
 public class Shop_StudentForPay extends JFrame {
+
+
     private Shop_StudentFrame SSF = null;
     private Double Credit = 0.0;
     private JPasswordField pwd;

@@ -7,7 +7,7 @@ import java.util.Vector;
  * @version jdk1.8.0
  */
 public class User implements java.io.Serializable {
-    private static final long serialVersionUID = 6424750174292826127L;
+    private static final long serialVersionUID = 2342342342342342342L;//Ϊ����ServerThread�ܹ�д����
     private String id;//0
     private String name;//1
     private String age;//2
@@ -19,6 +19,10 @@ public class User implements java.io.Serializable {
     private String money;//8
     private String online;//9
     private Vector<String> userContents;
+
+    public void print() {
+        System.out.print(id + "\n" + name + "\n" + age + "\n" + sex + "\n" + major + "\n" + grade + "\n" + pwd + "\n" + role + "\n" + money + "\n" + "\n");
+    }
 
     public String getId() {
         return id;

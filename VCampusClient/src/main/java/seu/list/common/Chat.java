@@ -2,7 +2,7 @@ package seu.list.common;
 
 import java.util.Vector;
 
-public class Chat implements java.io.Serializable {
+public class Chat implements java.io.Serializable{
     private String uID;
     private String NickName;
     private String ChatText;

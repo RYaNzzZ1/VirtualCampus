@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Vector;
 
 public class ClassAdminForDelete extends JFrame {
+
+
     private JTable table;
     private JTextField searchdata;
     private JScrollPane scrollPane;

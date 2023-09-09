@@ -6,7 +6,8 @@ import java.util.Vector;
 
 
 public class Dormitory implements Serializable {
-     private static final long serialVersionUID = 6424750174292826127L;
+    private static final long serialVersionUID = 1L;
+
     private String userID;  //学生姓名
     private String DormitoryID;  //宿舍号
     private int StudentBunkID;  //床位

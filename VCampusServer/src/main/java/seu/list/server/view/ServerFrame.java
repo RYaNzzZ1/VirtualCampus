@@ -10,6 +10,11 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 public class ServerFrame extends JFrame {
+
+
+    public static JTextArea consoleText;
+    private JScrollPane scrollPane;
+
     public ServerFrame() {
         this.setTitle("虚拟校园系统-服务端");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -35,6 +40,19 @@ public class ServerFrame extends JFrame {
                 }
             }
         });
+
+        //功能按钮配置：
+        //得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+    /* backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int x = e.getX();
+                int y = e.getY();
+                System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+            }
+        });
+*/
+
 
         JButton btnNewButton_1 = new JButton("Launch");
         btnNewButton_1.setBounds(137, 139, 369 - 137, 227 - 139);

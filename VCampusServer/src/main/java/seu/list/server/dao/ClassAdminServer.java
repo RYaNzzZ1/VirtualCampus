@@ -12,6 +12,8 @@ import java.util.Vector;
 
 public class ClassAdminServer extends StudentAccessHelper {
     Connection con = null;
+
+    // Modified by WU 8.16
     private Message mesFromClient; // 从客户端收到的数据
     private Message mesToClient;
 
@@ -131,4 +133,5 @@ public class ClassAdminServer extends StudentAccessHelper {
     public Message getMesToClient() { // 无需修改，网络层需要调用这个函数
         return this.mesToClient;
     }
+    // Modified by WU 8.16
 }

@@ -11,8 +11,6 @@
     <modules>
         <module>VCampusClient</module>
         <module>VCampusServer</module>
-        <module>Communication</module>
-
     </modules>
 
     <properties>

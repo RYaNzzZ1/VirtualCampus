@@ -1,4 +1,0 @@
-seu.list.client.driver
-built for client's manage
-
-控制层，沟通view（UI层）和数据库，避免直接访问数据库

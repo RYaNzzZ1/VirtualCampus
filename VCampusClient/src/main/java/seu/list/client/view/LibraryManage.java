@@ -19,10 +19,22 @@ import java.util.ArrayList;
 
 public class LibraryManage extends JFrame {
 
+    private final ButtonGroup buttonGroup = new ButtonGroup();
     JTable table;
     JScrollPane scrollPane2;
-    private JTextField findText;
+    private JPanel contentPane, modifyPane, panel, addPane, deletePane;
+    private JTextField findText, oldIDText, modifiedText;
+    private JLayeredPane layerPane;
+    private JRadioButton nameRadioButton, idRadioButton, authorRadioButton, pressRadioButton, stockRadioButton;
     private JButton deleteButton, addButton;
+    private JLabel addNameLabel, addIDLabel, addAuthorLabel, addPressLabel, addStockLabel;
+    private JTextField addNameText, addIDText, addAuthorText, addPressText, addStockText;
+    private JButton addqrButton, addqxButton;
+    private JLabel delIDLabel;
+    private JTextField delIDText;
+    private JButton delqrButton, delqxButton;
+    private JButton modqxButton;
+
 
     /**
      * Create the frame.
@@ -315,6 +327,7 @@ public class LibraryManage extends JFrame {
         Object[][] tableDate = new Object[booklist.size()][6];
 
         for (int i = 0; i < booklist.size(); i++) {
+
             tableDate[i][0] = booklist.get(i).getName();
             tableDate[i][1] = booklist.get(i).getId();
             tableDate[i][2] = booklist.get(i).getAuthor();
@@ -324,6 +337,7 @@ public class LibraryManage extends JFrame {
                 tableDate[i][5] = "可借";
             else
                 tableDate[i][5] = "不可借";
+
         }
 
 
@@ -375,10 +389,26 @@ public class LibraryManage extends JFrame {
 
     }
 
+
     public boolean isNumeric(String str) {
         for (int i = str.length(); --i >= 0; ) {
             if (!Character.isDigit(str.charAt(i))) return false;
         }
         return true;
+    }
+
+
+    public class BackgroundPanel extends JPanel {
+        private static final long serialVersionUID = -6352788025440244338L;
+
+        private Image image = null;
+
+        public BackgroundPanel(Image image) {
+            this.image = image;
+        }
+
+        protected void paintComponent(Graphics g) {
+            g.drawImage(image, 0, 0, this.getWidth(), this.getHeight(), this);
+        }
     }
 }

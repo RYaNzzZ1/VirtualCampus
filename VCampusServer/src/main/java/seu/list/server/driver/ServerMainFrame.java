@@ -20,6 +20,7 @@ import java.util.Vector;
  * @version 1.0
  */
 public class ServerMainFrame {
+    public static final String ServerCmdHelp = "help";
     public static final String ServerCmdLaunch = "launch";
     public static final String ServerCmdClose = "close";
     public static final String ServerCmdReboot = "reboot";

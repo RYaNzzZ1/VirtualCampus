@@ -90,7 +90,9 @@ public class ServerSocketThread extends Thread {
             ServerClientThreadMgr.unbindanobyid(this.id);
             System.out.println("Socket closed");
             System.out.println("客户端线程: " + this.id + "已关闭");
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -114,7 +116,7 @@ public class ServerSocketThread extends Thread {
      * @see ModuleType
      * @see seu.list.server.dao
      */
-    public Message processMes(Message message) throws SQLException, IOException {
+    public Message processMes(Message message) throws SQLException {
         Message serverResponse = null;
         switch (message.getModuleType()) {
             case ModuleType.User: {// 用户管理模块

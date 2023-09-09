@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.Vector;
 
 public class ClientStuCourseFrame extends JFrame implements ActionListener {
-     private static final long serialVersionUID = 6424750174292826127L;
+    private static final long serialVersionUID = 1L;
     final int WIDTH = 1280;
     final int HEIGHT = 750;
     JFrame jframe = new JFrame();
@@ -59,6 +59,18 @@ public class ClientStuCourseFrame extends JFrame implements ActionListener {
         jframe.setSize(1280, 760);
         jframe.setResizable(false);
         jframe.setLayout(null);
+
+        //2.绘制退出按钮
+        //得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+     /*backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+			}
+        });
+*/
 
         jtf1 = new JTextField();
         jtf1.setBounds(670, 149, 991 - 670, 194 - 149 + 3);

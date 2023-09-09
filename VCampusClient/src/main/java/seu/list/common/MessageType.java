@@ -12,8 +12,6 @@ public final class MessageType {
     public static final String REQ_REGISTER = "REQ_REGISTER";
     public static final String REQ_USERDEL = "REQ_USERDEL";
     public static final String REQ_USERUPDATE = "REQ_USERUPDATE";
-    public static final String AddClientSocket="ADD_CLIENT_SOCKET";
-    public static final String RemoveClientSocket="REMOVE_CLIENT_SOCKET";
     //Message-Type
     public static final String operFeedback = "OPER_FEEDBACK";
 
@@ -81,11 +79,8 @@ public final class MessageType {
     //chat
     public static final String ChatSend="CHAT_SEND";
     public static final String ChatShow="CHAT_SHOW";
-    public static final String ChatLogin="CHAT_LOGIN";
-    public static final String ChatLogout="CHAT_LOGOUT";
     public static final String CRE_ANONYMOUS = "CRE_ANONYMOUS";
     public static final String DES_ANONYMOUS = "DES_ANONYMOUS";
     public static final String ChatHistory="CHAT_HISTORY";
-
 
 }

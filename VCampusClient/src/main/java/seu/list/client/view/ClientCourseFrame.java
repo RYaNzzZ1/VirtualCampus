@@ -20,6 +20,8 @@ import java.sql.SQLException;
 import java.util.Vector;
 
 public class ClientCourseFrame extends JFrame implements ActionListener {
+
+
     final int WIDTH = 1280;
     final int HEIGHT = 720;
     JFrame jFrame = new JFrame();
@@ -54,7 +56,17 @@ public class ClientCourseFrame extends JFrame implements ActionListener {
         jFrame.setSize(1280, 755);
         jFrame.setResizable(false);
         jFrame.setLayout(null);
-
+        //2.绘制退出按钮
+        //得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+    /* backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+			}
+        });
+*/
         //下拉拉列表
         String[] seOp = {"全部", "课程号"};
 
@@ -159,13 +171,17 @@ public class ClientCourseFrame extends JFrame implements ActionListener {
         jco_Search.setOpaque(false);
         jco_Delete.setOpaque(false);
         jco_Add.setOpaque(false);
-        exit.addActionListener(event -> jFrame.dispose());
+        exit.addActionListener(event ->
+        {
+            jFrame.dispose();
+        });
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         Client client = new Client(this.socket);
-        if (e.getActionCommand().equals("search")) {
+        if (e.getActionCommand() == "search") {
             if (jcb.getSelectedItem().equals("全部")) {
                 Message clientReq = new Message();
                 clientReq.setModuleType(ModuleType.Course);
@@ -298,11 +314,11 @@ public class ClientCourseFrame extends JFrame implements ActionListener {
 
             }
 
-        } else if (e.getActionCommand().equals("add")) {
+        } else if (e.getActionCommand() == "add") {
             CourseInfor courseInfor = new CourseInfor(userID, this.socket, this);
             jFrame.setVisible(false);
 
-        } else if (e.getActionCommand().equals("delete")) {
+        } else if (e.getActionCommand() == "delete") {
             //删除课程增加弹窗
             //绘制背景图片
             jFrame.setVisible(false);
@@ -316,6 +332,18 @@ public class ClientCourseFrame extends JFrame implements ActionListener {
             tem.setLayout(null);
             tem.setVisible(true);
 
+
+            //2.绘制退出按钮
+            //得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+   /*  backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+			}
+        });
+*/
             JTextField jtf = new JTextField();
             jtf.setText("请输入课程名称");
             jtf.setBounds(263, 134, 620 - 263, 186 - 141);
@@ -339,7 +367,8 @@ public class ClientCourseFrame extends JFrame implements ActionListener {
                 jFrame.setVisible(true);
                 tem.dispose();
             });
-            OK.addActionListener(event -> {
+            OK.addActionListener(event ->
+            {
                 Message clientReq = new Message();
                 clientReq.setModuleType(ModuleType.Course);
                 clientReq.setMessageType("REQ_REMOVE_LESSON");
@@ -412,6 +441,8 @@ public class ClientCourseFrame extends JFrame implements ActionListener {
                 tem.dispose();
 
             });
+
+
         }
     }
 }

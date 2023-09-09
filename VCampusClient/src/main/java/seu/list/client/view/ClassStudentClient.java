@@ -33,6 +33,8 @@ public class ClassStudentClient extends JFrame {
     private String ID;
     private Student thisStu = null;
     private String statusmy = null;
+    private JLabel lblNewLabel_1;
+    private JLabel userimage = null;
     private MainMenu Mainmenu = null;
 
     @SuppressWarnings("unchecked")

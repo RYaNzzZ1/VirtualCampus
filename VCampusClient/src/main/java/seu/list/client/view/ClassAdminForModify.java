@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Vector;
 
 public class ClassAdminForModify extends JFrame {
+
+    private JPanel contentPane;
     private JTable table;
     private JTextField searchdata;
     private DefaultTableModel model1;
@@ -48,6 +50,18 @@ public class ClassAdminForModify extends JFrame {
         backgroundImageLabel.setBounds(0, 0, 949, 534);
         setResizable(false);
         setLayout(null);
+
+        //2.绘制退出按钮
+        //得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+   /*  backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+				int x = e.getX();
+				int y = e.getY();
+				System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+			}
+        });
+*/
 
         Font f = new Font("华文行楷", Font.BOLD, 24);
         final JComboBox selectmode = new JComboBox();

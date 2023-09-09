@@ -4,15 +4,12 @@ import seu.list.client.driver.Client;
 import seu.list.client.driver.ClientMainFrame;
 import seu.list.common.*;
 
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.Socket;
-import java.util.Map;
-
 
 public class ClientLoginFrame extends JFrame implements ActionListener {
 
@@ -154,9 +151,8 @@ public class ClientLoginFrame extends JFrame implements ActionListener {
                 Message res = ccs.sendRequestToServer(mes);
                 int sign = res.getUserType();
                 u = (User) res.getData();
-                if (u == null)
-                    JOptionPane.showMessageDialog(null, "用户名或密码错误！", "错误", JOptionPane.ERROR_MESSAGE);
-                else if (sign == 0 || sign == 1 || sign == 30 || sign == 31) {
+
+                if (sign == 0 || sign == 1 || sign == 30 || sign == 31) {
                     if (sign >= 30) {//重复登录，之前的下线
                         sign -= 30;
                         JOptionPane.showMessageDialog(null, "重复登录，之前的连接已断开", "提示", JOptionPane.WARNING_MESSAGE);
@@ -166,8 +162,13 @@ public class ClientLoginFrame extends JFrame implements ActionListener {
                     csf.setVisible(true);
                 } else if (sign == 2) {
                     JOptionPane.showMessageDialog(null, "用户名或密码错误！", "错误", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "用户名或密码错误！", "错误", JOptionPane.ERROR_MESSAGE);
                 }
+
+
             }
         }
+
     }
 }

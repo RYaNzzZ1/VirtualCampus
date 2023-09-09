@@ -18,8 +18,10 @@ public class CourseServer {
     // Modified by WU 8.16
     private Message mesFromClient;
     private Message mesToClient = new Message();
+
     public CourseServer() {
     }
+
     public CourseServer(Message mesFromClient) {
         this.mesFromClient = mesFromClient;
     }

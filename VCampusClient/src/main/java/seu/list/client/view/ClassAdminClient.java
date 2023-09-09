@@ -29,6 +29,7 @@ public class ClassAdminClient extends JFrame {
     private Vector<ClassManage> Clss = null;
     private JScrollPane scrollPane;
     private Vector<Student> StuTemp = null;
+    private JLabel lblNewLabel_1;
     private MODEL nowmodel;
 
     ;
@@ -41,7 +42,7 @@ public class ClassAdminClient extends JFrame {
         setLayout(null);
         model = new DefaultTableModel(new Object[][]{}, new String[]{"班级", "教师", "学号", "姓名", "专业", "联系电话"}) {
 
-             private static final long serialVersionUID = 6424750174292826127L;
+            private static final long serialVersionUID = 1L;
 
             /*
              * overload the method to change the table's factor

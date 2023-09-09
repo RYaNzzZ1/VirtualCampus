@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 public class Dormexchange extends JDialog {
 
+    static Socket socket;
     private final JPanel contentPanel = new JPanel();
     public DormitoryStudentClient C;
     public Dormitory dorm;

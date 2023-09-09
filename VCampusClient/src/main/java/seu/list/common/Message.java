@@ -15,7 +15,7 @@ import java.util.Vector;
  * @see ModuleType
  */
 public class Message implements Serializable {
-     private static final long serialVersionUID = 6424750174292826127L;
+    private static final long serialVersionUID = 50000L;
 
     public Vector<String> Content = null;
     private Object data = null;

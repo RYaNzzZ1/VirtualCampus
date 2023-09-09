@@ -33,6 +33,8 @@ public class Dormadd extends JDialog {
     private JTextField AscoreField;
     private JTextField AwaterField;
     private JTextField AelectricityField;
+    private JTextField AexchangeField;
+    private JTextField AmaintainField;
     private Message mes = new Message();
     private Client client;
     private Dormitory temp;
@@ -61,6 +63,17 @@ public class Dormadd extends JDialog {
         setVisible(true);
 
         setResizable(false); //阻止用户拖拽改变窗口的大小
+
+        //2.绘制退出按钮
+        //得到鼠标的坐标（用于推算对话框应该摆放的坐标）
+//     backgroundImageLabel.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                int x = e.getX();
+//                int y = e.getY();
+//                System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+//            }
+//        });
 
         //设置输入文本框
         AuserIDField = new JTextField();
@@ -134,6 +147,7 @@ public class Dormadd extends JDialog {
                         AddAct(e);
                         setVisible(false);
                     }
+
                 });
             }
             {
@@ -185,5 +199,7 @@ public class Dormadd extends JDialog {
         c.setEnabled(true);
         c.updateFrame(temp);
         this.dispose();
+
     }
+
 }

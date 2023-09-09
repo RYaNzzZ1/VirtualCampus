@@ -21,7 +21,7 @@
      /**
       *
       */
-      private static final long serialVersionUID = 6424750174292826127L;
+     private static final long serialVersionUID = 1L;
      private String ClassID = null;
      private String Major = null;
      private String TeacherID = null;

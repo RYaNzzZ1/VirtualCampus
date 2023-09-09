@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClassStudentForInvest extends JFrame {
+
     private JTextField money;
     private ClassStudentClient CSC;
     private Double Credit = 0.0;

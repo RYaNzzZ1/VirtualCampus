@@ -4,22 +4,20 @@ import seu.list.client.driver.Client;
 import seu.list.client.driver.ClientMainFrame;
 import seu.list.common.*;
 
-
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
 public class MainMenu extends JFrame implements ActionListener {
-     private static final long serialVersionUID = 6424750174292826127L;
+    private static final long serialVersionUID = 1L;
+
     private final String cmdClass = "CMD_CLASS";
     private final String cmdLib = "CMD_LIB";
     private final String cmdCourse = "CMD_COURSE";
@@ -35,6 +33,8 @@ public class MainMenu extends JFrame implements ActionListener {
     private String money;
     private int userType;
     private Socket socket;
+    private JTextField timeField;
+
     private JLabel nameLabel;
 
     /**
@@ -58,6 +58,7 @@ public class MainMenu extends JFrame implements ActionListener {
         this.name = name;
         this.money = money;
         this.socket = socket;
+
 
         //学生端用户读取student列表进行name\money的设置
         if (this.userType == 0) {
@@ -92,6 +93,18 @@ public class MainMenu extends JFrame implements ActionListener {
         }
         //结束有关学生列表的操作
 
+		/*addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				int result = JOptionPane.showConfirmDialog(null, "是否退出？", "退出", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
+				if(result == JOptionPane.OK_OPTION) {
+					ClientMainFrame.close();
+				}
+			}
+		});*/
+
+
+
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         type = "";
 
@@ -118,6 +131,16 @@ public class MainMenu extends JFrame implements ActionListener {
 
 
         add(backgroundImageLabel);
+
+
+        /*backgroundImageLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int x = e.getX();
+                int y = e.getY();
+                System.out.println("鼠标点击位置：X=" + x + ", Y=" + y);
+            }
+        });*/
 
         //六大模块
         JButton classButton = new JButton("学籍管理");//学籍管理
@@ -176,7 +199,10 @@ public class MainMenu extends JFrame implements ActionListener {
         nameLabel = new JLabel("姓名：" + this.name); // 姓名
         nameLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
         nameLabel.setBounds(10, 158, 164, 39);
+
+
     }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -190,8 +216,16 @@ public class MainMenu extends JFrame implements ActionListener {
                     ClientTeacherFrame s = new ClientTeacherFrame(uID, socket);
                     //s.setVisible(true);
                 }
-            } else if (e.getActionCommand().equals(this.cmdChat)) { // 聊天室
+            }else if (e.getActionCommand().equals(this.cmdChat)) { // 聊天室
+                if (userType == 0) {
+                    //System.out.println("学生端聊天室");
                     Chatroom s = new Chatroom(uID, socket);
+
+                } else {
+                    //System.out.println("管理员端聊天室");
+                    Chatroom s = new Chatroom(uID, socket);
+
+                }
             } else if (e.getActionCommand().equals(this.cmdClass)) { // 学籍
                 if (userType == 0) {
                     ClassStudentClient classStu = new ClassStudentClient(this.uID, this.pwd, tempmenu);
@@ -230,6 +264,7 @@ public class MainMenu extends JFrame implements ActionListener {
                 int result = JOptionPane.showConfirmDialog(null, "是否退出？", "退出", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
                 if (result == JOptionPane.OK_OPTION) {
                     this.dispose();
+
                     Client ccs = new Client(this.socket);
                     User u = new User();
                     u.setId(this.uID);
@@ -242,7 +277,11 @@ public class MainMenu extends JFrame implements ActionListener {
                     ClientMainFrame.back();
                 }
             }
-        } catch (ClassNotFoundException | SQLException | IOException ex) {
+        } catch (ClassNotFoundException ex) {
+            throw new RuntimeException(ex);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
     }

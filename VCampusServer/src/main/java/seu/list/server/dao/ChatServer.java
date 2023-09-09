@@ -5,17 +5,21 @@ import seu.list.client.driver.Client;
 import seu.list.common.Chat;
 import seu.list.common.Message;
 import seu.list.common.MessageType;
-import seu.list.common.ModuleType;
+import seu.list.common.NickName;
 import seu.list.server.db.Chat_DbAccess;
 import seu.list.server.db.SqlHelper;
 import seu.list.server.driver.ServerClientThreadMgr;
 import seu.list.server.driver.ServerSocketThread;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class ChatServer extends Chat_DbAccess {
     Connection con = null;
@@ -32,18 +36,24 @@ public class ChatServer extends Chat_DbAccess {
         this.mesFromClient = mesFromClient;
     }
 
-    public void execute() throws SQLException {
+    public void execute() throws SQLException, IOException {
         con = getConnection();
         mesToClient = new Message();
         String uid = mesFromClient.getUserId();
         switch (this.mesFromClient.getMessageType()) {
+            case MessageType.ChatLogin:
+                setChatLogin(mesFromClient.getData().toString());
+                break;
+            case MessageType.ChatLogout:
+                setChatLogout(mesFromClient.getData().toString());
+                break;
             case MessageType.CRE_ANONYMOUS:
                 String ano;
                 //匿名不重复
                 do {
                     ano = NickName.generateName();
-                }while(ServerClientThreadMgr.contain(ano));
-                ServerClientThreadMgr.bindano(uid,ano);
+                } while (ServerClientThreadMgr.contain(ano));
+                ServerClientThreadMgr.bindano(uid, ano);
                 mesToClient.setData(ano);
                 break;
             case MessageType.DES_ANONYMOUS: {
@@ -58,25 +68,12 @@ public class ChatServer extends Chat_DbAccess {
             case MessageType.ChatSend:
                 Chat chat = (Chat) this.mesFromClient.getData();
                 this.sendChat(chat);
-                this.mesToClient.setData(this.chatBroadcast(chat));
+                System.out.println("send结束");
+                this.chatBroadcast(chat);
                 break;
             case MessageType.ChatHistory:
-                System.out.println("serving CHAT_HISTORY");
-                System.out.println("grabbing.....");
-                Vector<String> sigChatContent = new Vector<String>();
-                Vector<String> allChatContent = new Vector<String>();
-                List<Chat> allChat = new LinkedList<Chat>();
-                allChat = this.getAllChat();
-                Iterator<Chat> iteAllChat = allChat.iterator();
-                while (iteAllChat.hasNext()) {
-                    sigChatContent = iteAllChat.next().getContent();
-                    for (int i = 0; i <= 3; i++) {
-                        allChatContent.add(sigChatContent.get(i));
-                    }
-                }
-                System.out.println(allChatContent);
-                this.mesToClient.setContent(allChatContent);
-                System.out.println("CHAT_HISTORY finished");
+                ArrayList<Chat> historyChat = this.getAllChat();
+                this.mesToClient.setData(historyChat);
                 break;
         }
     }
@@ -91,23 +88,33 @@ public class ChatServer extends Chat_DbAccess {
         new SqlHelper().sqlUpdate(sql, paras);
     }
 
-    private Message[] chatBroadcast(Chat chat) throws SQLException {
-        Map<String, ServerSocketThread> threadPool = ServerClientThreadMgr.getPool();
+    private void chatBroadcast(Chat chat) throws SQLException, IOException {
+        Map<String, Socket> clientSocketPool = ServerClientThreadMgr.getUIDSocketPool();
+        System.out.println("aa");
+        for (Map.Entry<String, Socket> entry : clientSocketPool.entrySet()) {
+            System.out.println("键:"+entry.getKey()+" 值："+entry.getValue());
+        }
+        System.out.println("bb");
         ArrayList<String> onlineID = getChatOnline(chat.getUID());
         Message[] messageResponse = new Message[onlineID.size()];
-        for (int i = 0; i < onlineID.size(); i++) {
-            Message messageBroadcast = new Message();
-            messageBroadcast.setModuleType(ModuleType.Chat);
-            messageBroadcast.setMessageType(MessageType.ChatShow);
-            messageBroadcast.setData(chat);
-            Client client = new Client(threadPool.get(onlineID.get(i)).getClientSocket());
-            messageResponse[i] = client.sendRequestToServer(messageBroadcast);
+        if (onlineID.size() > 0) {
+            for (int i = 0; i < onlineID.size(); i++) {
+                Message messageBroadcast = new Message();
+                messageBroadcast.setData(chat);
+                //messageBroadcast.setMessageType(MessageType.operFeedback);
+                //messageBroadcast.setLastOperState(true);
+                Socket serverToClientSocket = clientSocketPool.get(onlineID.get(i));
+                ObjectOutputStream response = new ObjectOutputStream(serverToClientSocket.getOutputStream());
+                response.writeObject(messageBroadcast); // 这里统一发回数据给客户端
+                response.flush();
+                System.out.println("其他聊天室的socket：" + clientSocketPool.get(onlineID.get(i)));
+            }
         }
-        return messageResponse;
     }
 
     private ArrayList<String> getChatOnline(String excludeID) throws SQLException {
-        rs = s.executeQuery("select uID from tb_User where ChatStatus=" + "'1'");
+        s = con.createStatement();
+        rs = s.executeQuery("select uID from tb_User where uChatStatus=" + "'1'");
         ArrayList<String> uID = new ArrayList<>();
         while (rs.next()) {
             uID.add(rs.getString(1));
@@ -120,4 +127,19 @@ public class ChatServer extends Chat_DbAccess {
         String sql = "select * from tb_Chat";
         return (ArrayList<Chat>) new SqlHelper().sqlChatQuery(sql, new String[]{});
     }
+
+    public void setChatLogin(String uID) throws SQLException {
+        s = con.createStatement();
+        s.executeUpdate("update tb_User set uChatStatus=" + "'1'" + "where uID='" + uID + "'");
+    }
+
+    public void setChatLogout(String uID) throws SQLException {
+        s = con.createStatement();
+        s.executeUpdate("update tb_User set uChatStatus=" + "'0'" + "where uID='" + uID + "'");
+    }
+
+    public Message getMesToClient() {
+        return this.mesToClient;
+    }
 }
+

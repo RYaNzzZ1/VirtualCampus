@@ -3,7 +3,7 @@ package seu.list.common;
 import java.io.Serializable;
 
 public class Student implements Serializable {
-    private static final long serialVersionUID = 1L;
+     private static final long serialVersionUID = 6424750174292826127L;
     private String studentid = null;
     private String id = null;
     private String studentName = null;

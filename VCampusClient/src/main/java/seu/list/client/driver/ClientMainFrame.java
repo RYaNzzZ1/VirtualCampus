@@ -33,7 +33,7 @@ public class ClientMainFrame {
         // TODO Auto-generated method stub
         try {
             socket = new Socket(IConstant.SERVER_ADDRESS, IConstant.SERVER_PORT);
-
+            System.out.println("ClientMainFrame socket:"+socket);
             // 启动登录窗口
             c = new ClientLoginFrame(socket);
 

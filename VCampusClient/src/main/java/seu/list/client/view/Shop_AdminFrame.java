@@ -306,12 +306,12 @@ public class Shop_AdminFrame {
                     return columnEditables[column];
                 }
             };
-            for (int i = 0; i < res.size(); i++) {
+            for (Goods re : res) {
                 String[] tempgoods = new String[4];
-                tempgoods[0] = res.get(i).getGoodsid() + "";
-                tempgoods[1] = res.get(i).getGoodsname();
-                tempgoods[2] = res.get(i).getGoodsprice() + "";
-                tempgoods[3] = res.get(i).getGoodsnumber() + "";
+                tempgoods[0] = re.getGoodsid() + "";
+                tempgoods[1] = re.getGoodsname();
+                tempgoods[2] = re.getGoodsprice() + "";
+                tempgoods[3] = re.getGoodsnumber() + "";
                 tablemodel.addRow(tempgoods);
             }
             getTable().setModel(tablemodel);
@@ -409,12 +409,12 @@ public class Shop_AdminFrame {
                 return columnEditables[column];
             }
         };
-        for (int i = 0; i < GoodsList.size(); i++) {
-            String tempgoods[] = new String[4];
-            tempgoods[0] = GoodsList.get(i).getGoodsid() + "";
-            tempgoods[1] = GoodsList.get(i).getGoodsname();
-            tempgoods[2] = GoodsList.get(i).getGoodsprice() + "";
-            tempgoods[3] = GoodsList.get(i).getGoodsnumber() + "";
+        for (Goods goods : GoodsList) {
+            String[] tempgoods = new String[4];
+            tempgoods[0] = goods.getGoodsid() + "";
+            tempgoods[1] = goods.getGoodsname();
+            tempgoods[2] = goods.getGoodsprice() + "";
+            tempgoods[3] = goods.getGoodsnumber() + "";
             tablemodel.addRow(tempgoods);
         }
         getTable().setModel(tablemodel);
@@ -490,28 +490,22 @@ public class Shop_AdminFrame {
         public boolean stopCellEditing() {
             // 获取当前单元格的编辑器组件
             Component comp = getComponent();
-
             // 获取当前单元格编辑器输入的值
             Object obj = getCellEditorValue();
-
             // 如果当前单元格编辑器输入的值不是数字，则返回 false（表示数据非法，不允许设置，无法保存）
             if (obj == null || !obj.toString().matches("[0-9]*")) {
                 // 数据非法时，设置编辑器组件内的内容颜色为红色
                 comp.setForeground(Color.RED);
                 return false;
             }
-
             // 数据合法时，设置编辑器组件内的内容颜色为黑色
             comp.setForeground(Color.BLACK);
-
             // 合法数据交给父类处理
             return super.stopCellEditing();
         }
     }
 
-
     public static class MyCellEditor_double extends DefaultCellEditor {
-
         public MyCellEditor_double(JTextField textField) {
             super(textField);
         }
@@ -538,5 +532,4 @@ public class Shop_AdminFrame {
             return super.stopCellEditing();
         }
     }
-
 }

@@ -4,12 +4,15 @@ import seu.list.client.driver.Client;
 import seu.list.client.driver.ClientMainFrame;
 import seu.list.common.*;
 
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.Socket;
+import java.util.Map;
+
 
 public class ClientLoginFrame extends JFrame implements ActionListener {
 
@@ -151,7 +154,7 @@ public class ClientLoginFrame extends JFrame implements ActionListener {
                 Message res = ccs.sendRequestToServer(mes);
                 int sign = res.getUserType();
                 u = (User) res.getData();
-                if(u == null)
+                if (u == null)
                     JOptionPane.showMessageDialog(null, "用户名或密码错误！", "错误", JOptionPane.ERROR_MESSAGE);
                 else if (sign == 0 || sign == 1 || sign == 30 || sign == 31) {
                     if (sign >= 30) {//重复登录，之前的下线
@@ -161,13 +164,10 @@ public class ClientLoginFrame extends JFrame implements ActionListener {
                     this.setVisible(false);
                     MainMenu csf = new MainMenu(sign, u.getId(), u.getPwd(), u.getName(), u.getMoney(), this.socket);
                     csf.setVisible(true);
-                } else if(sign == 2){
+                } else if (sign == 2) {
                     JOptionPane.showMessageDialog(null, "用户名或密码错误！", "错误", JOptionPane.ERROR_MESSAGE);
                 }
-
-
             }
         }
-
     }
 }

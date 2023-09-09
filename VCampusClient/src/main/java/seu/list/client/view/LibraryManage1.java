@@ -17,20 +17,8 @@ import java.util.ArrayList;
 
 public class LibraryManage1 extends JFrame {
 
-    private final ButtonGroup buttonGroup = new ButtonGroup();
-    private JPanel contentPane, modifyPane, panel, addPane, deletePane;
-    private JTextField findText, oldIDText, modifiedText;
-    private JLayeredPane layerPane;
-    private JRadioButton nameRadioButton, idRadioButton, authorRadioButton, pressRadioButton, stockRadioButton;
-
-    private JButton deleteButton, addButton;
-    private JLabel addNameLabel, addIDLabel, addAuthorLabel, addPressLabel, addStockLabel;
     private JTextField addNameText, addIDText, addAuthorText, addPressText, addStockText;
     private JButton addqrButton, addqxButton;
-    private JLabel delIDLabel;
-    private JTextField delIDText;
-    private JButton delqrButton, delqxButton;
-    private JButton modqxButton;
     private LibraryManage t;
 
     public LibraryManage1(LibraryManage tem) {
@@ -46,7 +34,7 @@ public class LibraryManage1 extends JFrame {
 
         //设置背景图片
         //把图片添加到标签里（把标签的大小设为和图片大小相同），把标签放在分层面板的最底层；
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLayout(null); // 使用绝对定位
         // 创建带有背景图片的JLabel
         ImageIcon image = new ImageIcon("VCampusClient/image/LibraryManage1.png");

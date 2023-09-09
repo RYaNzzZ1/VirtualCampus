@@ -12,7 +12,7 @@ import java.util.Vector;
  * @version jdk1.8.0
  */
 public class User implements java.io.Serializable {
-    private static final long serialVersionUID = 2342342342342342342L;//为了让ServerThread能够写回它
+    private static final long serialVersionUID = 6424750174292826127L;//为了让ServerThread能够写回它
     private String id;//0
     private String name;//1
     private String age;//2

@@ -18,18 +18,11 @@
  import java.io.Serializable;
 
  public class ClassManage implements Serializable {
-     /**
-      *
-      */
-     private static final long serialVersionUID = 1L;
+      private static final long serialVersionUID = 6424750174292826127L;
      private String ClassID = null;
      private String Major = null;
      private String TeacherID = null;
      private int ClassSize = 0;//exist students' number
-
-     public ClassManage() {
-         super();
-     }
 
      public ClassManage(String classid, String teacherID, String major, int classsize) {
          ClassID = classid;
@@ -50,24 +43,12 @@
          return Major;
      }
 
-     public void setMajor(String major) {
-         Major = major;
-     }
-
      public String getTeacherID() {
          return TeacherID;
      }
 
-     public void setTeacherID(String teacherID) {
-         TeacherID = teacherID;
-     }
-
      public int getClassSize() {
          return ClassSize;
-     }
-
-     public void setClassSize(int classSize) {
-         ClassSize = classSize;
      }
 
      @Override

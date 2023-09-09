@@ -62,7 +62,7 @@ public class LibraryStu extends JFrame {
 
         //设置背景图片
         //把图片添加到标签里（把标签的大小设为和图片大小相同），把标签放在分层面板的最底层；
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setLayout(null); // 使用绝对定位
         // 创建带有背景图片的JLabel
         ImageIcon image = new ImageIcon("VCampusClient/Image/LibraryStu.png");

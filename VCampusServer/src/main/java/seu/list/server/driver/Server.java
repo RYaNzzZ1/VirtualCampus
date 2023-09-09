@@ -56,8 +56,9 @@ public class Server extends Thread {
 
             while (!isClosed && !this.serverSocket.isClosed()) {
                 socket = this.serverSocket.accept(); // 在此阻塞，等待客户端接入
-                System.out.println("Thread: " + this.thdNum.toString() + ", 已经建立");
 
+                System.out.println("server accept socket:"+socket);
+                System.out.println("Thread: " + this.thdNum.toString() + ", 已经建立");
                 ServerSocketThread thd = new ServerSocketThread(socket, this.thdNum.toString());
                 thd.start(); // 启动客户端子线程
                 ServerClientThreadMgr.add(this.thdNum.toString(), thd); // 加入线程池

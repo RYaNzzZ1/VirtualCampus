@@ -120,7 +120,6 @@ public class DormApply extends JDialog {
                         // TODO Auto-generated method stub
                         setVisible(false);
                     }
-
                 });
             }
         }
@@ -136,8 +135,6 @@ public class DormApply extends JDialog {
         dormitoriesWithApply = (ArrayList<Dormitory>) serverResponse.getData();
         dormSize = dormitoriesWithApply.size();
         jCheckBoxes = new JCheckBox[dormSize];
-
-        JPanel panel = new JPanel();
 
         for (int i = 0; i < dormSize; i++) {
             System.out.println("bbbbb");
@@ -166,7 +163,7 @@ public class DormApply extends JDialog {
                         "学号", "宿舍号", "调换申请", "维修申请"
                 }
         ) {
-            boolean[] columnEditables = new boolean[]{false, false, false, false};
+            final boolean[] columnEditables = new boolean[]{false, false, false, false};
 
             public boolean isCellEditable(int row, int column) {
                 return columnEditables[column];

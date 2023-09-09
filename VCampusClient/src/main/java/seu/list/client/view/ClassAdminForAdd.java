@@ -19,7 +19,6 @@ import java.util.Vector;
 
 public class ClassAdminForAdd extends JFrame {
 
-    private JPanel contentPane;
     private JTable table;
     private DefaultTableModel model1;
     private DefaultTableModel model2;

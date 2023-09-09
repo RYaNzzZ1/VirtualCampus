@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.SocketException;
+import java.sql.SQLException;
 
 /**
  * 类{@code ServerSocketThread}为服务器客户端线程类，用于处理与客户端的通信 <br>
@@ -89,10 +90,10 @@ public class ServerSocketThread extends Thread {
             ServerClientThreadMgr.unbindanobyid(this.id);
             System.out.println("Socket closed");
             System.out.println("客户端线程: " + this.id + "已关闭");
-        } catch (IOException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         } finally {
             if (ServerClientThreadMgr.get(this.id) != null) {
                 ServerClientThreadMgr.remove(this.id);
@@ -113,7 +114,7 @@ public class ServerSocketThread extends Thread {
      * @see ModuleType
      * @see seu.list.server.dao
      */
-    public Message processMes(Message message) {
+    public Message processMes(Message message) throws SQLException, IOException {
         Message serverResponse = null;
         switch (message.getModuleType()) {
             case ModuleType.User: {// 用户管理模块
@@ -157,6 +158,12 @@ public class ServerSocketThread extends Thread {
                 dormitoryServer.execute();
                 serverResponse = dormitoryServer.getMesToClient();
                 System.out.println(serverResponse.getData());
+                break;
+            }
+            case ModuleType.Chat:{
+                ChatServer chatserver = new ChatServer(message);
+                chatserver.execute();
+                serverResponse = chatserver.getMesToClient();
                 break;
             }
             default:

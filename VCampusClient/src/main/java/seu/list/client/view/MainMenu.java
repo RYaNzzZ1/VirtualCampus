@@ -4,6 +4,7 @@ import seu.list.client.driver.Client;
 import seu.list.client.driver.ClientMainFrame;
 import seu.list.common.*;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,16 +15,17 @@ import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 public class MainMenu extends JFrame implements ActionListener {
-    private static final long serialVersionUID = 1L;
-
+     private static final long serialVersionUID = 6424750174292826127L;
     private final String cmdClass = "CMD_CLASS";
     private final String cmdLib = "CMD_LIB";
     private final String cmdCourse = "CMD_COURSE";
     private final String cmdDorm = "CMD_DORM";
     private final String cmdShop = "CMD_SHOP";
+    private final String cmdChat = "CMD_Chat";
     private final String cmdClose = "CMD_CLOSE";
     String type;
     JLabel l1, l2;
@@ -33,8 +35,6 @@ public class MainMenu extends JFrame implements ActionListener {
     private String money;
     private int userType;
     private Socket socket;
-    private JTextField timeField;
-
     private JLabel nameLabel;
 
     /**
@@ -58,7 +58,6 @@ public class MainMenu extends JFrame implements ActionListener {
         this.name = name;
         this.money = money;
         this.socket = socket;
-
 
         //学生端用户读取student列表进行name\money的设置
         if (this.userType == 0) {
@@ -93,15 +92,6 @@ public class MainMenu extends JFrame implements ActionListener {
         }
         //结束有关学生列表的操作
 
-		/*addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				int result = JOptionPane.showConfirmDialog(null, "是否退出？", "退出", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
-				if(result == JOptionPane.OK_OPTION) {
-					ClientMainFrame.close();
-				}
-			}
-		});*/
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         type = "";
 
@@ -128,23 +118,24 @@ public class MainMenu extends JFrame implements ActionListener {
 
 
         add(backgroundImageLabel);
-        //五大模块
+
+        //六大模块
         JButton classButton = new JButton("学籍管理");//学籍管理
-        classButton.setBounds(79, 441, 419 - 79, 533 - 441);
+        classButton.setBounds(31, 430, 352 - 31, 512 - 430);
         add(classButton);
         classButton.setOpaque(false);
         classButton.addActionListener(this);
         classButton.setActionCommand(this.cmdClass);
 
         JButton libraryButton = new JButton("图书馆");//图书馆
-        libraryButton.setBounds(152, 292, 447 - 152, 381 - 292);
+        libraryButton.setBounds(164, 268, 427 - 164, 353 - 268);
         libraryButton.setOpaque(false);
         add(libraryButton);
         libraryButton.addActionListener(this);
         libraryButton.setActionCommand(this.cmdLib);
 
         JButton courseButton = new JButton("选课");//选课
-        courseButton.setBounds(515, 273, 750 - 515, 357 - 273);
+        courseButton.setBounds(473, 295, 693 - 473, 377 - 295);
         courseButton.setOpaque(false);
         add(courseButton);
         courseButton.addActionListener(this);
@@ -152,17 +143,26 @@ public class MainMenu extends JFrame implements ActionListener {
 
         JButton dormButton = new JButton("宿舍");//宿舍
         dormButton.setOpaque(false);
-        dormButton.setBounds(567, 424, 813 - 567, 510 - 424);
+        dormButton.setBounds(554, 429, 771 - 554, 514 - 429);
         add(dormButton);
         dormButton.addActionListener(this);
         dormButton.setActionCommand(this.cmdDorm);
 
         JButton shopButton = new JButton("商店");//商店
-        shopButton.setBounds(281, 577, 509 - 281, 663 - 577);
+        shopButton.setBounds(409, 555, 627 - 409, 637 - 555);
         shopButton.setOpaque(false);
         add(shopButton);
         shopButton.addActionListener(this);
         shopButton.setActionCommand(this.cmdShop);
+
+        JButton chatButton = new JButton("聊天室");//商店
+        chatButton.setBounds(91, 587, 349 - 91, 670 - 587);
+        chatButton.setOpaque(false);
+        add(chatButton);
+        chatButton.addActionListener(this);
+        chatButton.setActionCommand(this.cmdChat);
+
+        //add(backgroundImageLabel);
 
         //退出按钮
         JButton exitButton = new JButton("EXit");//退出
@@ -176,10 +176,7 @@ public class MainMenu extends JFrame implements ActionListener {
         nameLabel = new JLabel("姓名：" + this.name); // 姓名
         nameLabel.setFont(new Font("微软雅黑", Font.BOLD, 20));
         nameLabel.setBounds(10, 158, 164, 39);
-
-
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -193,6 +190,8 @@ public class MainMenu extends JFrame implements ActionListener {
                     ClientTeacherFrame s = new ClientTeacherFrame(uID, socket);
                     //s.setVisible(true);
                 }
+            } else if (e.getActionCommand().equals(this.cmdChat)) { // 聊天室
+                    Chatroom s = new Chatroom(uID, socket);
             } else if (e.getActionCommand().equals(this.cmdClass)) { // 学籍
                 if (userType == 0) {
                     ClassStudentClient classStu = new ClassStudentClient(this.uID, this.pwd, tempmenu);
@@ -231,7 +230,6 @@ public class MainMenu extends JFrame implements ActionListener {
                 int result = JOptionPane.showConfirmDialog(null, "是否退出？", "退出", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE);
                 if (result == JOptionPane.OK_OPTION) {
                     this.dispose();
-
                     Client ccs = new Client(this.socket);
                     User u = new User();
                     u.setId(this.uID);
@@ -244,11 +242,7 @@ public class MainMenu extends JFrame implements ActionListener {
                     ClientMainFrame.back();
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            throw new RuntimeException(ex);
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        } catch (IOException ex) {
+        } catch (ClassNotFoundException | SQLException | IOException ex) {
             throw new RuntimeException(ex);
         }
     }

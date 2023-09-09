@@ -19,8 +19,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class Dormmaintain extends JDialog {
-
-    static Socket socket;
     private final JPanel contentPanel = new JPanel();
     public DormitoryStudentClient C;
     public Dormitory dorm;

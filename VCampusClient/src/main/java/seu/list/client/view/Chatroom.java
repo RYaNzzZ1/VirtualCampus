@@ -136,6 +136,14 @@ public class Chatroom {
                     Chat chat = (Chat) broadcastMessage.getData();
                     if (chat != null) {
                         System.out.println("新线程里: " + socket + "  " + chat.getChatText());
+                        try {
+                            String s3= chat.getNickName() + " " + chat.getChatTime() + ":\n";
+                            String s4= chat.getChatText()+ "\n";
+                            doc.insertString(doc.getLength(), s3, f1);
+                            doc.insertString(doc.getLength(), s4, f2);
+                        } catch (BadLocationException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             } catch (IOException | ClassNotFoundException e) {

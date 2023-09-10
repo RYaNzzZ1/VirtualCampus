@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.Socket;
+import java.util.Objects;
 
 public class ClientLoginFrame extends JFrame implements ActionListener {
 
@@ -140,6 +141,10 @@ public class ClientLoginFrame extends JFrame implements ActionListener {
             }
             if (flag == 1) {
                 //登录界面
+                if (Objects.equals(jpf_password.getText(), "") || Objects.equals(jtf_user.getText(), "")) {
+                    JOptionPane.showMessageDialog(null, "用户名和密码不能为空", "警告", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
                 Client ccs = new Client(this.socket);
                 User u = new User();
                 u.setPwd(jpf_password.getText());
@@ -152,7 +157,9 @@ public class ClientLoginFrame extends JFrame implements ActionListener {
                 int sign = res.getUserType();
                 u = (User) res.getData();
 
-                if (sign == 0 || sign == 1 || sign == 30 || sign == 31) {
+                if (u == null)
+                    JOptionPane.showMessageDialog(null, "用户名或密码错误！", "错误", JOptionPane.ERROR_MESSAGE);
+                else if (sign == 0 || sign == 1 || sign == 30 || sign == 31) {
                     if (sign >= 30) {//重复登录，之前的下线
                         sign -= 30;
                         JOptionPane.showMessageDialog(null, "重复登录，之前的连接已断开", "提示", JOptionPane.WARNING_MESSAGE);
@@ -161,8 +168,6 @@ public class ClientLoginFrame extends JFrame implements ActionListener {
                     MainMenu csf = new MainMenu(sign, u.getId(), u.getPwd(), u.getName(), u.getMoney(), this.socket);
                     csf.setVisible(true);
                 } else if (sign == 2) {
-                    JOptionPane.showMessageDialog(null, "用户名或密码错误！", "错误", JOptionPane.ERROR_MESSAGE);
-                } else {
                     JOptionPane.showMessageDialog(null, "用户名或密码错误！", "错误", JOptionPane.ERROR_MESSAGE);
                 }
             }

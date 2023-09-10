@@ -189,6 +189,11 @@ public class Chatroom {
                         }
                     }
                 }
+                JScrollBar jscrollBar = scrollPane.getVerticalScrollBar();
+                if (jscrollBar != null)
+                    jscrollBar.setValue(jscrollBar.getMaximum());
+
+
             }
         };
         timerJdg = false;
@@ -216,6 +221,9 @@ public class Chatroom {
 
                     doc.insertString(doc.getLength(), s1, f3);
                     doc.insertString(doc.getLength(), s2, f4);
+                    JScrollBar jscrollBar = scrollPane.getVerticalScrollBar();
+                    if (jscrollBar != null)
+                        jscrollBar.setValue(jscrollBar.getMaximum());
                 } catch (BadLocationException e) {
                     e.printStackTrace();
                 }
